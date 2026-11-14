@@ -17,6 +17,7 @@ load_dotenv()
 BASE_URL = os.getenv("INFERENCE_BASE_URL", "https://api.vultrinference.com/v1").rstrip("/")
 API_KEY = os.getenv("INFERENCE_API_KEY", "")
 MODEL = os.getenv("INFERENCE_MODEL", "")
+EMBED_MODEL = os.getenv("INFERENCE_EMBED_MODEL", "")
 TIMEOUT = 60
 
 
@@ -61,6 +62,24 @@ def chat(messages: list, temperature: float = 0.2, max_tokens: int = 900) -> str
     # Some reasoning models include their hidden thinking; remove it.
     content = re.sub(r"<think>.*?</think>", "", content, flags=re.DOTALL)
     return content.strip()
+
+
+def embed(texts: list) -> list:
+    """Return one embedding vector per text (OpenAI-compatible /embeddings endpoint)."""
+    if not EMBED_MODEL:
+        raise LLMError("Lipsește INFERENCE_EMBED_MODEL în fișierul .env")
+    try:
+        r = requests.post(f"{BASE_URL}/embeddings", headers=_headers(),
+                          json={"model": EMBED_MODEL, "input": texts}, timeout=TIMEOUT)
+    except requests.RequestException as exc:
+        raise LLMError(f"Nu pot contacta serviciul de embeddings: {exc}") from exc
+    if r.status_code != 200:
+        raise LLMError(f"Eroare embeddings {r.status_code}: {r.text[:300]}")
+    try:
+        data = sorted(r.json()["data"], key=lambda d: d.get("index", 0))
+        return [d["embedding"] for d in data]
+    except (KeyError, ValueError, TypeError) as exc:
+        raise LLMError(f"Răspuns neașteptat la embeddings: {r.text[:300]}") from exc
 
 
 if __name__ == "__main__":

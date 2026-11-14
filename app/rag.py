@@ -4,10 +4,13 @@ import re
 from urllib.parse import quote
 
 from app import llm
-from app.search import load_index
+from app.search import fuse, load_index, load_vectors, vector_search
 from app.text_utils import strip_diacritics
 
 INDEX = load_index()
+VECTORS = load_vectors(len(INDEX.chunks))   # None -> keyword search only
+QUERY_INSTRUCT = "Instruct: Given a student's question about the Romanian Baccalaureate exam, " \
+                 "retrieve official curriculum, exam or grading-scheme passages that answer it\nQuery: "
 TOP_K = 6
 MIN_SCORE = 1.0  # below this, sources are too weak to answer from
 
@@ -109,17 +112,34 @@ def detect_subject(question: str):
     return None
 
 
+def _hybrid(query: str, qvec, k: int, subject, year, doc_type=None) -> list:
+    keyword = [h for h in INDEX.search(query, k=20, subject=subject, year=year, doc_type=doc_type)
+               if h["score"] >= MIN_SCORE]
+    if qvec is None:
+        return keyword[:k]
+    semantic = vector_search(VECTORS, INDEX.chunks, qvec, k=20, subject=subject, year=year,
+                             doc_type=doc_type)
+    return fuse(keyword, semantic, k=k)
+
+
 def retrieve(question: str, subject=None, year=None) -> list:
+    """Hybrid retrieval: LLM query expansion + BM25 keywords + semantic embeddings (RRF)."""
     subject = subject or detect_subject(question)
     query = expand_query(question)
-    hits = INDEX.search(query, k=TOP_K, subject=subject, year=year)
+    qvec = None
+    if VECTORS is not None:
+        try:
+            qvec = llm.embed([QUERY_INSTRUCT + question])[0]
+        except llm.LLMError as exc:
+            print("[embeddings unavailable, keyword search only]", exc)
+    hits = _hybrid(query, qvec, TOP_K, subject, year)
     # Grading questions must see the actual grading schemes (bareme), not only the curriculum.
     if any(w in question.lower() for w in GRADING_WORDS):
-        barem_hits = INDEX.search(query, k=3, subject=subject, year=year, doc_type="barem")
+        barem_hits = _hybrid(query, qvec, 3, subject, year, doc_type="barem")
         ids = {h["id"] for h in hits}
         new = [b for b in barem_hits if b["id"] not in ids]
         hits = hits[:TOP_K - len(new)] + new
-    return [h for h in hits if h["score"] >= MIN_SCORE]
+    return hits
 
 
 def ask(question: str, subject=None, year=None, lang: str = "ro") -> dict:

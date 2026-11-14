@@ -7,6 +7,7 @@ from pathlib import Path
 from app.text_utils import tokenize
 
 CHUNKS_FILE = Path(__file__).resolve().parent.parent / "index" / "chunks.json"
+VECTORS_FILE = Path(__file__).resolve().parent.parent / "index" / "vectors.npy"
 
 
 class BM25Index:
@@ -45,6 +46,48 @@ class BM25Index:
                 scored.append((score, i))
         scored.sort(reverse=True)
         return [{**self.chunks[i], "score": round(s, 3)} for s, i in scored[:k]]
+
+
+def _matches(c: dict, subject, year, doc_type) -> bool:
+    return ((not subject or c["subject"] == subject) and (not year or c["year"] == year)
+            and (not doc_type or c["doc_type"] == doc_type))
+
+
+def load_vectors(n_chunks: int):
+    """Load normalized embedding matrix, or None if hybrid search isn't available."""
+    if not VECTORS_FILE.exists():
+        return None
+    import numpy as np
+    matrix = np.load(VECTORS_FILE)
+    return matrix if matrix.shape[0] == n_chunks else None
+
+
+def vector_search(matrix, chunks: list, query_vector, k: int = 20, subject=None, year=None,
+                  doc_type=None) -> list:
+    import numpy as np
+    q = np.asarray(query_vector, dtype=np.float32)
+    q /= np.linalg.norm(q) + 1e-12
+    scores = matrix @ q
+    order = np.argsort(-scores)
+    out = []
+    for i in order:
+        c = chunks[int(i)]
+        if _matches(c, subject, year, doc_type):
+            out.append({**c, "score": round(float(scores[i]), 3)})
+            if len(out) >= k:
+                break
+    return out
+
+
+def fuse(*result_lists, k: int = 6, rrf_k: int = 60) -> list:
+    """Reciprocal Rank Fusion: combine rankings from keyword and semantic search."""
+    scores, items = {}, {}
+    for results in result_lists:
+        for rank, r in enumerate(results):
+            scores[r["id"]] = scores.get(r["id"], 0.0) + 1.0 / (rrf_k + rank + 1)
+            items.setdefault(r["id"], r)
+    best = sorted(scores, key=scores.get, reverse=True)[:k]
+    return [{**items[i], "score": round(scores[i], 4)} for i in best]
 
 
 def load_index() -> BM25Index:

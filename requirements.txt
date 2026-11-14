@@ -3,3 +3,4 @@ starlette>=0.37,<2.0
 uvicorn>=0.29,<1.0
 requests>=2.31,<3.0
 python-dotenv>=1.0,<2.0
+numpy>=1.26,<3.0

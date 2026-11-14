@@ -6,6 +6,7 @@ Run from the project folder:
 import json
 import re
 import sys
+from collections import Counter
 from pathlib import Path
 
 from pypdf import PdfReader
@@ -16,6 +17,8 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
 INDEX_DIR = ROOT / "index"
 CHUNKS_FILE = INDEX_DIR / "chunks.json"
+VECTORS_FILE = INDEX_DIR / "vectors.npy"
+EMBED_BATCH = 32
 
 SUBJECTS = {"matematica": "Matematică", "informatica": "Informatică"}
 SESSIONS = {
@@ -115,12 +118,23 @@ def split_into_chunks(text: str) -> list:
     return chunks
 
 
+BOILERPLATE_MIN_CHARS = 25    # short lines like "3p" are real content, never boilerplate
+BOILERPLATE_SHARE = 0.4       # a line found in 40%+ of the files of a group is boilerplate
+
+
+def _line_key(line: str) -> str:
+    return " ".join(strip_diacritics(line.lower()).split())
+
+
 def build_index() -> dict:
     if not DATA_DIR.exists():
         sys.exit(f"Nu găsesc folderul {DATA_DIR}. Copiază PDF-urile în data/.")
 
-    chunks, report = [], {"files": 0, "skipped": [], "low_text_pages": [],
-                           "other_profile_pages": 0}
+    report = {"files": 0, "skipped": [], "low_text_pages": [],
+              "other_profile_pages": 0, "boilerplate_lines": 0}
+
+    # ---- Pass 1: read every PDF page (text only) ----
+    documents = []  # (folder, pdf_path, meta, [(page_no, text), ...])
     for folder in ["programe", "matematica", "informatica"]:
         folder_path = DATA_DIR / folder
         if not folder_path.exists():
@@ -137,10 +151,9 @@ def build_index() -> dict:
                 report["skipped"].append(f"{folder}/{pdf_path.name} ({exc})")
                 continue
             report["files"] += 1
-            profile_state = "keep"
+            pages, profile_state = [], "keep"
             for page_no, page in enumerate(reader.pages, start=1):
-                raw = page.extract_text() or ""
-                text = normalize_text(raw)
+                text = normalize_text(page.extract_text() or "")
                 if len(text) < MIN_PAGE_CHARS:
                     report["low_text_pages"].append(f"{folder}/{pdf_path.name} p.{page_no}")
                     continue
@@ -149,19 +162,78 @@ def build_index() -> dict:
                     if profile_state == "drop":
                         report["other_profile_pages"] += 1
                         continue
-                for piece in split_into_chunks(text):
-                    chunks.append({
-                        "id": len(chunks),
-                        "file": f"{folder}/{pdf_path.name}",
-                        "page": page_no,
-                        "text": piece,
-                        **meta,
-                    })
+                pages.append((page_no, text))
+            documents.append((folder, pdf_path, meta, pages))
+
+    # ---- Find boilerplate: long lines repeated across many files of the same kind ----
+    # (headers, footers, general grading rules). We keep them only in the first file.
+    groups = {}
+    for folder, _, meta, pages in documents:
+        groups.setdefault((meta["subject"], meta["doc_type"]), []).append(pages)
+    boilerplate = {}
+    for key, docs in groups.items():
+        if len(docs) < 3:
+            continue
+        counts = Counter()
+        for pages in docs:
+            counts.update({_line_key(l) for _, t in pages for l in t.splitlines()
+                           if len(l.strip()) >= BOILERPLATE_MIN_CHARS})
+        limit = max(3, BOILERPLATE_SHARE * len(docs))
+        boilerplate[key] = {line for line, n in counts.items() if n >= limit}
+
+    # ---- Pass 2: chunk the cleaned text ----
+    chunks, first_seen = [], set()
+    for folder, pdf_path, meta, pages in documents:
+        key = (meta["subject"], meta["doc_type"])
+        common = boilerplate.get(key, set())
+        keep_common = key not in first_seen   # the first file keeps one copy of the rules
+        first_seen.add(key)
+        for page_no, text in pages:
+            if common and not keep_common:
+                lines = text.splitlines()
+                kept = [l for l in lines if _line_key(l) not in common]
+                report["boilerplate_lines"] += len(lines) - len(kept)
+                text = "\n".join(kept).strip()
+                if len(text) < MIN_PAGE_CHARS:
+                    continue
+            for piece in split_into_chunks(text):
+                chunks.append({
+                    "id": len(chunks),
+                    "file": f"{folder}/{pdf_path.name}",
+                    "page": page_no,
+                    "text": piece,
+                    **meta,
+                })
 
     INDEX_DIR.mkdir(exist_ok=True)
     CHUNKS_FILE.write_text(json.dumps(chunks, ensure_ascii=False, indent=1), encoding="utf-8")
     report["chunks"] = len(chunks)
+    report["vectors"] = build_vectors(chunks)
     return report
+
+
+def build_vectors(chunks: list) -> str:
+    """Semantic embeddings for hybrid search. Optional: skipped if not configured."""
+    from app import llm
+    if VECTORS_FILE.exists():
+        VECTORS_FILE.unlink()
+    if not llm.EMBED_MODEL:
+        return "sărit (INFERENCE_EMBED_MODEL nu e setat) -> doar căutare BM25"
+    import numpy as np
+    vectors = []
+    try:
+        for i in range(0, len(chunks), EMBED_BATCH):
+            batch = [f"{c['label']}\n{c['text'][:2000]}" for c in chunks[i:i + EMBED_BATCH]]
+            vectors.extend(llm.embed(batch))
+            print(f"   embeddings: {min(i + EMBED_BATCH, len(chunks))}/{len(chunks)}", end="\r")
+    except llm.LLMError as exc:
+        print()
+        return f"EROARE ({exc}) -> doar căutare BM25"
+    print()
+    matrix = np.asarray(vectors, dtype=np.float32)
+    matrix /= np.linalg.norm(matrix, axis=1, keepdims=True) + 1e-12
+    np.save(VECTORS_FILE, matrix)
+    return f"{matrix.shape[0]} vectori x {matrix.shape[1]} dimensiuni ({llm.EMBED_MODEL})"
 
 
 if __name__ == "__main__":
@@ -169,6 +241,8 @@ if __name__ == "__main__":
     print(f"✅ Fișiere citite: {result['files']}")
     print(f"✅ Bucăți de text salvate: {result['chunks']} -> index/chunks.json")
     print(f"ℹ️  Pagini din programe pentru alte profiluri (ignorate): {result['other_profile_pages']}")
+    print(f"ℹ️  Rânduri repetitive eliminate (antete, reguli generale): {result['boilerplate_lines']}")
+    print(f"🧠 Embeddings semantice: {result['vectors']}")
     if result["skipped"]:
         print("⚠️  Fișiere sărite:")
         for item in result["skipped"]:
