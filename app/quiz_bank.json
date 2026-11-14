@@ -1,0 +1,2888 @@
+[
+ {
+  "id": "e39c7ac8a072",
+  "ref": "informatica/01_2026_iunie/I.1",
+  "subject": "informatica",
+  "file": "informatica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Variabilele `x` și `y` sunt întregi. Indicați o expresie C/C++ care are valoarea `1` dacă și numai dacă numerele naturale memorate în variabilele `x` și `y` au aceeași paritate.\n\na. `(x*y)%2==0`\nb. `x%2==0 && y%2==0`\nc. `(x+y)%2==0`\nd. `!(x%2==y%2)`",
+   "en": "The variables `x` and `y` are integers. Indicate a C/C++ expression whose value is `1` if and only if the natural numbers stored in `x` and `y` have the same parity.\n\na. `(x*y)%2==0`\nb. `x%2==0 && y%2==0`\nc. `(x+y)%2==0`\nd. `!(x%2==y%2)`"
+  },
+  "hint": {
+   "ro": "Suma a două numere de aceeași paritate este pară.",
+   "en": "The sum of two numbers with the same parity is even."
+  },
+  "answer": "c",
+  "options": {
+   "a": "`(x*y)%2==0`",
+   "b": "`x%2==0 && y%2==0`",
+   "c": "`(x+y)%2==0`",
+   "d": "`!(x%2==y%2)`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "8d8554f3d6a9",
+  "ref": "informatica/01_2026_iunie/I.2",
+  "subject": "informatica",
+  "file": "informatica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Subprogramul `f` de mai jos este incomplet definit. Indicați expresia cu care pot fi înlocuite punctele de suspensie, astfel încât, în urma apelului `f(35,17);`, să se afișeze `7`.\n\n```\nvoid f(int n, int d)\n{ if(n%d==0)\n     cout<<d;   // printf(\"%d\",d);\n  else f(........);\n}\n```\n\na. `n+1,d+1`\nb. `n-1,d-1`\nc. `n,d+1`\nd. `n,d-1`",
+   "en": "The subprogram `f` below is incompletely defined. Indicate the expression that can replace the dots so that the call `f(35,17);` prints `7`.\n\n```\nvoid f(int n, int d)\n{ if(n%d==0)\n     cout<<d;   // printf(\"%d\",d);\n  else f(........);\n}\n```\n\na. `n+1,d+1`\nb. `n-1,d-1`\nc. `n,d+1`\nd. `n,d-1`"
+  },
+  "hint": {
+   "ro": "Căutăm cel mai mare divizor al lui 35 care e cel mult 17.",
+   "en": "We look for the largest divisor of 35 that is at most 17."
+  },
+  "answer": "d",
+  "options": {
+   "a": "`n+1,d+1`",
+   "b": "`n-1,d-1`",
+   "c": "`n,d+1`",
+   "d": "`n,d-1`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "d10cdab47aac",
+  "ref": "informatica/01_2026_iunie/I.3",
+  "subject": "informatica",
+  "file": "informatica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Variabila `p`, declarată mai jos, memorează primul termen și rația unei progresii aritmetice. Știind că diferența dintre un termen al progresiei și termenul anterior este egală cu rația, indicați expresia a cărei valoare este egală cu cel de al `10`-lea termen al progresiei.\n\n```\nstruct progresie\n{  int prim;\n   int ratie;\n}p;\n```\n\na. `prim.p+ratie.p*9`\nb. `p.prim+9*p.ratie`\nc. `progresie.prim.p+9*progresie.ratie.p`\nd. `p.progresie.prim+9*p.progresie.ratie`",
+   "en": "The variable `p`, declared below, stores the first term and the common difference of an arithmetic progression. Indicate the expression whose value equals the `10`th term of the progression.\n\n```\nstruct progresie\n{  int prim;\n   int ratie;\n}p;\n```\n\na. `prim.p+ratie.p*9`\nb. `p.prim+9*p.ratie`\nc. `progresie.prim.p+9*progresie.ratie.p`\nd. `p.progresie.prim+9*p.progresie.ratie`"
+  },
+  "hint": {
+   "ro": "$a_{10}=a_1+9r$; câmpurile se accesează cu `variabila.camp`.",
+   "en": "$a_{10}=a_1+9r$; fields are accessed as `variable.field`."
+  },
+  "answer": "b",
+  "options": {
+   "a": "`prim.p+ratie.p*9`",
+   "b": "`p.prim+9*p.ratie`",
+   "c": "`progresie.prim.p+9*progresie.ratie.p`",
+   "d": "`p.progresie.prim+9*p.progresie.ratie`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "2c73fa4977ce",
+  "ref": "informatica/01_2026_iunie/I.4",
+  "subject": "informatica",
+  "file": "informatica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Un graf orientat cu `5` vârfuri, numerotate de la `1` la `5`, este reprezentat prin matricea de adiacență de mai jos. Indicați numărul de vârfuri ale grafului cu proprietatea că valoarea absolută a diferenței gradelor intern și extern este `1`.\n\n```\n0 1 0 0 1\n1 0 0 0 0\n1 1 0 1 0\n0 0 1 0 1\n0 0 1 1 0\n```\n\na. 2\nb. 3\nc. 4\nd. 5",
+   "en": "A directed graph with `5` vertices, numbered `1` to `5`, is represented by the adjacency matrix below. Indicate the number of vertices for which the absolute difference between the in-degree and the out-degree is `1`.\n\n```\n0 1 0 0 1\n1 0 0 0 0\n1 1 0 1 0\n0 0 1 0 1\n0 0 1 1 0\n```\n\na. 2\nb. 3\nc. 4\nd. 5"
+  },
+  "hint": {
+   "ro": "Gradul extern = suma pe linie; gradul intern = suma pe coloană.",
+   "en": "Out-degree = row sum; in-degree = column sum."
+  },
+  "answer": "a",
+  "options": {
+   "a": "2",
+   "b": "3",
+   "c": "4",
+   "d": "5"
+  },
+  "ordered": false
+ },
+ {
+  "id": "137680bcd44a",
+  "ref": "informatica/01_2026_iunie/I.5",
+  "subject": "informatica",
+  "file": "informatica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "Un graf neorientat cu `6` noduri, numerotate de la `1` la `6`, are muchiile [1,2], [1,3], [1,5], [2,3], [3,6], [5,6] (nodul `4` este izolat). Indicați numărul maxim de muchii care pot fi adăugate, astfel încât graful obținut să fie eulerian.\n\na. 9\nb. 6\nc. 3\nd. 2",
+   "en": "An undirected graph with `6` nodes, numbered `1` to `6`, has the edges [1,2], [1,3], [1,5], [2,3], [3,6], [5,6] (node `4` is isolated). Indicate the maximum number of edges that can be added so that the resulting graph is Eulerian.\n\na. 9\nb. 6\nc. 3\nd. 2"
+  },
+  "hint": {
+   "ro": "Un graf eulerian are toate gradele pare (și este conex).",
+   "en": "An Eulerian graph has all degrees even (and is connected)."
+  },
+  "answer": "b",
+  "options": {
+   "a": "9",
+   "b": "6",
+   "c": "3",
+   "d": "2"
+  },
+  "ordered": false
+ },
+ {
+  "id": "0546c4f04343",
+  "ref": "informatica/01_2026_iunie/II.1.a",
+  "subject": "informatica",
+  "file": "informatica/01_2026_iunie_subiect.pdf",
+  "page": 2,
+  "item": "II.1.a",
+  "problem": {
+   "ro": "Se consideră algoritmul de mai jos, reprezentat în pseudocod. Scrieți valoarea afișată dacă se citesc, în această ordine, numerele `8, 3, 1, 5, 2, 4, 5, 5, 7`.\n\n```\ncitește n (număr natural nenul)\ns ← 0; x ← 0; p ← 1\nrepetă\n   citește y (număr natural nenul)\n   dacă y > x atunci\n      s ← s + y; x ← y\n   altfel\n      dacă x = y atunci s ← s - y\n   p ← p + 1\npână când p > n\nscrie s\n```",
+   "en": "Consider the algorithm below, written in pseudocode. Write the value printed if the numbers `8, 3, 1, 5, 2, 4, 5, 5, 7` are read, in this order.\n\n```\ncitește n (număr natural nenul)\ns ← 0; x ← 0; p ← 1\nrepetă\n   citește y (număr natural nenul)\n   dacă y > x atunci\n      s ← s + y; x ← y\n   altfel\n      dacă x = y atunci s ← s - y\n   p ← p + 1\npână când p > n\nscrie s\n```"
+  },
+  "hint": {
+   "ro": "Primul număr citit este `n=8`; urmărește pe rând valorile lui `s` și `x`.",
+   "en": "The first number read is `n=8`; trace the values of `s` and `x` step by step."
+  },
+  "answer": "5",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "ba40d2a64988",
+  "ref": "informatica/02_2026_iunie_rezerva/I.1",
+  "subject": "informatica",
+  "file": "informatica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Indicați o expresie C/C++ cu valoarea `1`.\n\na. `!(2>3 || 3>4)`\nb. `!(2>3) && 3>4`\nc. `2>3 && !(3>4)`\nd. `4>3>2`",
+   "en": "Indicate a C/C++ expression with the value `1`.\n\na. `!(2>3 || 3>4)`\nb. `!(2>3) && 3>4`\nc. `2>3 && !(3>4)`\nd. `4>3>2`"
+  },
+  "hint": {
+   "ro": "Evaluează fiecare comparație (0 sau 1), apoi operatorii logici.",
+   "en": "Evaluate each comparison (0 or 1), then the logical operators."
+  },
+  "answer": "a",
+  "options": {
+   "a": "`!(2>3 || 3>4)`",
+   "b": "`!(2>3) && 3>4`",
+   "c": "`2>3 && !(3>4)`",
+   "d": "`4>3>2`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "be94c97f0a10",
+  "ref": "informatica/02_2026_iunie_rezerva/I.2",
+  "subject": "informatica",
+  "file": "informatica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Subprogramul `f` este definit mai jos. Indicați valoarea lui `f(56579)`.\n\n```\nint f(int n)\n{ if(n==0)return 0;\n  if(n%2==1)return f(n/10)+1;\n  return f(n/10)-1;\n}\n```\n\na. 0\nb. 1\nc. 2\nd. 3",
+   "en": "The subprogram `f` is defined below. Indicate the value of `f(56579)`.\n\n```\nint f(int n)\n{ if(n==0)return 0;\n  if(n%2==1)return f(n/10)+1;\n  return f(n/10)-1;\n}\n```\n\na. 0\nb. 1\nc. 2\nd. 3"
+  },
+  "hint": {
+   "ro": "Funcția adună 1 pentru fiecare cifră impară și scade 1 pentru fiecare cifră pară.",
+   "en": "The function adds 1 for each odd digit and subtracts 1 for each even digit."
+  },
+  "answer": "d",
+  "options": {
+   "a": "0",
+   "b": "1",
+   "c": "2",
+   "d": "3"
+  },
+  "ordered": false
+ },
+ {
+  "id": "f2b43081c2d6",
+  "ref": "informatica/02_2026_iunie_rezerva/I.3",
+  "subject": "informatica",
+  "file": "informatica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "În muzica clasică, o sonată este o lucrare compusă din trei părți. Variabila `s`, declarată mai jos, memorează indicativul unei sonate și durata fiecăreia dintre cele trei părți ale acesteia, exprimată în minute și secunde. Indicați o expresie a cărei valoare este egală cu durata celei de a doua părți a sonatei, exprimată în secunde.\n\n```\nstruct sonata\n{ int indicativ;\n  struct\n  { int min,sec;\n  }unu,doi,trei;\n}s;\n```\n\na. `s.doi.sec+60*s.doi.min`\nb. `sonata.doi.sec+60*sonata.doi.min`\nc. `sec.doi.s+60*min.doi.s`\nd. `doi.sec.sonata.s+60*doi.min.sonata.s`",
+   "en": "The variable `s`, declared below, stores the code of a sonata and the duration of each of its three parts, in minutes and seconds. Indicate an expression whose value equals the duration of the second part, in seconds.\n\n```\nstruct sonata\n{ int indicativ;\n  struct\n  { int min,sec;\n  }unu,doi,trei;\n}s;\n```\n\na. `s.doi.sec+60*s.doi.min`\nb. `sonata.doi.sec+60*sonata.doi.min`\nc. `sec.doi.s+60*min.doi.s`\nd. `doi.sec.sonata.s+60*doi.min.sonata.s`"
+  },
+  "hint": {
+   "ro": "Accesul se face de la variabilă spre câmp: `s.doi.min`.",
+   "en": "Access goes from the variable to the field: `s.doi.min`."
+  },
+  "answer": "a",
+  "options": {
+   "a": "`s.doi.sec+60*s.doi.min`",
+   "b": "`sonata.doi.sec+60*sonata.doi.min`",
+   "c": "`sec.doi.s+60*min.doi.s`",
+   "d": "`doi.sec.sonata.s+60*doi.min.sonata.s`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "ee80e14f35af",
+  "ref": "informatica/02_2026_iunie_rezerva/I.4",
+  "subject": "informatica",
+  "file": "informatica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Într-un arbore cu rădăcină considerăm că un nod se află pe nivelul `x` dacă lanțul elementar care are o extremitate în nodul respectiv și cealaltă extremitate în rădăcina arborelui are lungimea `x`. Pe nivelul `0` se află un singur nod (rădăcina). Un arbore cu `8` noduri, numerotate de la `1` la `8`, este reprezentat prin vectorul de tați `(3,4,0,3,4,8,2,3)`. Indicați numărul de niveluri ale arborelui.\n\na. 7\nb. 5\nc. 4\nd. 2",
+   "en": "In a rooted tree, a node is on level `x` if the path between it and the root has length `x`; level `0` contains only the root. A tree with `8` nodes, numbered `1` to `8`, is given by the parent array `(3,4,0,3,4,8,2,3)`. Indicate the number of levels of the tree.\n\na. 7\nb. 5\nc. 4\nd. 2"
+  },
+  "hint": {
+   "ro": "Rădăcina are tatăl 0; desenează arborele nivel cu nivel.",
+   "en": "The root has parent 0; draw the tree level by level."
+  },
+  "answer": "c",
+  "options": {
+   "a": "7",
+   "b": "5",
+   "c": "4",
+   "d": "2"
+  },
+  "ordered": false
+ },
+ {
+  "id": "1296509f06dc",
+  "ref": "informatica/02_2026_iunie_rezerva/I.5",
+  "subject": "informatica",
+  "file": "informatica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "Un graf orientat cu `7` vârfuri, numerotate de la `1` la `7`, are arcele `(1,2), (2,3), (3,1), (4,5), (4,6), (5,6), (6,7), (7,4)`. Indicați numărul minim de arce care pot fi adăugate și poziționate adecvat, astfel încât graful orientat obținut să fie tare conex.\n\na. 1\nb. 2\nc. 3\nd. 4",
+   "en": "A directed graph with `7` vertices, numbered `1` to `7`, has the arcs `(1,2), (2,3), (3,1), (4,5), (4,6), (5,6), (6,7), (7,4)`. Indicate the minimum number of arcs that can be added, suitably placed, so that the resulting graph is strongly connected.\n\na. 1\nb. 2\nc. 3\nd. 4"
+  },
+  "hint": {
+   "ro": "Găsește componentele tare conexe și leagă-le în ambele sensuri.",
+   "en": "Find the strongly connected components and link them in both directions."
+  },
+  "answer": "b",
+  "options": {
+   "a": "1",
+   "b": "2",
+   "c": "3",
+   "d": "4"
+  },
+  "ordered": false
+ },
+ {
+  "id": "365ffd3b1468",
+  "ref": "informatica/02_2026_iunie_rezerva/II.1.a",
+  "subject": "informatica",
+  "file": "informatica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "II.1.a",
+  "problem": {
+   "ro": "Se consideră algoritmul de mai jos, reprezentat în pseudocod. S-a notat cu `a%b` restul împărțirii numărului natural `a` la numărul natural nenul `b` și cu `[c]` partea întreagă a numărului real `c`. Scrieți valoarea afișată în urma executării algoritmului dacă se citesc, în această ordine, numerele `120, 126, 2`.\n\n```\ncitește m,n,k\n   (numere naturale nenule, m≤n, 0≤k≤9)\nnr ← 0\npentru i ← m,n execută\n   x ← i\n   repetă\n      dacă x%10 = k atunci\n         nr ← nr+1\n      x ← [x/10]\n   până când x = 0\nscrie nr\n```",
+   "en": "Consider the algorithm below, in pseudocode. `a%b` is the remainder of dividing `a` by `b`, and `[c]` is the integer part of `c`. Write the value printed if the numbers `120, 126, 2` are read, in this order.\n\n```\ncitește m,n,k\n   (numere naturale nenule, m≤n, 0≤k≤9)\nnr ← 0\npentru i ← m,n execută\n   x ← i\n   repetă\n      dacă x%10 = k atunci\n         nr ← nr+1\n      x ← [x/10]\n   până când x = 0\nscrie nr\n```"
+  },
+  "hint": {
+   "ro": "Algoritmul numără de câte ori apare cifra `k` în numerele de la `m` la `n`.",
+   "en": "The algorithm counts how many times digit `k` appears in the numbers from `m` to `n`."
+  },
+  "answer": "8",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "17d27b273604",
+  "ref": "informatica/03_2026_august/I.1",
+  "subject": "informatica",
+  "file": "informatica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Variabila `x` este de tip întreg și memorează un număr natural nenul. Indicați o expresie C/C++ care are valoarea `1` dacă și numai dacă valoarea variabilei `x` este divizibilă cu `26`, dar **NU** este divizibilă cu `2026`.\n\na. `!(x%26!=0) || x%2026!=0`\nb. `!(x%26!=0) && !(x%2026==0)`\nc. `!(x%26==0 || x%2026==0)`\nd. `!(x%26!=0 && x%2026!=0)`",
+   "en": "The integer variable `x` stores a nonzero natural number. Indicate a C/C++ expression whose value is `1` if and only if `x` is divisible by `26` but **NOT** divisible by `2026`.\n\na. `!(x%26!=0) || x%2026!=0`\nb. `!(x%26!=0) && !(x%2026==0)`\nc. `!(x%26==0 || x%2026==0)`\nd. `!(x%26!=0 && x%2026!=0)`"
+  },
+  "hint": {
+   "ro": "`!(x%26!=0)` înseamnă „x divizibil cu 26”; ambele condiții trebuie îndeplinite simultan.",
+   "en": "`!(x%26!=0)` means “x divisible by 26”; both conditions must hold at the same time."
+  },
+  "answer": "b",
+  "options": {
+   "a": "`!(x%26!=0) || x%2026!=0`",
+   "b": "`!(x%26!=0) && !(x%2026==0)`",
+   "c": "`!(x%26==0 || x%2026==0)`",
+   "d": "`!(x%26!=0 && x%2026!=0)`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "38613a0901c2",
+  "ref": "informatica/03_2026_august/I.2",
+  "subject": "informatica",
+  "file": "informatica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Subprogramul `f` de mai jos este incomplet definit. Indicați o expresie cu care pot fi înlocuite punctele de suspensie astfel încât, în urma apelului `f(10);`, să se afișeze, în ordine strict crescătoare, primele `10` numere naturale nenule, separate prin câte un spațiu.\n\n```\nvoid f(int x)\n{ if(......)\n  { f(x-1);\n    cout<<x<<' ';   // printf(\"%d \",x);\n  }\n}\n```\n\na. `x<=10`\nb. `x<=11`\nc. `x>=2`\nd. `x>=1`",
+   "en": "The subprogram `f` below is incompletely defined. Indicate an expression that can replace the dots so that the call `f(10);` prints, in strictly increasing order, the first `10` nonzero natural numbers, separated by spaces.\n\n```\nvoid f(int x)\n{ if(......)\n  { f(x-1);\n    cout<<x<<' ';   // printf(\"%d \",x);\n  }\n}\n```\n\na. `x<=10`\nb. `x<=11`\nc. `x>=2`\nd. `x>=1`"
+  },
+  "hint": {
+   "ro": "Recursivitatea trebuie să se oprească la 0, iar 1 trebuie afișat.",
+   "en": "The recursion must stop at 0, and 1 must still be printed."
+  },
+  "answer": "d",
+  "options": {
+   "a": "`x<=10`",
+   "b": "`x<=11`",
+   "c": "`x>=2`",
+   "d": "`x>=1`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "e6eeadce72e5",
+  "ref": "informatica/03_2026_august/I.3",
+  "subject": "informatica",
+  "file": "informatica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Variabila `m` memorează simultan, pentru o casă de marcat a unui magazin, numărul de tipuri de bancnote prezente la sfârșitul zilei (maximum `20`) și, pentru fiecare tip, valoarea unei bancnote (număr natural) și numărul de exemplare existente. Indicați expresia C/C++ care are valoarea egală cu suma de bani obținută cu bancnotele de primul tip.\n\n```\nstruct magazin\n{  int nr;\n   int valoare[20];\n   int exemplare[20];\n}m;\n```\n\na. `m[0].valoare*m[0].exemplare`\nb. `m.[0][valoare]*m.[0][exemplare]`\nc. `m.valoare[0]*m.exemplare[0]`\nd. `m.[valoare.0]*m.[exemplare.0]`",
+   "en": "The variable `m` stores, for a shop's cash register, the number of banknote types at the end of the day (at most `20`) and, for each type, the value of one banknote and the number of banknotes. Indicate the C/C++ expression equal to the amount of money given by the banknotes of the first type.\n\n```\nstruct magazin\n{  int nr;\n   int valoare[20];\n   int exemplare[20];\n}m;\n```\n\na. `m[0].valoare*m[0].exemplare`\nb. `m.[0][valoare]*m.[0][exemplare]`\nc. `m.valoare[0]*m.exemplare[0]`\nd. `m.[valoare.0]*m.[exemplare.0]`"
+  },
+  "hint": {
+   "ro": "`m` nu e tablou; tablourile sunt câmpurile `valoare` și `exemplare`.",
+   "en": "`m` is not an array; the arrays are the fields `valoare` and `exemplare`."
+  },
+  "answer": "c",
+  "options": {
+   "a": "`m[0].valoare*m[0].exemplare`",
+   "b": "`m.[0][valoare]*m.[0][exemplare]`",
+   "c": "`m.valoare[0]*m.exemplare[0]`",
+   "d": "`m.[valoare.0]*m.[exemplare.0]`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "8df3220f6197",
+  "ref": "informatica/03_2026_august/I.4",
+  "subject": "informatica",
+  "file": "informatica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Utilizând metoda backtracking se generează toate posibilitățile de a selecta poezii ale autorilor din mulțimea ordonată astfel: {Arghezi, Blaga, Coșbuc, Eminescu}. Două soluții diferă prin cel puțin un autor. Primele patru soluții generate sunt, în această ordine: {Arghezi}, {Arghezi, Blaga}, {Arghezi, Blaga, Coșbuc}, {Arghezi, Blaga, Coșbuc, Eminescu}. Indicați a `5`-a soluție generată.\n\na. {Arghezi, Blaga, Eminescu}\nb. {Arghezi, Coșbuc, Eminescu, Blaga}\nc. {Blaga, Coșbuc, Eminescu}\nd. {Coșbuc, Eminescu}",
+   "en": "Using backtracking, all ways of selecting poems by authors from the ordered set {Arghezi, Blaga, Coșbuc, Eminescu} are generated. The first four solutions are, in order: {Arghezi}, {Arghezi, Blaga}, {Arghezi, Blaga, Coșbuc}, {Arghezi, Blaga, Coșbuc, Eminescu}. Indicate the `5`th solution generated.\n\na. {Arghezi, Blaga, Eminescu}\nb. {Arghezi, Coșbuc, Eminescu, Blaga}\nc. {Blaga, Coșbuc, Eminescu}\nd. {Coșbuc, Eminescu}"
+  },
+  "hint": {
+   "ro": "După ce nu mai poți adăuga, revii și înlocuiești ultimul autor cu următorul.",
+   "en": "When nothing more can be added, go back and replace the last author with the next one."
+  },
+  "answer": "a",
+  "options": {
+   "a": "{Arghezi, Blaga, Eminescu}",
+   "b": "{Arghezi, Coșbuc, Eminescu, Blaga}",
+   "c": "{Blaga, Coșbuc, Eminescu}",
+   "d": "{Coșbuc, Eminescu}"
+  },
+  "ordered": false
+ },
+ {
+  "id": "0bbb98b7e8f4",
+  "ref": "informatica/03_2026_august/I.5",
+  "subject": "informatica",
+  "file": "informatica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "Într-un arbore cu rădăcină, un nod se află pe nivelul `x` dacă lanțul elementar care are o extremitate în nodul respectiv și cealaltă extremitate în rădăcina arborelui are lungimea `x`. Pe nivelul `0` se află un singur nod (rădăcina). Se consideră următoarea operație prin care se transformă un arbore cu rădăcină: i se adaugă un nod „frunză”, astfel încât acesta să aibă cel mult un nod „frate”, iar valoarea absolută a diferenței dintre eticheta nodului adăugat și eticheta nodului său ascendent direct („tată”) să fie minimă. Asupra unui arbore cu rădăcină, având inițial doar un nod, cu eticheta `4`, se efectuează de șase ori, succesiv, operația precizată, etichetele nodurilor adăugate fiind, în această ordine: `2, 3, 1, 5, 7, 6`. Indicați **numărul** minim **de niveluri** ale arborelui obținut.\n\na. 2\nb. 3\nc. 4\nd. 5",
+   "en": "In a rooted tree, a node is on level `x` if the path from it to the root has length `x`; level `0` contains only the root. Consider the operation: add a leaf so that it has at most one sibling and the absolute difference between its label and its parent's label is minimal. Starting from a tree with a single node labelled `4`, the operation is applied six times, the added labels being, in order: `2, 3, 1, 5, 7, 6`. Indicate the minimum **number of levels** of the resulting tree.\n\na. 2\nb. 3\nc. 4\nd. 5"
+  },
+  "hint": {
+   "ro": "Fiecare nod poate avea cel mult doi fii; alege tatăl cu eticheta cea mai apropiată.",
+   "en": "Each node can have at most two children; pick the parent with the closest label."
+  },
+  "answer": "b",
+  "options": {
+   "a": "2",
+   "b": "3",
+   "c": "4",
+   "d": "5"
+  },
+  "ordered": false
+ },
+ {
+  "id": "a70646108134",
+  "ref": "informatica/03_2026_august/II.1.a",
+  "subject": "informatica",
+  "file": "informatica/03_2026_august_subiect.pdf",
+  "page": 2,
+  "item": "II.1.a",
+  "problem": {
+   "ro": "Se consideră algoritmul de mai jos, reprezentat în pseudocod. S-a notat cu `a%b` restul împărțirii numărului natural `a` la numărul natural nenul `b` și cu `[c]` partea întreagă a numărului real `c`. Scrieți valoarea afișată dacă se citește numărul `10`.\n\n```\ncitește n (număr natural nenul)\ns ← 0; i ← 1\ncât timp s < n execută\n   j ← i; nr ← 0\n   cât timp j ≠ 0 execută\n      nr ← nr + j%2; j ← [j/2]\n   dacă nr = 1 atunci\n      s ← s + i\n   i ← i + 1\nscrie s\n```",
+   "en": "Consider the algorithm below, in pseudocode. `a%b` is the remainder of dividing `a` by `b`, and `[c]` is the integer part of `c`. Write the value printed if the number `10` is read.\n\n```\ncitește n (număr natural nenul)\ns ← 0; i ← 1\ncât timp s < n execută\n   j ← i; nr ← 0\n   cât timp j ≠ 0 execută\n      nr ← nr + j%2; j ← [j/2]\n   dacă nr = 1 atunci\n      s ← s + i\n   i ← i + 1\nscrie s\n```"
+  },
+  "hint": {
+   "ro": "`nr` este numărul de cifre 1 din scrierea în baza 2 a lui `i`.",
+   "en": "`nr` is the number of 1 bits in the binary representation of `i`."
+  },
+  "answer": "15",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "78fefcbcb2f8",
+  "ref": "informatica/04_2026_speciala/I.1",
+  "subject": "informatica",
+  "file": "informatica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Indicați expresia C/C++ a cărei valoare este egală cu `26`.\n\na. `(2026-26)/100`\nb. `2026/100`\nc. `(2026-26)%100`\nd. `2026%100`",
+   "en": "Indicate the C/C++ expression whose value equals `26`.\n\na. `(2026-26)/100`\nb. `2026/100`\nc. `(2026-26)%100`\nd. `2026%100`"
+  },
+  "hint": {
+   "ro": "`/` între întregi dă câtul, `%` dă restul.",
+   "en": "`/` between integers gives the quotient, `%` gives the remainder."
+  },
+  "answer": "d",
+  "options": {
+   "a": "`(2026-26)/100`",
+   "b": "`2026/100`",
+   "c": "`(2026-26)%100`",
+   "d": "`2026%100`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "d5dd72efe689",
+  "ref": "informatica/04_2026_speciala/I.2",
+  "subject": "informatica",
+  "file": "informatica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Subprogramul `f` este definit mai jos. Indicați valoarea `f(1,10)`.\n\n```\nint f(int n,int m)\n{ if(n>=m) return 0;\n  else return 1+f(n+1,m-2);\n}\n```\n\na. 1\nb. 3\nc. 5\nd. 7",
+   "en": "The subprogram `f` is defined below. Indicate the value of `f(1,10)`.\n\n```\nint f(int n,int m)\n{ if(n>=m) return 0;\n  else return 1+f(n+1,m-2);\n}\n```\n\na. 1\nb. 3\nc. 5\nd. 7"
+  },
+  "hint": {
+   "ro": "Urmărește apelurile: `f(1,10)`, `f(2,8)`, …",
+   "en": "Trace the calls: `f(1,10)`, `f(2,8)`, …"
+  },
+  "answer": "b",
+  "options": {
+   "a": "1",
+   "b": "3",
+   "c": "5",
+   "d": "7"
+  },
+  "ordered": false
+ },
+ {
+  "id": "618a076b3057",
+  "ref": "informatica/04_2026_speciala/I.3",
+  "subject": "informatica",
+  "file": "informatica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "O agenție de turism pune la dispoziție pachete de vacanță cu câte trei destinații, în ordinea următoare: una pe Clisura Dunării, una la munte și una pe litoral. Utilizând metoda backtracking, se generează toate pachetele formate cu destinații din mulțimile ordonate astfel {Dubova, Eșelnița, Svinița} pentru Clisura Dunării, {Bușteni, Păltiniș, Predeal} pentru munte și {Venus, Neptun, Olimp} pentru litoral. Două soluții diferă prin cel puțin o destinație de un anumit tip. Primele cinci pachete generate sunt, în această ordine: (Dubova, Bușteni, Venus), (Dubova, Bușteni, Neptun), (Dubova, Bușteni, Olimp), (Dubova, Păltiniș, Venus), (Dubova, Păltiniș, Neptun). Indicați pachetul generat imediat înainte de (Svinița, Bușteni, Venus).\n\na. (Eșelnița, Bușteni, Venus)\nb. (Eșelnița, Predeal, Olimp)\nc. (Svinița, Păltiniș, Olimp)\nd. (Svinița, Predeal, Olimp)",
+   "en": "A travel agency offers packages with three destinations, in this order: one on the Danube Gorge, one in the mountains and one at the seaside. Using backtracking, all packages are generated from the ordered sets {Dubova, Eșelnița, Svinița}, {Bușteni, Păltiniș, Predeal} and {Venus, Neptun, Olimp}. The first five packages are: (Dubova, Bușteni, Venus), (Dubova, Bușteni, Neptun), (Dubova, Bușteni, Olimp), (Dubova, Păltiniș, Venus), (Dubova, Păltiniș, Neptun). Indicate the package generated immediately before (Svinița, Bușteni, Venus).\n\na. (Eșelnița, Bușteni, Venus)\nb. (Eșelnița, Predeal, Olimp)\nc. (Svinița, Păltiniș, Olimp)\nd. (Svinița, Predeal, Olimp)"
+  },
+  "hint": {
+   "ro": "Este un produs cartezian; ce pachet încheie seria care începe cu Eșelnița?",
+   "en": "It is a Cartesian product; which package ends the block starting with Eșelnița?"
+  },
+  "answer": "b",
+  "options": {
+   "a": "(Eșelnița, Bușteni, Venus)",
+   "b": "(Eșelnița, Predeal, Olimp)",
+   "c": "(Svinița, Păltiniș, Olimp)",
+   "d": "(Svinița, Predeal, Olimp)"
+  },
+  "ordered": false
+ },
+ {
+  "id": "bba320c0f22b",
+  "ref": "informatica/04_2026_speciala/I.4",
+  "subject": "informatica",
+  "file": "informatica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Un graf orientat cu `4` vârfuri, numerotate de la `1` la `4`, este reprezentat prin matricea de adiacență de mai jos. Indicați un circuit elementar în acest graf.\n\n```\n0 1 1 0\n1 0 1 0\n0 0 0 1\n1 1 0 0\n```\n\na. 1, 2, 1, 3, 4, 1\nb. 1, 2, 3, 4\nc. 1, 3, 4, 2, 1\nd. 1, 4, 3, 2, 1",
+   "en": "A directed graph with `4` vertices, numbered `1` to `4`, is represented by the adjacency matrix below. Indicate an elementary circuit of this graph.\n\n```\n0 1 1 0\n1 0 1 0\n0 0 0 1\n1 1 0 0\n```\n\na. 1, 2, 1, 3, 4, 1\nb. 1, 2, 3, 4\nc. 1, 3, 4, 2, 1\nd. 1, 4, 3, 2, 1"
+  },
+  "hint": {
+   "ro": "Un circuit elementar se închide în vârful de start și nu repetă alte vârfuri; verifică fiecare arc în matrice.",
+   "en": "An elementary circuit returns to its start and repeats no other vertex; check each arc in the matrix."
+  },
+  "answer": "c",
+  "options": {
+   "a": "1, 2, 1, 3, 4, 1",
+   "b": "1, 2, 3, 4",
+   "c": "1, 3, 4, 2, 1",
+   "d": "1, 4, 3, 2, 1"
+  },
+  "ordered": false
+ },
+ {
+  "id": "73ba55450382",
+  "ref": "informatica/04_2026_speciala/I.5",
+  "subject": "informatica",
+  "file": "informatica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "O companie de logistică are o rețea formată din `12` centre, numerotate de la `1` la `12`, între care există comunicații bidirecționale, astfel: între 1 și 2, între 1 și 3, între 2 și 3, între 2 și 4, între 3 și 5, între 4 și 5, între 4 și 6, între 5 și 6, între 6 și 7, între 7 și 8, între 7 și 9, între 8 și 9, între 9 și 10, între 10 și 11, între 10 și 12, între 11 și 12. Rețeaua este modelată ca un graf neorientat, în care nodurile reprezintă centrele, iar muchiile reprezintă comunicațiile dintre acestea. Indicați numărul minim de muchii care trebuie eliminate, astfel încât graful parțial obținut să fie format din trei componente conexe, fiecare cu câte `4` noduri.\n\na. 2\nb. 4\nc. 5\nd. 7",
+   "en": "A logistics company has a network of `12` centres, numbered `1` to `12`, with two-way links: 1–2, 1–3, 2–3, 2–4, 3–5, 4–5, 4–6, 5–6, 6–7, 7–8, 7–9, 8–9, 9–10, 10–11, 10–12, 11–12. The network is an undirected graph. Indicate the minimum number of edges that must be removed so that the resulting partial graph has three connected components with `4` nodes each.\n\na. 2\nb. 4\nc. 5\nd. 7"
+  },
+  "hint": {
+   "ro": "Încearcă împărțiri în grupe de câte 4 noduri și numără muchiile dintre grupe.",
+   "en": "Try splitting into groups of 4 nodes and count the edges between groups."
+  },
+  "answer": "c",
+  "options": {
+   "a": "2",
+   "b": "4",
+   "c": "5",
+   "d": "7"
+  },
+  "ordered": false
+ },
+ {
+  "id": "6684ee65e6b6",
+  "ref": "informatica/04_2026_speciala/II.1.a",
+  "subject": "informatica",
+  "file": "informatica/04_2026_speciala_subiect.pdf",
+  "page": 2,
+  "item": "II.1.a",
+  "problem": {
+   "ro": "Se consideră algoritmul de mai jos, reprezentat în pseudocod. S-a notat cu `a%b` restul împărțirii numărului natural `a` la numărul natural nenul `b` și cu `[c]` partea întreagă a numărului real `c`. Scrieți valoarea afișată în urma executării algoritmului dacă se citește numărul `2600`.\n\n```\ncitește n (număr natural nenul)\nnr ← 0; d ← 2\ncât timp d*d ≤ n execută\n   p ← 0\n   cât timp n%d = 0 execută\n      p ← 1; n ← [n/d]\n   nr ← nr + p; d ← d + 1\ndacă n ≠ 1 atunci\n   nr ← nr + 1\nscrie nr\n```",
+   "en": "Consider the algorithm below, in pseudocode. `a%b` is the remainder of dividing `a` by `b`, and `[c]` is the integer part of `c`. Write the value printed if the number `2600` is read.\n\n```\ncitește n (număr natural nenul)\nnr ← 0; d ← 2\ncât timp d*d ≤ n execută\n   p ← 0\n   cât timp n%d = 0 execută\n      p ← 1; n ← [n/d]\n   nr ← nr + p; d ← d + 1\ndacă n ≠ 1 atunci\n   nr ← nr + 1\nscrie nr\n```"
+  },
+  "hint": {
+   "ro": "Algoritmul numără factorii primi distincți ai lui `n`.",
+   "en": "The algorithm counts the distinct prime factors of `n`."
+  },
+  "answer": "3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "bb85c86ccfa7",
+  "ref": "informatica/05_2025_iunie/I.1",
+  "subject": "informatica",
+  "file": "informatica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Indicați expresia C/C++ cu aceeași valoare ca a expresiei `2025%2019+6`.\n\na. `2025/2020+5`\nb. `2025/2021+8`\nc. `2025%2020+5`\nd. `2025%2021+8`",
+   "en": "Indicate the C/C++ expression with the same value as `2025%2019+6`.\n\na. `2025/2020+5`\nb. `2025/2021+8`\nc. `2025%2020+5`\nd. `2025%2021+8`"
+  },
+  "hint": {
+   "ro": "Calculează întâi `2025%2019`.",
+   "en": "First compute `2025%2019`."
+  },
+  "answer": "d",
+  "options": {
+   "a": "`2025/2020+5`",
+   "b": "`2025/2021+8`",
+   "c": "`2025%2020+5`",
+   "d": "`2025%2021+8`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "89cf2d3639e5",
+  "ref": "informatica/05_2025_iunie/I.2",
+  "subject": "informatica",
+  "file": "informatica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Subprogramul `f` este definit mai jos. Indicați ce se afișează în urma apelului `f(3);`.\n\n```\nvoid f(int n)\n{ int i;\n  for(i=1;i<=n;i++)\n    if(i%2==0){ cout<<i;   // printf(\"%d\",i);\n                f(i-1);\n              }\n    else { f(i-1);\n           cout<<i;        // printf(\"%d\",i);\n         }\n}\n```\n\na. 1211213\nb. 123121\nc. 123\nd. 01201012013",
+   "en": "The subprogram `f` is defined below. Indicate what the call `f(3);` prints.\n\n```\nvoid f(int n)\n{ int i;\n  for(i=1;i<=n;i++)\n    if(i%2==0){ cout<<i;   // printf(\"%d\",i);\n                f(i-1);\n              }\n    else { f(i-1);\n           cout<<i;        // printf(\"%d\",i);\n         }\n}\n```\n\na. 1211213\nb. 123121\nc. 123\nd. 01201012013"
+  },
+  "hint": {
+   "ro": "Calculează întâi ce afișează `f(1)` și `f(2)`, apoi folosește-le pentru `f(3)`.",
+   "en": "First work out what `f(1)` and `f(2)` print, then use them for `f(3)`."
+  },
+  "answer": "a",
+  "options": {
+   "a": "1211213",
+   "b": "123121",
+   "c": "123",
+   "d": "01201012013"
+  },
+  "ordered": false
+ },
+ {
+  "id": "05aad15fcbab",
+  "ref": "informatica/05_2025_iunie/I.3",
+  "subject": "informatica",
+  "file": "informatica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Indicați o declarare a unui tablou bidimensional `m`, care poate memora maximum `100` de numere reale.\n\na. `float m[2,50];`\nb. `float m[4][25];`\nc. `float m[10] x float m[10];`\nd. `int m[100];`",
+   "en": "Indicate a declaration of a two-dimensional array `m` that can store at most `100` real numbers.\n\na. `float m[2,50];`\nb. `float m[4][25];`\nc. `float m[10] x float m[10];`\nd. `int m[100];`"
+  },
+  "hint": {
+   "ro": "În C/C++ fiecare dimensiune se scrie între paranteze drepte separate.",
+   "en": "In C/C++ each dimension is written in its own square brackets."
+  },
+  "answer": "b",
+  "options": {
+   "a": "`float m[2,50];`",
+   "b": "`float m[4][25];`",
+   "c": "`float m[10] x float m[10];`",
+   "d": "`int m[100];`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "879724c83af5",
+  "ref": "informatica/05_2025_iunie/I.4",
+  "subject": "informatica",
+  "file": "informatica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Utilizând metoda backtracking, s-au generat toate codurile posibile pentru deblocarea unor telefoane, coduri de câte `6` cifre distincte, din mulțimea cifrelor, ordonată crescător. Fiecare cod are primele trei cifre impare și ultimele trei cifre pare. Primele patru coduri sunt `135024, 135026, 135028, 135042`. Indicați penultimul cod generat.\n\na. 957862\nb. 957846\nc. 975862\nd. 975846",
+   "en": "Using backtracking, all phone unlock codes of `6` distinct digits were generated from the digits in increasing order. Each code has its first three digits odd and its last three digits even. The first four codes are `135024, 135026, 135028, 135042`. Indicate the second-to-last code generated.\n\na. 957862\nb. 957846\nc. 975862\nd. 975846"
+  },
+  "hint": {
+   "ro": "Ultimul cod folosește cifrele cele mai mari în fiecare poziție.",
+   "en": "The last code uses the largest digits in every position."
+  },
+  "answer": "c",
+  "options": {
+   "a": "957862",
+   "b": "957846",
+   "c": "975862",
+   "d": "975846"
+  },
+  "ordered": false
+ },
+ {
+  "id": "f4bd831851a0",
+  "ref": "informatica/05_2025_iunie/I.5",
+  "subject": "informatica",
+  "file": "informatica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "Un graf orientat fără circuite are `10` vârfuri. Indicați numărul maxim de arce ale grafului.\n\na. 10\nb. 45\nc. 50\nd. 90",
+   "en": "A directed graph with no circuits has `10` vertices. Indicate the maximum number of arcs it can have.\n\na. 10\nb. 45\nc. 50\nd. 90"
+  },
+  "hint": {
+   "ro": "Între două vârfuri poate exista cel mult un arc, altfel apare un circuit.",
+   "en": "Between two vertices there can be at most one arc, otherwise a circuit appears."
+  },
+  "answer": "b",
+  "options": {
+   "a": "10",
+   "b": "45",
+   "c": "50",
+   "d": "90"
+  },
+  "ordered": false
+ },
+ {
+  "id": "b5de5bc42a17",
+  "ref": "informatica/05_2025_iunie/II.1.a",
+  "subject": "informatica",
+  "file": "informatica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "II.1.a",
+  "problem": {
+   "ro": "Se consideră algoritmul de mai jos, reprezentat în pseudocod. Scrieți ce se afișează în urma executării algoritmului dacă se citesc, în această ordine, numerele `7` și `17`.\n\n```\ncitește m,n (numere naturale nenule, m≤n)\nnr ← 0; i ← m\nrepetă\n   x ← 1\n   cât timp x*x < i execută\n      x ← x + 1\n   dacă x*x = i atunci nr ← i\n   altfel i ← i + 1\npână când i > n sau nr ≠ 0\nscrie nr\n```",
+   "en": "Consider the algorithm below, in pseudocode. Write what is printed if the numbers `7` and `17` are read, in this order.\n\n```\ncitește m,n (numere naturale nenule, m≤n)\nnr ← 0; i ← m\nrepetă\n   x ← 1\n   cât timp x*x < i execută\n      x ← x + 1\n   dacă x*x = i atunci nr ← i\n   altfel i ← i + 1\npână când i > n sau nr ≠ 0\nscrie nr\n```"
+  },
+  "hint": {
+   "ro": "Algoritmul caută primul pătrat perfect din intervalul `[m,n]`.",
+   "en": "The algorithm looks for the first perfect square in the interval `[m,n]`."
+  },
+  "answer": "9",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "0d1ac473e1ad",
+  "ref": "informatica/06_2025_iunie_rezerva/I.1",
+  "subject": "informatica",
+  "file": "informatica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Indicați valoarea expresiei C/C++ `15.4/2+15/2`.\n\na. 14\nb. 14.7\nc. 15\nd. 15.2",
+   "en": "Indicate the value of the C/C++ expression `15.4/2+15/2`.\n\na. 14\nb. 14.7\nc. 15\nd. 15.2"
+  },
+  "hint": {
+   "ro": "`15/2` este împărțire între întregi; `15.4/2` este împărțire reală.",
+   "en": "`15/2` is integer division; `15.4/2` is real division."
+  },
+  "answer": "b",
+  "options": {
+   "a": "14",
+   "b": "14.7",
+   "c": "15",
+   "d": "15.2"
+  },
+  "ordered": false
+ },
+ {
+  "id": "c88728208fd7",
+  "ref": "informatica/06_2025_iunie_rezerva/I.2",
+  "subject": "informatica",
+  "file": "informatica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Variabila `m`, declarată mai jos, memorează, pentru un medicament, codul, procentul de compensare și data expirării (ziua, luna și anul). Indicați o expresie C/C++ cu valoarea `1` dacă și numai dacă medicamentul expiră în anul `2025`, după luna octombrie.\n\n```\nstruct data\n{ int zi,luna,an; };\nstruct medicament\n{  int cod;\n   float compensare;\n   data expira;\n}m;\n```\n\na. `m.data.an==2025 && m.data.luna>10`\nb. `data.an.m==2025 && data.luna.m>10`\nc. `m.expira.an==2025 && m.expira.luna>10`\nd. `m.an.expira==2025 && m.luna.expira>10`",
+   "en": "The variable `m`, declared below, stores for a medicine its code, compensation percentage and expiry date (day, month, year). Indicate a C/C++ expression with value `1` if and only if the medicine expires in `2025`, after October.\n\n```\nstruct data\n{ int zi,luna,an; };\nstruct medicament\n{  int cod;\n   float compensare;\n   data expira;\n}m;\n```\n\na. `m.data.an==2025 && m.data.luna>10`\nb. `data.an.m==2025 && data.luna.m>10`\nc. `m.expira.an==2025 && m.expira.luna>10`\nd. `m.an.expira==2025 && m.luna.expira>10`"
+  },
+  "hint": {
+   "ro": "Câmpul de tip `data` al lui `m` se numește `expira`.",
+   "en": "The `data`-type field of `m` is called `expira`."
+  },
+  "answer": "c",
+  "options": {
+   "a": "`m.data.an==2025 && m.data.luna>10`",
+   "b": "`data.an.m==2025 && data.luna.m>10`",
+   "c": "`m.expira.an==2025 && m.expira.luna>10`",
+   "d": "`m.an.expira==2025 && m.luna.expira>10`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "d134d1859063",
+  "ref": "informatica/06_2025_iunie_rezerva/I.3",
+  "subject": "informatica",
+  "file": "informatica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Un site de vânzări online oferă reduceri la încălțăminte pentru fiecare comandă care conține trei perechi de articole din categorii diferite din mulțimea ordonată {balerini, botine, cizme, ghete, sandale, teniși}, astfel încât o comandă să nu conțină simultan ghete și cizme, respectiv balerini și sandale. Două soluții diferă prin cel puțin o categorie. Utilizând metoda backtracking, se generează toate comenzile posibile, iar primele patru soluții generate sunt: (balerini, botine, cizme), (balerini, botine, ghete), (balerini, botine, teniși), (balerini, cizme, teniși). Indicați soluția generată imediat înainte de (cizme, sandale, teniși).\n\na. (botine, ghete, sandale)\nb. (botine, cizme, sandale)\nc. (botine, cizme, teniși)\nd. (botine, sandale, teniși)",
+   "en": "An online shop gives discounts on orders with three pairs of shoes from different categories of the ordered set {balerini, botine, cizme, ghete, sandale, teniși}, such that an order does not contain both ghete and cizme, nor both balerini and sandale. Using backtracking, all possible orders are generated; the first four are: (balerini, botine, cizme), (balerini, botine, ghete), (balerini, botine, teniși), (balerini, cizme, teniși). Indicate the solution generated immediately before (cizme, sandale, teniși).\n\na. (botine, ghete, sandale)\nb. (botine, cizme, sandale)\nc. (botine, cizme, teniși)\nd. (botine, sandale, teniși)"
+  },
+  "hint": {
+   "ro": "Soluțiile sunt combinări în ordine crescătoare; găsește ultima soluție care începe cu „botine”.",
+   "en": "Solutions are increasing combinations; find the last solution that starts with “botine”."
+  },
+  "answer": "d",
+  "options": {
+   "a": "(botine, ghete, sandale)",
+   "b": "(botine, cizme, sandale)",
+   "c": "(botine, cizme, teniși)",
+   "d": "(botine, sandale, teniși)"
+  },
+  "ordered": false
+ },
+ {
+  "id": "024e25f74d3a",
+  "ref": "informatica/06_2025_iunie_rezerva/I.4",
+  "subject": "informatica",
+  "file": "informatica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Un arbore cu `6` noduri, numerotate de la `1` la `6`, are muchiile `[1,2], [1,3], [2,4], [2,5], [2,6]`. Indicați două noduri care pot fi alese drept rădăcină, astfel încât arborele obținut, pentru fiecare dintre acestea, să aibă trei frunze.\n\na. 1, 3\nb. 2, 4\nc. 2, 5\nd. 4, 6",
+   "en": "A tree with `6` nodes, numbered `1` to `6`, has the edges `[1,2], [1,3], [2,4], [2,5], [2,6]`. Indicate two nodes that can be chosen as root so that, for each of them, the resulting rooted tree has three leaves.\n\na. 1, 3\nb. 2, 4\nc. 2, 5\nd. 4, 6"
+  },
+  "hint": {
+   "ro": "Când rădăcina este un nod de grad 1, acesta nu mai e frunză.",
+   "en": "When the root is a degree-1 node, it is no longer a leaf."
+  },
+  "answer": "d",
+  "options": {
+   "a": "1, 3",
+   "b": "2, 4",
+   "c": "2, 5",
+   "d": "4, 6"
+  },
+  "ordered": false
+ },
+ {
+  "id": "38113a20eb81",
+  "ref": "informatica/06_2025_iunie_rezerva/I.5",
+  "subject": "informatica",
+  "file": "informatica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "Un graf orientat cu `6` vârfuri, numerotate de la `1` la `6`, are arcele `(1,3), (2,1), (2,5), (2,6), (4,3), (6,4), (6,5)`. Indicați numărul minim de arce care trebuie adăugate pentru ca graful obținut să aibă două componente tare conexe.\n\na. 1\nb. 2\nc. 3\nd. 4",
+   "en": "A directed graph with `6` vertices, numbered `1` to `6`, has the arcs `(1,3), (2,1), (2,5), (2,6), (4,3), (6,4), (6,5)`. Indicate the minimum number of arcs that must be added so that the resulting graph has two strongly connected components.\n\na. 1\nb. 2\nc. 3\nd. 4"
+  },
+  "hint": {
+   "ro": "Caută un arc care închide un circuit mare prin mai multe vârfuri.",
+   "en": "Look for one arc that closes a large circuit through several vertices."
+  },
+  "answer": "a",
+  "options": {
+   "a": "1",
+   "b": "2",
+   "c": "3",
+   "d": "4"
+  },
+  "ordered": false
+ },
+ {
+  "id": "4ef22149b024",
+  "ref": "informatica/06_2025_iunie_rezerva/II.1.a",
+  "subject": "informatica",
+  "file": "informatica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 2,
+  "item": "II.1.a",
+  "problem": {
+   "ro": "Se consideră algoritmul de mai jos, reprezentat în pseudocod. S-a notat cu `a%b` restul împărțirii numărului natural `a` la numărul natural nenul `b` și cu `[c]` partea întreagă a numărului real `c`. Scrieți valorile afișate în urma executării algoritmului, dacă se citește numărul `252`.\n\n```\ncitește n (număr natural, n≥2)\nd ← 2; x ← 1; y ← 1\ncât timp n > 1 execută\n   dacă n%d = 0 atunci\n      x ← d; y ← y*d\n      cât timp n%d = 0 execută\n         n ← [n/d]\n   d ← d + 1\nscrie x,' ',y\n```",
+   "en": "Consider the algorithm below, in pseudocode. `a%b` is the remainder of dividing `a` by `b`, and `[c]` is the integer part of `c`. Write the values printed if the number `252` is read.\n\n```\ncitește n (număr natural, n≥2)\nd ← 2; x ← 1; y ← 1\ncât timp n > 1 execută\n   dacă n%d = 0 atunci\n      x ← d; y ← y*d\n      cât timp n%d = 0 execută\n         n ← [n/d]\n   d ← d + 1\nscrie x,' ',y\n```"
+  },
+  "hint": {
+   "ro": "`x` devine cel mai mare factor prim, iar `y` produsul factorilor primi distincți.",
+   "en": "`x` becomes the largest prime factor and `y` the product of the distinct prime factors."
+  },
+  "answer": "7 42",
+  "options": {},
+  "ordered": true
+ },
+ {
+  "id": "c3598287e1a1",
+  "ref": "informatica/06_2025_iunie_rezerva/II.2",
+  "subject": "informatica",
+  "file": "informatica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 2,
+  "item": "II.2",
+  "problem": {
+   "ro": "Subprogramul `f` este definit mai jos. Scrieți valoarea `f(2)`, respectiv valoarea `f(17)`.\n\n```\nint f(int x)\n{ if (x<=4) return x;\n  else return x-f(x-2);\n}\n```",
+   "en": "The subprogram `f` is defined below. Write the value of `f(2)` and, respectively, of `f(17)`.\n\n```\nint f(int x)\n{ if (x<=4) return x;\n  else return x-f(x-2);\n}\n```"
+  },
+  "hint": {
+   "ro": "Calculează din aproape în aproape: `f(5)`, `f(7)`, …",
+   "en": "Compute step by step: `f(5)`, `f(7)`, …"
+  },
+  "answer": "2 8",
+  "options": {},
+  "ordered": true
+ },
+ {
+  "id": "d2917ae2242f",
+  "ref": "informatica/07_2025_august/I.1",
+  "subject": "informatica",
+  "file": "informatica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Indicați intervalul căruia îi aparține valoarea memorată în variabila întreagă `x`, dacă și numai dacă expresia C/C++ `!(x<=2020) && !(x>2025)` are valoarea `1`.\n\na. (2020,2025]\nb. (2020,2025)\nc. [2020,2025]\nd. (2021,2025)",
+   "en": "Indicate the interval that contains the value of the integer variable `x` if and only if the C/C++ expression `!(x<=2020) && !(x>2025)` has the value `1`.\n\na. (2020,2025]\nb. (2020,2025)\nc. [2020,2025]\nd. (2021,2025)"
+  },
+  "hint": {
+   "ro": "`!(x<=2020)` înseamnă `x>2020`, iar `!(x>2025)` înseamnă `x<=2025`.",
+   "en": "`!(x<=2020)` means `x>2020`, and `!(x>2025)` means `x<=2025`."
+  },
+  "answer": "a",
+  "options": {
+   "a": "(2020,2025]",
+   "b": "(2020,2025)",
+   "c": "[2020,2025]",
+   "d": "(2021,2025)"
+  },
+  "ordered": false
+ },
+ {
+  "id": "cbdaf50dfc11",
+  "ref": "informatica/07_2025_august/I.2",
+  "subject": "informatica",
+  "file": "informatica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Variabila `k` este de tip întreg, iar variabila `s` permite memorarea unui șir de maximum `20` de caractere. Indicați valoarea variabilei `k` în urma executării secvenței de mai jos.\n\n```\nstrcpy(s,\"calculator\");\nk=strchr(s,s[1])-strchr(s,s[3]);\n```\n\na. 9\nb. 3\nc. 2\nd. 1",
+   "en": "The variable `k` is an integer and `s` can store a string of at most `20` characters. Indicate the value of `k` after the code below runs.\n\n```\nstrcpy(s,\"calculator\");\nk=strchr(s,s[1])-strchr(s,s[3]);\n```\n\na. 9\nb. 3\nc. 2\nd. 1"
+  },
+  "hint": {
+   "ro": "`strchr` întoarce adresa primei apariții a caracterului; diferența a două adrese este o diferență de poziții.",
+   "en": "`strchr` returns the address of the first occurrence; the difference of two addresses is a difference of positions."
+  },
+  "answer": "d",
+  "options": {
+   "a": "9",
+   "b": "3",
+   "c": "2",
+   "d": "1"
+  },
+  "ordered": false
+ },
+ {
+  "id": "62a994f24c77",
+  "ref": "informatica/07_2025_august/I.3",
+  "subject": "informatica",
+  "file": "informatica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "La o probă de dans a unui concurs s-au calificat `6` perechi, notate cu litere distincte din mulțimea ordonată {A, B, C, D, E, F}, fiecare pereche prezentând câte un dans. Utilizând metoda backtracking, se generează toate posibilitățile de a stabili ordinea susținerii probei, astfel încât perechea A să prezinte prima, iar perechea F să prezinte ultima. Primele trei soluții generate sunt (A, B, C, D, E, F), (A, B, C, E, D, F), (A, B, D, C, E, F). Indicați ultima soluție generată.\n\na. (A, D, B, C, E, F)\nb. (A, E, D, B, C, F)\nc. (A, E, D, C, B, F)\nd. (A, F, E, D, C, B)",
+   "en": "In a dance contest `6` couples, labelled with distinct letters from the ordered set {A, B, C, D, E, F}, qualified. Using backtracking, all performance orders are generated such that couple A performs first and couple F last. The first three solutions are (A, B, C, D, E, F), (A, B, C, E, D, F), (A, B, D, C, E, F). Indicate the last solution generated.\n\na. (A, D, B, C, E, F)\nb. (A, E, D, B, C, F)\nc. (A, E, D, C, B, F)\nd. (A, F, E, D, C, B)"
+  },
+  "hint": {
+   "ro": "Ultima permutare a literelor din mijloc este cea în ordine descrescătoare.",
+   "en": "The last permutation of the middle letters is the one in decreasing order."
+  },
+  "answer": "c",
+  "options": {
+   "a": "(A, D, B, C, E, F)",
+   "b": "(A, E, D, B, C, F)",
+   "c": "(A, E, D, C, B, F)",
+   "d": "(A, F, E, D, C, B)"
+  },
+  "ordered": false
+ },
+ {
+  "id": "0ffd319297eb",
+  "ref": "informatica/07_2025_august/I.4",
+  "subject": "informatica",
+  "file": "informatica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Un graf orientat cu `6` vârfuri, numerotate de la `1` la `6`, are arcele `(3,1), (4,1), (4,2), (4,3), (5,6), (6,4)`. Indicați numărul vârfurilor pentru care gradul exterior este egal cu gradul interior.\n\na. 1\nb. 2\nc. 3\nd. 4",
+   "en": "A directed graph with `6` vertices, numbered `1` to `6`, has the arcs `(3,1), (4,1), (4,2), (4,3), (5,6), (6,4)`. Indicate the number of vertices whose out-degree equals their in-degree.\n\na. 1\nb. 2\nc. 3\nd. 4"
+  },
+  "hint": {
+   "ro": "Pentru fiecare vârf numără arcele care pleacă și arcele care intră.",
+   "en": "For each vertex count the outgoing and incoming arcs."
+  },
+  "answer": "b",
+  "options": {
+   "a": "1",
+   "b": "2",
+   "c": "3",
+   "d": "4"
+  },
+  "ordered": false
+ },
+ {
+  "id": "f44c2380fbc7",
+  "ref": "informatica/07_2025_august/I.5",
+  "subject": "informatica",
+  "file": "informatica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "Într-un arbore cu `50` de noduri, numerotate de la `1` la `50`, rădăcina este nodul numerotat cu `1`, iar tatăl oricărui alt nod `i` al său este nodul numerotat cu `[i/2]`. Indicați lungimea lanțului elementar cu o extremitate în nodul `32` și cealaltă extremitate în nodul `23`.\n\na. 5\nb. 7\nc. 9\nd. 11",
+   "en": "In a tree with `50` nodes, numbered `1` to `50`, the root is node `1` and the parent of any other node `i` is node `[i/2]`. Indicate the length of the elementary path between node `32` and node `23`.\n\na. 5\nb. 7\nc. 9\nd. 11"
+  },
+  "hint": {
+   "ro": "Urcă din fiecare nod spre rădăcină până la primul strămoș comun.",
+   "en": "Climb from each node towards the root until the first common ancestor."
+  },
+  "answer": "b",
+  "options": {
+   "a": "5",
+   "b": "7",
+   "c": "9",
+   "d": "11"
+  },
+  "ordered": false
+ },
+ {
+  "id": "70db41e4ea69",
+  "ref": "informatica/07_2025_august/II.1.a",
+  "subject": "informatica",
+  "file": "informatica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "II.1.a",
+  "problem": {
+   "ro": "Se consideră algoritmul de mai jos, reprezentat în pseudocod. S-a notat cu `a%b` restul împărțirii numărului natural `a` la numărul natural nenul `b` și cu `[c]` partea întreagă a numărului real `c`. Scrieți ce se afișează în urma executării algoritmului dacă se citesc, în această ordine, numerele `9767` și `8204`.\n\n```\ncitește x,y (numere naturale distincte)\ncx ← 0; cy ← 0\ncât timp x ≥ 10 sau y ≥ 10 execută\n   cât timp x+y ≠ 0 execută\n      cx ← cx + x%10; x ← [x/10]\n      cy ← cy + y%10; y ← [y/10]\n   x ← cx; cx ← 0; y ← cy; cy ← 0\ndacă x = y atunci scrie \"DA \",x\naltfel scrie \"NU \",x,\" \",y\n```",
+   "en": "Consider the algorithm below, in pseudocode. `a%b` is the remainder of dividing `a` by `b`, and `[c]` is the integer part of `c`. Write what is printed if the numbers `9767` and `8204` are read, in this order.\n\n```\ncitește x,y (numere naturale distincte)\ncx ← 0; cy ← 0\ncât timp x ≥ 10 sau y ≥ 10 execută\n   cât timp x+y ≠ 0 execută\n      cx ← cx + x%10; x ← [x/10]\n      cy ← cy + y%10; y ← [y/10]\n   x ← cx; cx ← 0; y ← cy; cy ← 0\ndacă x = y atunci scrie \"DA \",x\naltfel scrie \"NU \",x,\" \",y\n```"
+  },
+  "hint": {
+   "ro": "Algoritmul înlocuiește repetat fiecare număr cu suma cifrelor lui, până ambele au o singură cifră.",
+   "en": "The algorithm repeatedly replaces each number with its digit sum until both have one digit."
+  },
+  "answer": "NU 2 5",
+  "options": {},
+  "ordered": true
+ },
+ {
+  "id": "83ba2ef8e697",
+  "ref": "informatica/08_2025_speciala/I.1",
+  "subject": "informatica",
+  "file": "informatica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Variabilele `m`, `n`, `p`, `q` și `x` sunt de tip întreg, iar `m<p<q<n`. Indicați o expresie C/C++ care are valoarea `1` dacă și numai dacă numărul memorat în variabila `x` aparține intervalului `[m,n]`, dar **NU** și intervalului `(p,q)`.\n\na. `x<=m || x>=p && x<=q || x>=n`\nb. `x<=m && x>=p || x<=q && x>=n`\nc. `x>=m || x<=p && x>=q || x<=n`\nd. `x>=m && x<=p || x>=q && x<=n`",
+   "en": "The variables `m`, `n`, `p`, `q` and `x` are integers, with `m<p<q<n`. Indicate a C/C++ expression with value `1` if and only if `x` belongs to `[m,n]` but **NOT** to `(p,q)`.\n\na. `x<=m || x>=p && x<=q || x>=n`\nb. `x<=m && x>=p || x<=q && x>=n`\nc. `x>=m || x<=p && x>=q || x<=n`\nd. `x>=m && x<=p || x>=q && x<=n`"
+  },
+  "hint": {
+   "ro": "Mulțimea căutată este `[m,p] ∪ [q,n]`.",
+   "en": "The required set is `[m,p] ∪ [q,n]`."
+  },
+  "answer": "d",
+  "options": {
+   "a": "`x<=m || x>=p && x<=q || x>=n`",
+   "b": "`x<=m && x>=p || x<=q && x>=n`",
+   "c": "`x>=m || x<=p && x>=q || x<=n`",
+   "d": "`x>=m && x<=p || x>=q && x<=n`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "a5601d188597",
+  "ref": "informatica/08_2025_speciala/I.2",
+  "subject": "informatica",
+  "file": "informatica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Subprogramul `f` este definit mai jos. Indicați ce se afișează în urma apelului `f(2050);`.\n\n```\nvoid f(int n)\n{ cout<<n<<' ';   // printf(\"%d \",n);\n  if(n%10!=0) { cout<<n<<' ';   // printf(\"%d \",n);\n                f(n/10);\n              }\n  else if(n!=0) { f(n/10);\n                  cout<<n<<' ';   // printf(\"%d \",n);\n                }\n}\n```\n\na. 2050 205 20 2 0\nb. 2050 205 20 2 0 20 2050\nc. 2050 205 205 20 2 2 0 20 2050\nd. 2050 2050 205 205 20 20 2 2 0",
+   "en": "The subprogram `f` is defined below. Indicate what the call `f(2050);` prints.\n\n```\nvoid f(int n)\n{ cout<<n<<' ';   // printf(\"%d \",n);\n  if(n%10!=0) { cout<<n<<' ';   // printf(\"%d \",n);\n                f(n/10);\n              }\n  else if(n!=0) { f(n/10);\n                  cout<<n<<' ';   // printf(\"%d \",n);\n                }\n}\n```\n\na. 2050 205 20 2 0\nb. 2050 205 20 2 0 20 2050\nc. 2050 205 205 20 2 2 0 20 2050\nd. 2050 2050 205 205 20 20 2 2 0"
+  },
+  "hint": {
+   "ro": "Pentru ultima cifră nenulă, numărul se afișează de două ori înainte de apel; pentru ultima cifră 0 (și n nenul), după apel.",
+   "en": "If the last digit is nonzero, n is printed twice before the call; if it is 0 (and n is nonzero), once more after the call."
+  },
+  "answer": "c",
+  "options": {
+   "a": "2050 205 20 2 0",
+   "b": "2050 205 20 2 0 20 2050",
+   "c": "2050 205 205 20 2 2 0 20 2050",
+   "d": "2050 2050 205 205 20 20 2 2 0"
+  },
+  "ordered": false
+ },
+ {
+  "id": "334d76609b00",
+  "ref": "informatica/08_2025_speciala/I.4",
+  "subject": "informatica",
+  "file": "informatica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Variabila `m` memorează elementele unui tablou bidimensional cu `100` de linii și `100` de coloane, numerotate de la `0` la `99`. Indicați o expresie C/C++ prin care poate fi accesat un element aflat pe diagonala principală a tabloului.\n\na. `m[1,16]`\nb. `m[16][16]`\nc. `m(16,16)`\nd. `m(16)(1)`",
+   "en": "The variable `m` stores a two-dimensional array with `100` rows and `100` columns, numbered `0` to `99`. Indicate a C/C++ expression that accesses an element on the main diagonal.\n\na. `m[1,16]`\nb. `m[16][16]`\nc. `m(16,16)`\nd. `m(16)(1)`"
+  },
+  "hint": {
+   "ro": "Pe diagonala principală indicele de linie este egal cu cel de coloană.",
+   "en": "On the main diagonal the row index equals the column index."
+  },
+  "answer": "b",
+  "options": {
+   "a": "`m[1,16]`",
+   "b": "`m[16][16]`",
+   "c": "`m(16,16)`",
+   "d": "`m(16)(1)`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "93632ab2ffdc",
+  "ref": "informatica/08_2025_speciala/I.5",
+  "subject": "informatica",
+  "file": "informatica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "Un graf neorientat are `7` noduri și `21` de muchii. Indicați numărul minim de muchii care pot fi eliminate din acest graf, astfel încât graful parțial obținut să aibă două componente conexe, cu cel puțin două noduri fiecare.\n\na. 6\nb. 8\nc. 10\nd. 12",
+   "en": "An undirected graph has `7` nodes and `21` edges. Indicate the minimum number of edges that can be removed so that the resulting partial graph has two connected components, each with at least two nodes.\n\na. 6\nb. 8\nc. 10\nd. 12"
+  },
+  "hint": {
+   "ro": "Graful este complet; păstrează cât mai multe muchii în cele două componente.",
+   "en": "The graph is complete; keep as many edges as possible inside the two components."
+  },
+  "answer": "c",
+  "options": {
+   "a": "6",
+   "b": "8",
+   "c": "10",
+   "d": "12"
+  },
+  "ordered": false
+ },
+ {
+  "id": "d599fb151c95",
+  "ref": "informatica/08_2025_speciala/II.1.a",
+  "subject": "informatica",
+  "file": "informatica/08_2025_speciala_subiect.pdf",
+  "page": 2,
+  "item": "II.1.a",
+  "problem": {
+   "ro": "Se consideră algoritmul de mai jos, reprezentat în pseudocod. S-a notat cu `a%b` restul împărțirii numărului natural `a` la numărul natural nenul `b` și cu `[c]` partea întreagă a numărului real `c`. Scrieți numerele afișate dacă se citesc, în această ordine, numerele `75` și `90`.\n\n```\ncitește m,n (numere naturale nenule, m≤n)\npentru i ← n,m,-1 execută\n   x ← i\n   c ← x%10\n   repetă\n      x ← [x/10]\n   până când x%10 ≠ c\n   dacă x = 0 atunci\n      scrie i,' '\n```",
+   "en": "Consider the algorithm below, in pseudocode. `a%b` is the remainder of dividing `a` by `b`, and `[c]` is the integer part of `c`. Write the numbers printed if `75` and `90` are read, in this order.\n\n```\ncitește m,n (numere naturale nenule, m≤n)\npentru i ← n,m,-1 execută\n   x ← i\n   c ← x%10\n   repetă\n      x ← [x/10]\n   până când x%10 ≠ c\n   dacă x = 0 atunci\n      scrie i,' '\n```"
+  },
+  "hint": {
+   "ro": "Se afișează, de la `n` spre `m`, numerele cu toate cifrele egale.",
+   "en": "It prints, from `n` down to `m`, the numbers whose digits are all equal."
+  },
+  "answer": "88 77",
+  "options": {},
+  "ordered": true
+ },
+ {
+  "id": "722293a3b86d",
+  "ref": "informatica/09_2024_iulie/I.1",
+  "subject": "informatica",
+  "file": "informatica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Indicați expresia C/C++ care are valoarea `1` dacă și numai dacă numerele memorate în variabilele întregi `x` și `y` sunt pare.\n\na. `x%2==0 && (y+1)%2!=0`\nb. `(x-y)%2==0`\nc. `(x+y)%2==0`\nd. `x%2==y%2`",
+   "en": "Indicate the C/C++ expression whose value is `1` if and only if the numbers stored in the integer variables `x` and `y` are both even.\n\na. `x%2==0 && (y+1)%2!=0`\nb. `(x-y)%2==0`\nc. `(x+y)%2==0`\nd. `x%2==y%2`"
+  },
+  "hint": {
+   "ro": "Dacă `y+1` e impar, atunci `y` e par.",
+   "en": "If `y+1` is odd, then `y` is even."
+  },
+  "answer": "a",
+  "options": {
+   "a": "`x%2==0 && (y+1)%2!=0`",
+   "b": "`(x-y)%2==0`",
+   "c": "`(x+y)%2==0`",
+   "d": "`x%2==y%2`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "3a34c3194a2a",
+  "ref": "informatica/09_2024_iulie/I.2",
+  "subject": "informatica",
+  "file": "informatica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Subprogramul `f` este definit mai jos. Indicați ce se afișează în urma apelului `f(2020,0);`.\n\n```\nvoid f(int x, int y)\n{ if (x<10) cout<<x;   // printf(\"%d\",x);\n  else\n  { f(x/10,y+1);\n    cout<<x%10;          // printf(\"%d\",x%10);\n  }\n  cout<<y;               // printf(\"%d\",y);\n}\n```\n\na. 23020\nb. 2022100\nc. 02023210\nd. 23022100",
+   "en": "The subprogram `f` is defined below. Indicate what the call `f(2020,0);` prints.\n\n```\nvoid f(int x, int y)\n{ if (x<10) cout<<x;   // printf(\"%d\",x);\n  else\n  { f(x/10,y+1);\n    cout<<x%10;          // printf(\"%d\",x%10);\n  }\n  cout<<y;               // printf(\"%d\",y);\n}\n```\n\na. 23020\nb. 2022100\nc. 02023210\nd. 23022100"
+  },
+  "hint": {
+   "ro": "La fiecare nivel se afișează o cifră a lui `x`, urmată de valoarea lui `y` de pe acel nivel.",
+   "en": "At each level a digit of `x` is printed, followed by that level's value of `y`."
+  },
+  "answer": "d",
+  "options": {
+   "a": "23020",
+   "b": "2022100",
+   "c": "02023210",
+   "d": "23022100"
+  },
+  "ordered": false
+ },
+ {
+  "id": "64fd9a2460ee",
+  "ref": "informatica/09_2024_iulie/I.3",
+  "subject": "informatica",
+  "file": "informatica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Utilizând metoda backtracking se generează toate permutările elementelor mulțimii ordonate astfel: {1, 2, 3, 4, 5, 6}; pentru fiecare permutare, pe primele trei poziții sunt doar valori pare, iar pe ultimele trei poziții sunt doar valori impare. Primele șase permutări generate sunt, în această ordine: (2,4,6,1,3,5), (2,4,6,1,5,3), (2,4,6,3,1,5), (2,4,6,3,5,1), (2,4,6,5,1,3), (2,4,6,5,3,1). Indicați a șaptea permutare generată.\n\na. (4,2,6,1,5,3)\nb. (4,2,6,1,3,5)\nc. (2,6,4,1,3,5)\nd. (2,4,6,5,3,2)",
+   "en": "Using backtracking, all permutations of the ordered set {1, 2, 3, 4, 5, 6} are generated such that the first three positions hold only even values and the last three only odd values. The first six are: (2,4,6,1,3,5), (2,4,6,1,5,3), (2,4,6,3,1,5), (2,4,6,3,5,1), (2,4,6,5,1,3), (2,4,6,5,3,1). Indicate the seventh permutation.\n\na. (4,2,6,1,5,3)\nb. (4,2,6,1,3,5)\nc. (2,6,4,1,3,5)\nd. (2,4,6,5,3,2)"
+  },
+  "hint": {
+   "ro": "După ce s-au epuizat ordinile valorilor impare, se schimbă a treia poziție, apoi a doua.",
+   "en": "Once the odd values are exhausted, the generator changes the third, then the second position."
+  },
+  "answer": "c",
+  "options": {
+   "a": "(4,2,6,1,5,3)",
+   "b": "(4,2,6,1,3,5)",
+   "c": "(2,6,4,1,3,5)",
+   "d": "(2,4,6,5,3,2)"
+  },
+  "ordered": false
+ },
+ {
+  "id": "1aecc6339f3d",
+  "ref": "informatica/09_2024_iulie/I.4",
+  "subject": "informatica",
+  "file": "informatica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Variabila `x` memorează, pentru fiecare dintre cele `20` de sortimente de ciocolată, următoarele date: tipul (litera `N` pentru ciocolată neagră și litera `L` pentru ciocolată cu lapte) și prețul produsului. Indicați o expresie a cărei valoare este egală cu tipul celui de al `11`-lea sortiment de ciocolată.\n\n```\nstruct ciocolata\n{ char tip;\n  float pret;\n}x[20];\n```\n\na. `x.ciocolata[10].tip`\nb. `x.tip[10]`\nc. `x[10].ciocolata.tip`\nd. `x[10].tip`",
+   "en": "The variable `x` stores, for each of the `20` chocolate types, the kind (`N` for dark, `L` for milk) and the price. Indicate an expression equal to the kind of the `11`th chocolate type.\n\n```\nstruct ciocolata\n{ char tip;\n  float pret;\n}x[20];\n```\n\na. `x.ciocolata[10].tip`\nb. `x.tip[10]`\nc. `x[10].ciocolata.tip`\nd. `x[10].tip`"
+  },
+  "hint": {
+   "ro": "`x` este un tablou de structuri, indexat de la 0.",
+   "en": "`x` is an array of structures, indexed from 0."
+  },
+  "answer": "d",
+  "options": {
+   "a": "`x.ciocolata[10].tip`",
+   "b": "`x.tip[10]`",
+   "c": "`x[10].ciocolata.tip`",
+   "d": "`x[10].tip`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "01dc93096f14",
+  "ref": "informatica/09_2024_iulie/I.5",
+  "subject": "informatica",
+  "file": "informatica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "Într-un graf neorientat, cu `10` muchii, două noduri au gradul `0`, șase noduri au grade impare, iar celelalte noduri au grade pare, nenule. Indicați numărul maxim de noduri ale grafului.\n\na. 17\nb. 15\nc. 12\nd. 10",
+   "en": "In an undirected graph with `10` edges, two nodes have degree `0`, six nodes have odd degrees and all other nodes have nonzero even degrees. Indicate the maximum number of nodes of the graph.\n\na. 17\nb. 15\nc. 12\nd. 10"
+  },
+  "hint": {
+   "ro": "Suma gradelor este 20; alege gradele cele mai mici posibile.",
+   "en": "The sum of degrees is 20; choose the smallest possible degrees."
+  },
+  "answer": "b",
+  "options": {
+   "a": "17",
+   "b": "15",
+   "c": "12",
+   "d": "10"
+  },
+  "ordered": false
+ },
+ {
+  "id": "44a308e841ec",
+  "ref": "informatica/09_2024_iulie/II.1.a",
+  "subject": "informatica",
+  "file": "informatica/09_2024_iulie_subiect.pdf",
+  "page": 2,
+  "item": "II.1.a",
+  "problem": {
+   "ro": "Se consideră algoritmul de mai jos, reprezentat în pseudocod. S-a notat cu `[c]` partea întreagă a numărului real `c`. Scrieți valoarea afișată dacă se citesc, în această ordine, numerele `5, 15, 27, 10, 1, 17`.\n\n```\ncitește n (număr natural nenul)\np ← 1\npentru i ← 1,n execută\n   citește x (număr natural)\n   repetă\n      x ← [x/3]\n   până când x ≤ 3\n   dacă x ≠ 0 atunci\n      p ← p*x\nscrie p\n```",
+   "en": "Consider the algorithm below, in pseudocode. `[c]` is the integer part of `c`. Write the value printed if the numbers `5, 15, 27, 10, 1, 17` are read, in this order.\n\n```\ncitește n (număr natural nenul)\np ← 1\npentru i ← 1,n execută\n   citește x (număr natural)\n   repetă\n      x ← [x/3]\n   până când x ≤ 3\n   dacă x ≠ 0 atunci\n      p ← p*x\nscrie p\n```"
+  },
+  "hint": {
+   "ro": "Primul număr citit este `n=5`; pentru fiecare `x`, împarte la 3 cel puțin o dată, până ajunge ≤ 3.",
+   "en": "The first number is `n=5`; divide each `x` by 3 at least once, until it is ≤ 3."
+  },
+  "answer": "9",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "1a0de6282528",
+  "ref": "informatica/10_2024_august/I.1",
+  "subject": "informatica",
+  "file": "informatica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Variabilele `x` și `y` memorează câte un număr natural (`x≤y`). Indicați expresia C/C++ cu valoarea `1` dacă și numai dacă intervalul `[x,y]` **NU** conține niciun număr de două cifre.\n\na. `!(x>=10 || y>99)`\nb. `!(x<=99 && y>=10)`\nc. `x>=10 || y<=99`\nd. `x>99 && y<10`",
+   "en": "The variables `x` and `y` store natural numbers (`x≤y`). Indicate the C/C++ expression with value `1` if and only if the interval `[x,y]` does **NOT** contain any two-digit number.\n\na. `!(x>=10 || y>99)`\nb. `!(x<=99 && y>=10)`\nc. `x>=10 || y<=99`\nd. `x>99 && y<10`"
+  },
+  "hint": {
+   "ro": "Intervalul conține un număr de două cifre exact când `x≤99` și `y≥10`.",
+   "en": "The interval contains a two-digit number exactly when `x≤99` and `y≥10`."
+  },
+  "answer": "b",
+  "options": {
+   "a": "`!(x>=10 || y>99)`",
+   "b": "`!(x<=99 && y>=10)`",
+   "c": "`x>=10 || y<=99`",
+   "d": "`x>99 && y<10`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "f8edf4f2ff45",
+  "ref": "informatica/10_2024_august/I.2",
+  "subject": "informatica",
+  "file": "informatica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Subprogramul `f` este definit mai jos. Indicați un apel în urma căruia se afișează pe ecran secvența `13579`.\n\n```\nvoid f(int x,int y,int z)\n{ if(z<x)\n  { cout<<y;   // printf(\"%d\",y);\n    f(x,y+2,z+1);\n  }\n}\n```\n\na. `f(5,0,0);`\nb. `f(5,1,1);`\nc. `f(6,1,6);`\nd. `f(6,1,1);`",
+   "en": "The subprogram `f` is defined below. Indicate a call that prints the sequence `13579`.\n\n```\nvoid f(int x,int y,int z)\n{ if(z<x)\n  { cout<<y;   // printf(\"%d\",y);\n    f(x,y+2,z+1);\n  }\n}\n```\n\na. `f(5,0,0);`\nb. `f(5,1,1);`\nc. `f(6,1,6);`\nd. `f(6,1,1);`"
+  },
+  "hint": {
+   "ro": "`y` pornește de la 1 și crește din 2 în 2; trebuie exact 5 afișări.",
+   "en": "`y` must start at 1 and grow by 2; you need exactly 5 prints."
+  },
+  "answer": "d",
+  "options": {
+   "a": "`f(5,0,0);`",
+   "b": "`f(5,1,1);`",
+   "c": "`f(6,1,6);`",
+   "d": "`f(6,1,1);`"
+  },
+  "ordered": false
+ },
+ {
+  "id": "a7df114145a4",
+  "ref": "informatica/10_2024_august/I.3",
+  "subject": "informatica",
+  "file": "informatica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Variabilele `s`, `x` și `y` permit memorarea câte unui șir de cel mult `15` caractere. Indicați șirul accesat prin variabila `s` în urma executării secvenței de mai jos.\n\n```\nstrcpy(x,\"soare\");\nstrcpy(y,\"ploaie\");\nif (strcmp(x,y)>0) strcpy(s,x+1);\nelse strcpy(s,y+2);\n```\n\na. oare\nb. oaie\nc. ploaie\nd. soare",
+   "en": "The variables `s`, `x` and `y` can each store a string of at most `15` characters. Indicate the string in `s` after the code below runs.\n\n```\nstrcpy(x,\"soare\");\nstrcpy(y,\"ploaie\");\nif (strcmp(x,y)>0) strcpy(s,x+1);\nelse strcpy(s,y+2);\n```\n\na. oare\nb. oaie\nc. ploaie\nd. soare"
+  },
+  "hint": {
+   "ro": "`strcmp` compară lexicografic; `x+1` înseamnă șirul fără primul caracter.",
+   "en": "`strcmp` compares lexicographically; `x+1` is the string without its first character."
+  },
+  "answer": "a",
+  "options": {
+   "a": "oare",
+   "b": "oaie",
+   "c": "ploaie",
+   "d": "soare"
+  },
+  "ordered": false
+ },
+ {
+  "id": "4f33cff109db",
+  "ref": "informatica/10_2024_august/I.4",
+  "subject": "informatica",
+  "file": "informatica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Un arbore cu `14` noduri, numerotate de la `1` la `14`, este reprezentat prin vectorul de „tați” `(13,3,0,6,13,3,3,7,6,2,13,2,6,13)`. Indicați nodul care este rădăcina arborelui.\n\na. 1\nb. 3\nc. 7\nd. 13",
+   "en": "A tree with `14` nodes, numbered `1` to `14`, is given by the parent array `(13,3,0,6,13,3,3,7,6,2,13,2,6,13)`. Indicate the root node.\n\na. 1\nb. 3\nc. 7\nd. 13"
+  },
+  "hint": {
+   "ro": "Rădăcina este nodul al cărui tată este 0.",
+   "en": "The root is the node whose parent is 0."
+  },
+  "answer": "b",
+  "options": {
+   "a": "1",
+   "b": "3",
+   "c": "7",
+   "d": "13"
+  },
+  "ordered": false
+ },
+ {
+  "id": "99bd309face2",
+  "ref": "informatica/10_2024_august/I.5",
+  "subject": "informatica",
+  "file": "informatica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "Indicați numărul maxim de vârfuri izolate pe care le poate avea un graf orientat cu `24` de vârfuri și `24` de arce poziționate adecvat.\n\na. 5\nb. 6\nc. 18\nd. 21",
+   "en": "Indicate the maximum number of isolated vertices that a directed graph with `24` vertices and `24` suitably placed arcs can have.\n\na. 5\nb. 6\nc. 18\nd. 21"
+  },
+  "hint": {
+   "ro": "Între `k` vârfuri pot exista cel mult `k(k-1)` arce.",
+   "en": "Among `k` vertices there can be at most `k(k-1)` arcs."
+  },
+  "answer": "c",
+  "options": {
+   "a": "5",
+   "b": "6",
+   "c": "18",
+   "d": "21"
+  },
+  "ordered": false
+ },
+ {
+  "id": "3485fdc8c549",
+  "ref": "informatica/10_2024_august/II.1.a",
+  "subject": "informatica",
+  "file": "informatica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "II.1.a",
+  "problem": {
+   "ro": "Se consideră algoritmul de mai jos, reprezentat în pseudocod. S-a notat cu `a%b` restul împărțirii numărului natural `a` la numărul natural nenul `b` și cu `[c]` partea întreagă a numărului real `c`. Scrieți valoarea afișată dacă se citește numărul `412531`.\n\n```\ncitește n (număr natural nenul)\nx ← -1; y ← -1\ncât timp n > 9 execută\n   dacă x = -1 atunci x ← n%100\n   altfel y ← n%100\n   n ← [n/10]\ndacă x < y atunci n ← (n*100+x)*100+y\naltfel n ← (n*100+y)*100+x\nscrie n\n```",
+   "en": "Consider the algorithm below, in pseudocode. `a%b` is the remainder of dividing `a` by `b`, and `[c]` is the integer part of `c`. Write the value printed if the number `412531` is read.\n\n```\ncitește n (număr natural nenul)\nx ← -1; y ← -1\ncât timp n > 9 execută\n   dacă x = -1 atunci x ← n%100\n   altfel y ← n%100\n   n ← [n/10]\ndacă x < y atunci n ← (n*100+x)*100+y\naltfel n ← (n*100+y)*100+x\nscrie n\n```"
+  },
+  "hint": {
+   "ro": "`x` reține ultimele două cifre la primul pas, `y` ultimele două cifre la ultimul pas.",
+   "en": "`x` keeps the last two digits at the first step, `y` the last two digits at the final step."
+  },
+  "answer": "43141",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "25ff1299af50",
+  "ref": "matematica/01_2026_iunie/I.2",
+  "subject": "matematica",
+  "file": "matematica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=3x-4$. Determinați numărul real $a$ pentru care $f(a)+f(-2a)=a$.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=3x-4$. Determine the real number $a$ for which $f(a)+f(-2a)=a$."
+  },
+  "hint": {
+   "ro": "Calculează $f(a)$ și $f(-2a)$, apoi rezolvă ecuația de gradul I.",
+   "en": "Compute $f(a)$ and $f(-2a)$, then solve the linear equation."
+  },
+  "answer": "a=-2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "b5a2d327b9a2",
+  "ref": "matematica/01_2026_iunie/I.3",
+  "subject": "matematica",
+  "file": "matematica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Rezolvați în mulțimea numerelor reale ecuația $\\sqrt{x^2+7}=2\\sqrt{x+1}$.",
+   "en": "Solve in the set of real numbers the equation $\\sqrt{x^2+7}=2\\sqrt{x+1}$."
+  },
+  "hint": {
+   "ro": "Ridică ambii membri la pătrat și verifică soluțiile obținute.",
+   "en": "Square both sides and check the solutions you get."
+  },
+  "answer": "x=1 sau x=3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "d571ef9f85df",
+  "ref": "matematica/01_2026_iunie/I.4",
+  "subject": "matematica",
+  "file": "matematica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Se consideră mulțimea $A=\\{1,2,3,5,7\\}$. Determinați câte dintre submulțimile mulțimii $A$ au exact trei elemente și conțin numărul $5$.",
+   "en": "Consider the set $A=\\{1,2,3,5,7\\}$. Determine how many subsets of $A$ have exactly three elements and contain the number $5$."
+  },
+  "hint": {
+   "ro": "Fixează elementul 5 și alege celelalte două elemente din restul mulțimii.",
+   "en": "Fix the element 5 and choose the other two elements from the rest of the set."
+  },
+  "answer": "6",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "8898eb43e90e",
+  "ref": "matematica/01_2026_iunie/I.5",
+  "subject": "matematica",
+  "file": "matematica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "În reperul cartezian $xOy$ se consideră punctele $A(3,6)$, $B(4,1)$ și $C(5,a)$, unde $a$ este număr real. Determinați numărul real $a$ pentru care dreptele $OA$ și $BC$ sunt paralele.",
+   "en": "In the Cartesian plane $xOy$ consider the points $A(3,6)$, $B(4,1)$ and $C(5,a)$, where $a$ is a real number. Determine the real number $a$ for which the lines $OA$ and $BC$ are parallel."
+  },
+  "hint": {
+   "ro": "Două drepte paralele au aceeași pantă.",
+   "en": "Parallel lines have the same slope."
+  },
+  "answer": "a=3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "25256818a3ec",
+  "ref": "matematica/01_2026_iunie/II.1.c",
+  "subject": "matematica",
+  "file": "matematica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "II.1.c",
+  "problem": {
+   "ro": "Se consideră matricea $A(a)=\\begin{pmatrix}1&a&a\\\\ a&3&a\\\\ 0&2&1\\end{pmatrix}$ și sistemul de ecuații liniare $\\begin{cases}x+ay+az=1\\\\ ax+3y+az=0\\\\ 2y+z=0\\end{cases}$, unde $a$ este număr real. Determinați numărul natural nenul $a$ pentru care sistemul de ecuații are soluția $(x_0,y_0,z_0)$, cu $z_0=nx_0$, unde $n$ este număr natural.",
+   "en": "Consider the matrix $A(a)=\\begin{pmatrix}1&a&a\\\\ a&3&a\\\\ 0&2&1\\end{pmatrix}$ and the system of linear equations $\\begin{cases}x+ay+az=1\\\\ ax+3y+az=0\\\\ 2y+z=0\\end{cases}$, where $a$ is a real number. Determine the nonzero natural number $a$ for which the system has the solution $(x_0,y_0,z_0)$ with $z_0=nx_0$, where $n$ is a natural number."
+  },
+  "hint": {
+   "ro": "Din a treia ecuație $z=-2y$; exprimă $x$ și $z$ în funcție de $a$ și impune ca $z_0/x_0$ să fie număr natural.",
+   "en": "From the third equation $z=-2y$; express $x$ and $z$ in terms of $a$ and require $z_0/x_0$ to be a natural number."
+  },
+  "answer": "a=1",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "2f5a55c6387e",
+  "ref": "matematica/01_2026_iunie/II.2.b",
+  "subject": "matematica",
+  "file": "matematica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "II.2.b",
+  "problem": {
+   "ro": "Pe mulțimea numerelor reale se definește legea de compoziție asociativă $x*y=\\frac{2}{3}(x-3)(y-3)+3$. Determinați numerele reale $x$ pentru care $x*\\frac{3x}{2}=5x$.",
+   "en": "On the set of real numbers the associative operation $x*y=\\frac{2}{3}(x-3)(y-3)+3$ is defined. Determine the real numbers $x$ for which $x*\\frac{3x}{2}=5x$."
+  },
+  "hint": {
+   "ro": "Calculează $x*\\frac{3x}{2}$; obții o ecuație de gradul al II-lea.",
+   "en": "Compute $x*\\frac{3x}{2}$; you get a quadratic equation."
+  },
+  "answer": "x=1 sau x=9",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "e4776c249d45",
+  "ref": "matematica/01_2026_iunie/II.2.c",
+  "subject": "matematica",
+  "file": "matematica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "II.2.c",
+  "problem": {
+   "ro": "Pe mulțimea numerelor reale se definește legea de compoziție asociativă $x*y=\\frac{2}{3}(x-3)(y-3)+3$. Determinați perechile $(m,n)$ de numere naturale pentru care $m*m*n=-1$.",
+   "en": "On the set of real numbers the associative operation $x*y=\\frac{2}{3}(x-3)(y-3)+3$ is defined. Determine the pairs $(m,n)$ of natural numbers for which $m*m*n=-1$."
+  },
+  "hint": {
+   "ro": "Arată că $m*m*n=\\frac{4}{9}(m-3)^2(n-3)+3$.",
+   "en": "Show that $m*m*n=\\frac{4}{9}(m-3)^2(n-3)+3$."
+  },
+  "answer": "(0,2) și (6,2)",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "823feabbf9e3",
+  "ref": "matematica/01_2026_iunie/III.1.c",
+  "subject": "matematica",
+  "file": "matematica/01_2026_iunie_subiect.pdf",
+  "page": 1,
+  "item": "III.1.c",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=\\frac{x^3-4x}{x^2+5}$. Se știe că $f'(x)=\\frac{(x^2-1)(x^2+20)}{(x^2+5)^2}$. Determinați mulțimea numerelor reale $m$ pentru care ecuația $f(x)=m$ are exact trei soluții.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=\\frac{x^3-4x}{x^2+5}$. It is known that $f'(x)=\\frac{(x^2-1)(x^2+20)}{(x^2+5)^2}$. Determine the set of real numbers $m$ for which the equation $f(x)=m$ has exactly three solutions."
+  },
+  "hint": {
+   "ro": "Studiază monotonia lui $f$ și calculează $f(-1)$, $f(1)$ și limitele la $\\pm\\infty$.",
+   "en": "Study the monotonicity of $f$ and compute $f(-1)$, $f(1)$ and the limits at $\\pm\\infty$."
+  },
+  "answer": "m ∈ (-1/2, 1/2)",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "1d80d572ba0e",
+  "ref": "matematica/02_2026_iunie_rezerva/I.2",
+  "subject": "matematica",
+  "file": "matematica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=2x-5$. Determinați numărul real $a$ pentru care $a+f(a-1)+f(a+1)=0$.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=2x-5$. Determine the real number $a$ for which $a+f(a-1)+f(a+1)=0$."
+  },
+  "hint": {
+   "ro": "Calculează $f(a-1)$ și $f(a+1)$ și înlocuiește în ecuație.",
+   "en": "Compute $f(a-1)$ and $f(a+1)$ and substitute them into the equation."
+  },
+  "answer": "a=2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "846ab3c7304c",
+  "ref": "matematica/02_2026_iunie_rezerva/I.3",
+  "subject": "matematica",
+  "file": "matematica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Rezolvați în mulțimea numerelor reale ecuația $\\frac{1}{2}\\log_2(6x-8)=\\log_2 x$.",
+   "en": "Solve in the set of real numbers the equation $\\frac{1}{2}\\log_2(6x-8)=\\log_2 x$."
+  },
+  "hint": {
+   "ro": "Înmulțește cu 2 și folosește $2\\log_2 x=\\log_2 x^2$; verifică domeniul.",
+   "en": "Multiply by 2 and use $2\\log_2 x=\\log_2 x^2$; check the domain."
+  },
+  "answer": "x=2 sau x=4",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "48446989f9ea",
+  "ref": "matematica/02_2026_iunie_rezerva/I.4",
+  "subject": "matematica",
+  "file": "matematica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Se consideră mulțimea $A=\\{3,6,9,\\ldots,60\\}$. Determinați probabilitatea ca, alegând un număr din mulțimea $A$, acesta să fie divizibil cu $5$.",
+   "en": "Consider the set $A=\\{3,6,9,\\ldots,60\\}$. Determine the probability that a number chosen from $A$ is divisible by $5$."
+  },
+  "hint": {
+   "ro": "Numără elementele lui $A$ și multiplii de 15 din ea.",
+   "en": "Count the elements of $A$ and the multiples of 15 in it."
+  },
+  "answer": "1/5",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "fdff4d80b2f5",
+  "ref": "matematica/02_2026_iunie_rezerva/I.5",
+  "subject": "matematica",
+  "file": "matematica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "În reperul cartezian $xOy$ se consideră punctele $A(2,2)$, $B(a,0)$ și $C(1,b)$, unde $a$ și $b$ sunt numere reale. Determinați numerele reale $a$ și $b$ pentru care $\\overrightarrow{OB}+\\overrightarrow{OC}=2\\overrightarrow{OA}$.",
+   "en": "In the Cartesian plane $xOy$ consider the points $A(2,2)$, $B(a,0)$ and $C(1,b)$, where $a$ and $b$ are real numbers. Determine the real numbers $a$ and $b$ for which $\\overrightarrow{OB}+\\overrightarrow{OC}=2\\overrightarrow{OA}$."
+  },
+  "hint": {
+   "ro": "Relația spune că $A$ este mijlocul segmentului $BC$.",
+   "en": "The relation means that $A$ is the midpoint of segment $BC$."
+  },
+  "answer": "a=3, b=4",
+  "options": {},
+  "ordered": true
+ },
+ {
+  "id": "1d35e8681c8b",
+  "ref": "matematica/02_2026_iunie_rezerva/II.1.c",
+  "subject": "matematica",
+  "file": "matematica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "II.1.c",
+  "problem": {
+   "ro": "Se consideră matricele $I_3=\\begin{pmatrix}1&0&0\\\\ 0&1&0\\\\ 0&0&1\\end{pmatrix}$ și $A(a)=\\begin{pmatrix}2a-1&2&1\\\\ 0&-1&-a\\\\ 0&2&2a\\end{pmatrix}$, unde $a$ este număr real. Se știe că $A(a)\\cdot A(a)=(2a-1)A(a)$, pentru orice număr real $a$. Se consideră matricea $B(n)=A(n)+nI_3$, unde $n$ este număr natural. Determinați numărul natural $n$ pentru care $A(n)\\cdot B(n)=2n^2A(n)$.",
+   "en": "Consider the matrices $I_3=\\begin{pmatrix}1&0&0\\\\ 0&1&0\\\\ 0&0&1\\end{pmatrix}$ and $A(a)=\\begin{pmatrix}2a-1&2&1\\\\ 0&-1&-a\\\\ 0&2&2a\\end{pmatrix}$, where $a$ is a real number. It is known that $A(a)\\cdot A(a)=(2a-1)A(a)$ for every real $a$. Let $B(n)=A(n)+nI_3$, where $n$ is a natural number. Determine the natural number $n$ for which $A(n)\\cdot B(n)=2n^2A(n)$."
+  },
+  "hint": {
+   "ro": "$A(n)\\cdot B(n)=A(n)^2+nA(n)=(3n-1)A(n)$.",
+   "en": "$A(n)\\cdot B(n)=A(n)^2+nA(n)=(3n-1)A(n)$."
+  },
+  "answer": "n=1",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "3f51221b7d96",
+  "ref": "matematica/02_2026_iunie_rezerva/II.2.b",
+  "subject": "matematica",
+  "file": "matematica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "II.2.b",
+  "problem": {
+   "ro": "Se consideră polinomul $f=X^4-X^3+aX^2+bX-6$, unde $a$ și $b$ sunt numere reale. Pentru $a=b=1$, determinați câtul și restul împărțirii polinomului $f$ la polinomul $g=X^2-X+1$.",
+   "en": "Consider the polynomial $f=X^4-X^3+aX^2+bX-6$, where $a$ and $b$ are real numbers. For $a=b=1$, determine the quotient and the remainder of the division of $f$ by $g=X^2-X+1$."
+  },
+  "hint": {
+   "ro": "Fă împărțirea polinoamelor sau scrie $f=(X^2-X+1)X^2+\\ldots$",
+   "en": "Do the polynomial long division, or write $f=(X^2-X+1)X^2+\\ldots$"
+  },
+  "answer": "câtul X^2, restul X-6",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "d905246c01b9",
+  "ref": "matematica/02_2026_iunie_rezerva/II.2.c",
+  "subject": "matematica",
+  "file": "matematica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "II.2.c",
+  "problem": {
+   "ro": "Se consideră polinomul $f=X^4-X^3+aX^2+bX-6$, unde $a$ și $b$ sunt numere reale. Determinați perechile $(a,b)$ de numere naturale pentru care două dintre rădăcinile polinomului $f$ sunt numere opuse.",
+   "en": "Consider the polynomial $f=X^4-X^3+aX^2+bX-6$, where $a$ and $b$ are real numbers. Determine the pairs $(a,b)$ of natural numbers for which two of the roots of $f$ are opposite numbers."
+  },
+  "hint": {
+   "ro": "Dacă $f(x_1)=f(-x_1)=0$, adună și scade cele două relații.",
+   "en": "If $f(x_1)=f(-x_1)=0$, add and subtract the two relations."
+  },
+  "answer": "(1,2) și (5,1)",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "12251da49796",
+  "ref": "matematica/02_2026_iunie_rezerva/III.1.b",
+  "subject": "matematica",
+  "file": "matematica/02_2026_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "III.1.b",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=2\\sqrt{2x^2+1}-3\\ln(2x^2+1)$. Se știe că $f'(x)=\\frac{4x\\left(\\sqrt{2x^2+1}-3\\right)}{2x^2+1}$. Determinați ecuația tangentei la graficul funcției $f$ în punctul de abscisă $x=0$, situat pe graficul funcției $f$.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=2\\sqrt{2x^2+1}-3\\ln(2x^2+1)$. It is known that $f'(x)=\\frac{4x\\left(\\sqrt{2x^2+1}-3\\right)}{2x^2+1}$. Determine the equation of the tangent to the graph of $f$ at the point with abscissa $x=0$."
+  },
+  "hint": {
+   "ro": "Tangenta: $y-f(0)=f'(0)(x-0)$.",
+   "en": "Tangent line: $y-f(0)=f'(0)(x-0)$."
+  },
+  "answer": "y=2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "a9e51c71adb4",
+  "ref": "matematica/03_2026_august/I.1",
+  "subject": "matematica",
+  "file": "matematica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Determinați termenul $b_3$ al progresiei geometrice $(b_n)_{n\\ge1}$, în care $b_1=2$ și $b_2=10$.",
+   "en": "Determine the term $b_3$ of the geometric progression $(b_n)_{n\\ge1}$ with $b_1=2$ and $b_2=10$."
+  },
+  "hint": {
+   "ro": "Rația este $q=b_2/b_1$.",
+   "en": "The common ratio is $q=b_2/b_1$."
+  },
+  "answer": "50",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "a3f76c88b39f",
+  "ref": "matematica/03_2026_august/I.2",
+  "subject": "matematica",
+  "file": "matematica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Se consideră funcțiile $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x-5$ și $g:\\mathbb{R}\\to\\mathbb{R}$, $g(x)=ax-1$, unde $a$ este număr real. Determinați numărul real $a$ pentru care $(f\\circ g)(2)=2$.",
+   "en": "Consider the functions $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x-5$ and $g:\\mathbb{R}\\to\\mathbb{R}$, $g(x)=ax-1$, where $a$ is a real number. Determine the real number $a$ for which $(f\\circ g)(2)=2$."
+  },
+  "hint": {
+   "ro": "Calculează întâi $g(2)$, apoi $f(g(2))$.",
+   "en": "First compute $g(2)$, then $f(g(2))$."
+  },
+  "answer": "a=4",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "11738cf32ee4",
+  "ref": "matematica/03_2026_august/I.3",
+  "subject": "matematica",
+  "file": "matematica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Rezolvați în mulțimea numerelor reale ecuația $\\log_8 x+\\log_8(8-x)=\\log_8(6+x)$.",
+   "en": "Solve in the set of real numbers the equation $\\log_8 x+\\log_8(8-x)=\\log_8(6+x)$."
+  },
+  "hint": {
+   "ro": "Folosește $\\log_8 u+\\log_8 v=\\log_8(uv)$ și verifică domeniul de existență.",
+   "en": "Use $\\log_8 u+\\log_8 v=\\log_8(uv)$ and check the domain."
+  },
+  "answer": "x=1 sau x=6",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "73d46937797e",
+  "ref": "matematica/03_2026_august/I.4",
+  "subject": "matematica",
+  "file": "matematica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Determinați câte numere naturale pare, de două cifre, se pot forma cu cifre din mulțimea $A=\\{1,2,4,6,8\\}$.",
+   "en": "Determine how many even two-digit natural numbers can be formed with digits from the set $A=\\{1,2,4,6,8\\}$."
+  },
+  "hint": {
+   "ro": "Cifra unităților trebuie să fie pară; cifrele se pot repeta.",
+   "en": "The units digit must be even; digits may repeat."
+  },
+  "answer": "20",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "6574e64b8718",
+  "ref": "matematica/03_2026_august/I.5",
+  "subject": "matematica",
+  "file": "matematica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "În reperul cartezian $xOy$ se consideră punctele $A(1,3)$, $B(2,2)$ și $C(4,6)$. Determinați ecuația dreptei $d$ care trece prin punctul $B$ și este paralelă cu dreapta $AC$.",
+   "en": "In the Cartesian plane $xOy$ consider the points $A(1,3)$, $B(2,2)$ and $C(4,6)$. Determine the equation of the line $d$ that passes through $B$ and is parallel to $AC$."
+  },
+  "hint": {
+   "ro": "Dreapta $d$ are aceeași pantă ca $AC$.",
+   "en": "Line $d$ has the same slope as $AC$."
+  },
+  "answer": "y=x",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "b2a08ad7e1cd",
+  "ref": "matematica/03_2026_august/II.2.b",
+  "subject": "matematica",
+  "file": "matematica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "II.2.b",
+  "problem": {
+   "ro": "Se consideră polinomul $f=X^3+X^2+aX+8$, unde $a$ este număr real. Determinați numărul real $a$ pentru care polinomul $f$ este divizibil cu polinomul $g=X+2$.",
+   "en": "Consider the polynomial $f=X^3+X^2+aX+8$, where $a$ is a real number. Determine the real number $a$ for which $f$ is divisible by $g=X+2$."
+  },
+  "hint": {
+   "ro": "$f$ e divizibil cu $X+2$ dacă și numai dacă $f(-2)=0$.",
+   "en": "$f$ is divisible by $X+2$ if and only if $f(-2)=0$."
+  },
+  "answer": "a=2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "9170ca48b789",
+  "ref": "matematica/03_2026_august/II.2.c",
+  "subject": "matematica",
+  "file": "matematica/03_2026_august_subiect.pdf",
+  "page": 1,
+  "item": "II.2.c",
+  "problem": {
+   "ro": "Se consideră polinomul $f=X^3+X^2+aX+8$, unde $a$ este număr real. Determinați numărul real $a$ pentru care raportul a două dintre rădăcinile polinomului $f$ este egal cu $2$.",
+   "en": "Consider the polynomial $f=X^3+X^2+aX+8$, where $a$ is a real number. Determine the real number $a$ for which the ratio of two of the roots of $f$ equals $2$."
+  },
+  "hint": {
+   "ro": "Fie $x_2=2x_1$; folosește relațiile lui Viète $x_1+x_2+x_3=-1$ și $x_1x_2x_3=-8$.",
+   "en": "Let $x_2=2x_1$; use Vieta's relations $x_1+x_2+x_3=-1$ and $x_1x_2x_3=-8$."
+  },
+  "answer": "a=-10",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "b122763b08fa",
+  "ref": "matematica/04_2026_speciala/I.1",
+  "subject": "matematica",
+  "file": "matematica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Determinați termenul $a_2$ al progresiei aritmetice $(a_n)_{n\\ge1}$, în care $a_1=6$ și $a_3=30$.",
+   "en": "Determine the term $a_2$ of the arithmetic progression $(a_n)_{n\\ge1}$ with $a_1=6$ and $a_3=30$."
+  },
+  "hint": {
+   "ro": "Într-o progresie aritmetică, $a_2$ este media aritmetică a vecinilor.",
+   "en": "In an arithmetic progression, $a_2$ is the mean of its neighbours."
+  },
+  "answer": "18",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "6b1766b58500",
+  "ref": "matematica/04_2026_speciala/I.2",
+  "subject": "matematica",
+  "file": "matematica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=ax^2+2ax-1$, unde $a$ este număr real. Determinați numărul real $a$ pentru care $(f\\circ f)(0)=0$.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=ax^2+2ax-1$, where $a$ is a real number. Determine the real number $a$ for which $(f\\circ f)(0)=0$."
+  },
+  "hint": {
+   "ro": "Calculează $f(0)$, apoi $f(f(0))$.",
+   "en": "Compute $f(0)$, then $f(f(0))$."
+  },
+  "answer": "a=-1",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "ab62f42fba34",
+  "ref": "matematica/04_2026_speciala/I.3",
+  "subject": "matematica",
+  "file": "matematica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Rezolvați în mulțimea numerelor reale ecuația $\\log_2(2x^2-4x+3)=2\\log_2 x$.",
+   "en": "Solve in the set of real numbers the equation $\\log_2(2x^2-4x+3)=2\\log_2 x$."
+  },
+  "hint": {
+   "ro": "Scrie $2\\log_2 x=\\log_2 x^2$ și verifică condiția $x>0$.",
+   "en": "Write $2\\log_2 x=\\log_2 x^2$ and check that $x>0$."
+  },
+  "answer": "x=1 sau x=3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "e2a729ded2d9",
+  "ref": "matematica/04_2026_speciala/I.4",
+  "subject": "matematica",
+  "file": "matematica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Se consideră mulțimea $A=\\{2,4,5,6\\}$. Determinați câte numere naturale pare, de trei cifre distincte, se pot forma cu cifre din mulțimea $A$.",
+   "en": "Consider the set $A=\\{2,4,5,6\\}$. Determine how many even three-digit natural numbers with distinct digits can be formed with digits from $A$."
+  },
+  "hint": {
+   "ro": "Alege întâi cifra unităților (pară), apoi celelalte două cifre distincte.",
+   "en": "First choose the (even) units digit, then the other two distinct digits."
+  },
+  "answer": "18",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "66adc3f8df88",
+  "ref": "matematica/04_2026_speciala/I.5",
+  "subject": "matematica",
+  "file": "matematica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "În reperul cartezian $xOy$ se consideră punctele $A(6,4)$ și $B(1,3)$. Determinați coordonatele punctului $C$ pentru care $2\\overrightarrow{BC}=\\overrightarrow{OA}$.",
+   "en": "In the Cartesian plane $xOy$ consider the points $A(6,4)$ and $B(1,3)$. Determine the coordinates of the point $C$ for which $2\\overrightarrow{BC}=\\overrightarrow{OA}$."
+  },
+  "hint": {
+   "ro": "$\\overrightarrow{BC}=(x_C-1)\\vec i+(y_C-3)\\vec j$ trebuie să fie egal cu $3\\vec i+2\\vec j$.",
+   "en": "$\\overrightarrow{BC}=(x_C-1)\\vec i+(y_C-3)\\vec j$ must equal $3\\vec i+2\\vec j$."
+  },
+  "answer": "C(4,5)",
+  "options": {},
+  "ordered": true
+ },
+ {
+  "id": "7b1d3bf457c6",
+  "ref": "matematica/04_2026_speciala/II.1.c",
+  "subject": "matematica",
+  "file": "matematica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "II.1.c",
+  "problem": {
+   "ro": "Se consideră matricea $A(a)=\\begin{pmatrix}1-2a&a&0\\\\ 2a&1-a&0\\\\ 0&0&1-3a\\end{pmatrix}$, unde $a$ este număr real. Se știe că $A(a)\\cdot A(b)=A(a+b-3ab)$, pentru orice numere reale $a$ și $b$. Determinați numărul real $a$ pentru care $A(1)\\cdot A(a)+A(5)=2A(4)$.",
+   "en": "Consider the matrix $A(a)=\\begin{pmatrix}1-2a&a&0\\\\ 2a&1-a&0\\\\ 0&0&1-3a\\end{pmatrix}$, where $a$ is a real number. It is known that $A(a)\\cdot A(b)=A(a+b-3ab)$ for all real $a,b$. Determine the real number $a$ for which $A(1)\\cdot A(a)+A(5)=2A(4)$."
+  },
+  "hint": {
+   "ro": "$A(1)\\cdot A(a)=A(1-2a)$, iar $2A(4)-A(5)=A(3)$.",
+   "en": "$A(1)\\cdot A(a)=A(1-2a)$ and $2A(4)-A(5)=A(3)$."
+  },
+  "answer": "a=-1",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "dbbfad448f6a",
+  "ref": "matematica/04_2026_speciala/II.2.b",
+  "subject": "matematica",
+  "file": "matematica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "II.2.b",
+  "problem": {
+   "ro": "Se consideră polinomul $f=mX^4-mX^2+X+1$, unde $m$ este număr real nenul. Determinați numărul real nenul $m$ pentru care restul împărțirii polinomului $f$ la polinomul $g=X+2$ este egal cu $11$.",
+   "en": "Consider the polynomial $f=mX^4-mX^2+X+1$, where $m$ is a nonzero real number. Determine the nonzero real number $m$ for which the remainder of the division of $f$ by $g=X+2$ equals $11$."
+  },
+  "hint": {
+   "ro": "Restul împărțirii la $X+2$ este $f(-2)$.",
+   "en": "The remainder of the division by $X+2$ is $f(-2)$."
+  },
+  "answer": "m=1",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "db4faf37a415",
+  "ref": "matematica/04_2026_speciala/II.2.c",
+  "subject": "matematica",
+  "file": "matematica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "II.2.c",
+  "problem": {
+   "ro": "Se consideră polinomul $f=mX^4-mX^2+X+1$, unde $m$ este număr real nenul. Determinați numărul real nenul $m$ pentru care $x_1^3+x_2^3+x_3^3+x_4^3=1$, unde $x_1,x_2,x_3,x_4$ sunt rădăcinile polinomului $f$.",
+   "en": "Consider the polynomial $f=mX^4-mX^2+X+1$, where $m$ is a nonzero real number. Determine the nonzero real number $m$ for which $x_1^3+x_2^3+x_3^3+x_4^3=1$, where $x_1,x_2,x_3,x_4$ are the roots of $f$."
+  },
+  "hint": {
+   "ro": "Din $f(x_i)=0$: $mx_i^4-mx_i^2+x_i+1=0$; împarte la $x_i$ și adună, folosind relațiile lui Viète.",
+   "en": "From $f(x_i)=0$: $mx_i^4-mx_i^2+x_i+1=0$; divide by $x_i$ and add up, using Vieta's relations."
+  },
+  "answer": "m=-3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "8a3186be9fcf",
+  "ref": "matematica/04_2026_speciala/III.1.b",
+  "subject": "matematica",
+  "file": "matematica/04_2026_speciala_subiect.pdf",
+  "page": 1,
+  "item": "III.1.b",
+  "problem": {
+   "ro": "Se consideră funcția $f:(-1,+\\infty)\\to\\mathbb{R}$, $f(x)=\\frac{e^x+2x+1}{x+1}$. Se știe că $f'(x)=\\frac{xe^x+1}{(x+1)^2}$. Determinați ecuația tangentei la graficul funcției $f$ în punctul de abscisă $x=0$, situat pe graficul funcției $f$.",
+   "en": "Consider the function $f:(-1,+\\infty)\\to\\mathbb{R}$, $f(x)=\\frac{e^x+2x+1}{x+1}$. It is known that $f'(x)=\\frac{xe^x+1}{(x+1)^2}$. Determine the equation of the tangent to the graph of $f$ at the point with abscissa $x=0$."
+  },
+  "hint": {
+   "ro": "Tangenta: $y-f(0)=f'(0)(x-0)$.",
+   "en": "Tangent line: $y-f(0)=f'(0)(x-0)$."
+  },
+  "answer": "y=x+2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "c02cd42ad230",
+  "ref": "matematica/05_2025_iunie/I.2",
+  "subject": "matematica",
+  "file": "matematica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x+3$. Determinați numărul real $a$ pentru care $(f\\circ f)(a)=9$.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x+3$. Determine the real number $a$ for which $(f\\circ f)(a)=9$."
+  },
+  "hint": {
+   "ro": "$(f\\circ f)(a)=f(a+3)$.",
+   "en": "$(f\\circ f)(a)=f(a+3)$."
+  },
+  "answer": "a=3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "63827d7f7a3b",
+  "ref": "matematica/05_2025_iunie/I.3",
+  "subject": "matematica",
+  "file": "matematica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Rezolvați în mulțimea numerelor reale ecuația $\\sqrt{2x^2-3x+2}=x$.",
+   "en": "Solve in the set of real numbers the equation $\\sqrt{2x^2-3x+2}=x$."
+  },
+  "hint": {
+   "ro": "Ridică la pătrat și păstrează doar soluțiile cu $x\\ge 0$.",
+   "en": "Square both sides and keep only solutions with $x\\ge 0$."
+  },
+  "answer": "x=1 sau x=2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "a9346255c97d",
+  "ref": "matematica/05_2025_iunie/I.4",
+  "subject": "matematica",
+  "file": "matematica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Determinați probabilitatea ca, alegând un număr din mulțimea numerelor naturale de două cifre, acesta să fie divizor al numărului $2^6$.",
+   "en": "Determine the probability that a number chosen from the set of two-digit natural numbers is a divisor of $2^6$."
+  },
+  "hint": {
+   "ro": "Sunt 90 de numere de două cifre; caută divizorii lui 64 de două cifre.",
+   "en": "There are 90 two-digit numbers; find the two-digit divisors of 64."
+  },
+  "answer": "1/30",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "42a86562305d",
+  "ref": "matematica/05_2025_iunie/I.5",
+  "subject": "matematica",
+  "file": "matematica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "În reperul cartezian $xOy$ se consideră punctele $A(0,1)$, $B(5,0)$, $C(6,3)$ și $D(a,b)$, unde $a$ și $b$ sunt numere reale. Determinați numerele reale $a$ și $b$, știind că segmentele $AC$ și $BD$ au același mijloc.",
+   "en": "In the Cartesian plane $xOy$ consider the points $A(0,1)$, $B(5,0)$, $C(6,3)$ and $D(a,b)$, where $a$ and $b$ are real numbers. Determine $a$ and $b$, knowing that segments $AC$ and $BD$ have the same midpoint."
+  },
+  "hint": {
+   "ro": "Mijlocul lui $AC$ este $(3,2)$.",
+   "en": "The midpoint of $AC$ is $(3,2)$."
+  },
+  "answer": "a=1, b=4",
+  "options": {},
+  "ordered": true
+ },
+ {
+  "id": "e3fe224d5978",
+  "ref": "matematica/05_2025_iunie/II.1.c",
+  "subject": "matematica",
+  "file": "matematica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "II.1.c",
+  "problem": {
+   "ro": "Se consideră matricea $A(x)=\\begin{pmatrix}2-3x&0&x\\\\ 0&2&0\\\\ -9x&0&2+3x\\end{pmatrix}$, unde $x$ este număr real. Se știe că $A(x)\\cdot A(y)=2A(x+y)$, pentru orice numere reale $x$ și $y$. Determinați numerele reale $x$ pentru care $\\left(A(x)+A(3x)\\right)\\cdot A(2x)=4A(x^2)$.",
+   "en": "Consider the matrix $A(x)=\\begin{pmatrix}2-3x&0&x\\\\ 0&2&0\\\\ -9x&0&2+3x\\end{pmatrix}$, where $x$ is a real number. It is known that $A(x)\\cdot A(y)=2A(x+y)$ for all real $x,y$. Determine the real numbers $x$ for which $\\left(A(x)+A(3x)\\right)\\cdot A(2x)=4A(x^2)$."
+  },
+  "hint": {
+   "ro": "$A(x)+A(3x)=2A(2x)$.",
+   "en": "$A(x)+A(3x)=2A(2x)$."
+  },
+  "answer": "x=0 sau x=4",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "5d4400f127cb",
+  "ref": "matematica/05_2025_iunie/II.2.b",
+  "subject": "matematica",
+  "file": "matematica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "II.2.b",
+  "problem": {
+   "ro": "Se consideră polinomul $f=aX^3+3X^2-aX-6$, unde $a$ este număr real nenul. Pentru $a=1$, determinați câtul și restul împărțirii polinomului $f$ la polinomul $g=X^2+3X-1$.",
+   "en": "Consider the polynomial $f=aX^3+3X^2-aX-6$, where $a$ is a nonzero real number. For $a=1$, determine the quotient and the remainder of the division of $f$ by $g=X^2+3X-1$."
+  },
+  "hint": {
+   "ro": "Observă că $X^3+3X^2-X=X(X^2+3X-1)$.",
+   "en": "Notice that $X^3+3X^2-X=X(X^2+3X-1)$."
+  },
+  "answer": "câtul X, restul -6",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "8c4037346761",
+  "ref": "matematica/05_2025_iunie/II.2.c",
+  "subject": "matematica",
+  "file": "matematica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "II.2.c",
+  "problem": {
+   "ro": "Se consideră polinomul $f=aX^3+3X^2-aX-6$, unde $a$ este număr real nenul. Determinați numărul real nenul $a$ pentru care $(1+x_1)(1+x_2)(1+x_3)=1$, unde $x_1,x_2,x_3$ sunt rădăcinile polinomului $f$.",
+   "en": "Consider the polynomial $f=aX^3+3X^2-aX-6$, where $a$ is a nonzero real number. Determine the nonzero real number $a$ for which $(1+x_1)(1+x_2)(1+x_3)=1$, where $x_1,x_2,x_3$ are the roots of $f$."
+  },
+  "hint": {
+   "ro": "$f=a(X-x_1)(X-x_2)(X-x_3)$, deci $(1+x_1)(1+x_2)(1+x_3)=-\\frac{f(-1)}{a}$.",
+   "en": "$f=a(X-x_1)(X-x_2)(X-x_3)$, so $(1+x_1)(1+x_2)(1+x_3)=-\\frac{f(-1)}{a}$."
+  },
+  "answer": "a=3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "9e0b58cfe741",
+  "ref": "matematica/05_2025_iunie/III.1.b",
+  "subject": "matematica",
+  "file": "matematica/05_2025_iunie_subiect.pdf",
+  "page": 1,
+  "item": "III.1.b",
+  "problem": {
+   "ro": "Se consideră funcția $f:(0,+\\infty)\\to\\mathbb{R}$, $f(x)=2x+\\ln\\frac{x}{x+2}$. Determinați ecuația asimptotei oblice spre $+\\infty$ la graficul funcției $f$.",
+   "en": "Consider the function $f:(0,+\\infty)\\to\\mathbb{R}$, $f(x)=2x+\\ln\\frac{x}{x+2}$. Determine the equation of the oblique asymptote towards $+\\infty$ of the graph of $f$."
+  },
+  "hint": {
+   "ro": "Calculează $m=\\lim\\limits_{x\\to+\\infty}\\frac{f(x)}{x}$ și $n=\\lim\\limits_{x\\to+\\infty}(f(x)-mx)$.",
+   "en": "Compute $m=\\lim\\limits_{x\\to+\\infty}\\frac{f(x)}{x}$ and $n=\\lim\\limits_{x\\to+\\infty}(f(x)-mx)$."
+  },
+  "answer": "y=2x",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "f8e9eb205edb",
+  "ref": "matematica/06_2025_iunie_rezerva/I.2",
+  "subject": "matematica",
+  "file": "matematica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x-4$. Determinați numărul real $m$ pentru care $f(2+m)=2-m$.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x-4$. Determine the real number $m$ for which $f(2+m)=2-m$."
+  },
+  "hint": {
+   "ro": "$f(2+m)=m-2$.",
+   "en": "$f(2+m)=m-2$."
+  },
+  "answer": "m=2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "6165edd2d1c0",
+  "ref": "matematica/06_2025_iunie_rezerva/I.3",
+  "subject": "matematica",
+  "file": "matematica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Rezolvați în mulțimea numerelor reale ecuația $8^x\\cdot 2^{1-x}=2^7$.",
+   "en": "Solve in the set of real numbers the equation $8^x\\cdot 2^{1-x}=2^7$."
+  },
+  "hint": {
+   "ro": "Scrie $8^x=2^{3x}$ și egalează exponenții.",
+   "en": "Write $8^x=2^{3x}$ and equate the exponents."
+  },
+  "answer": "x=3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "07a4a207b557",
+  "ref": "matematica/06_2025_iunie_rezerva/I.4",
+  "subject": "matematica",
+  "file": "matematica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Se consideră mulțimea $A=\\{1,2,3,4,5,6\\}$. Determinați câte dintre numerele naturale de trei cifre distincte, care se pot forma cu cifre din mulțimea $A$, sunt divizibile cu $5$.",
+   "en": "Consider the set $A=\\{1,2,3,4,5,6\\}$. Determine how many of the three-digit natural numbers with distinct digits that can be formed with digits from $A$ are divisible by $5$."
+  },
+  "hint": {
+   "ro": "Ultima cifră trebuie să fie 5; alege apoi celelalte două cifre distincte.",
+   "en": "The last digit must be 5; then choose the other two distinct digits."
+  },
+  "answer": "20",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "ecc3681e5bc9",
+  "ref": "matematica/06_2025_iunie_rezerva/I.5",
+  "subject": "matematica",
+  "file": "matematica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "În reperul cartezian $xOy$ se consideră punctele $A(0,1)$, $B(2,0)$ și $C(4,6)$. Determinați ecuația dreptei $d$ care trece prin punctul $A$ și este paralelă cu dreapta $BC$.",
+   "en": "In the Cartesian plane $xOy$ consider the points $A(0,1)$, $B(2,0)$ and $C(4,6)$. Determine the equation of the line $d$ that passes through $A$ and is parallel to $BC$."
+  },
+  "hint": {
+   "ro": "Calculează panta dreptei $BC$.",
+   "en": "Compute the slope of $BC$."
+  },
+  "answer": "y=3x+1",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "5cb19b75cb42",
+  "ref": "matematica/06_2025_iunie_rezerva/II.1.c",
+  "subject": "matematica",
+  "file": "matematica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "II.1.c",
+  "problem": {
+   "ro": "Se consideră matricea $A(a)=\\begin{pmatrix}a&1&-2\\\\ 0&a&1\\\\ 2&4&1\\end{pmatrix}$ și sistemul de ecuații $\\begin{cases}ax+y-2z=4\\\\ ay+z=1\\\\ 2x+4y+z=4\\end{cases}$, unde $a$ este număr real. Determinați mulțimea numerelor reale $a$ pentru care soluția $(x_0,y_0,z_0)$ a sistemului de ecuații verifică inegalitatea $y_0\\ge 1$.",
+   "en": "Consider the matrix $A(a)=\\begin{pmatrix}a&1&-2\\\\ 0&a&1\\\\ 2&4&1\\end{pmatrix}$ and the system $\\begin{cases}ax+y-2z=4\\\\ ay+z=1\\\\ 2x+4y+z=4\\end{cases}$, where $a$ is a real number. Determine the set of real numbers $a$ for which the solution $(x_0,y_0,z_0)$ of the system satisfies $y_0\\ge 1$."
+  },
+  "hint": {
+   "ro": "$\\det A(a)=a^2+2$; folosește regula lui Cramer pentru $y_0$.",
+   "en": "$\\det A(a)=a^2+2$; use Cramer's rule for $y_0$."
+  },
+  "answer": "a ∈ [-5, 2]",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "0a72c82b0cb7",
+  "ref": "matematica/06_2025_iunie_rezerva/II.2.b",
+  "subject": "matematica",
+  "file": "matematica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "II.2.b",
+  "problem": {
+   "ro": "Pe mulțimea numerelor reale se definește legea de compoziție asociativă $x*y=4-\\frac{1}{2}(x-4)(y-4)$. Determinați numărul real $x$ pentru care $x*(x+4)=6$.",
+   "en": "On the set of real numbers the associative operation $x*y=4-\\frac{1}{2}(x-4)(y-4)$ is defined. Determine the real number $x$ for which $x*(x+4)=6$."
+  },
+  "hint": {
+   "ro": "$x*(x+4)=4-\\frac{1}{2}(x-4)x$.",
+   "en": "$x*(x+4)=4-\\frac{1}{2}(x-4)x$."
+  },
+  "answer": "x=2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "b7a9abc83ae6",
+  "ref": "matematica/06_2025_iunie_rezerva/II.2.c",
+  "subject": "matematica",
+  "file": "matematica/06_2025_iunie_rezerva_subiect.pdf",
+  "page": 1,
+  "item": "II.2.c",
+  "problem": {
+   "ro": "Pe mulțimea numerelor reale se definește legea de compoziție asociativă $x*y=4-\\frac{1}{2}(x-4)(y-4)$. Determinați tripletele $(m,n,p)$ de numere naturale, cu $m<n<p$, pentru care $m*n*p=3$.",
+   "en": "On the set of real numbers the associative operation $x*y=4-\\frac{1}{2}(x-4)(y-4)$ is defined. Determine the triples $(m,n,p)$ of natural numbers with $m<n<p$ for which $m*n*p=3$."
+  },
+  "hint": {
+   "ro": "$m*n*p=4+\\frac{1}{4}(m-4)(n-4)(p-4)$.",
+   "en": "$m*n*p=4+\\frac{1}{4}(m-4)(n-4)(p-4)$."
+  },
+  "answer": "(2,5,6) și (3,5,8)",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "7dd475b39d56",
+  "ref": "matematica/07_2025_august/I.2",
+  "subject": "matematica",
+  "file": "matematica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Se consideră funcțiile $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x+4$ și $g:\\mathbb{R}\\to\\mathbb{R}$, $g(x)=2x+a$, unde $a$ este număr real. Determinați numărul real $a$ pentru care $(g\\circ f)(1)=1$.",
+   "en": "Consider the functions $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x+4$ and $g:\\mathbb{R}\\to\\mathbb{R}$, $g(x)=2x+a$, where $a$ is a real number. Determine the real number $a$ for which $(g\\circ f)(1)=1$."
+  },
+  "hint": {
+   "ro": "Calculează $f(1)$, apoi $g(f(1))$.",
+   "en": "Compute $f(1)$, then $g(f(1))$."
+  },
+  "answer": "a=-9",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "d676dd4b5965",
+  "ref": "matematica/07_2025_august/I.3",
+  "subject": "matematica",
+  "file": "matematica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Rezolvați în mulțimea numerelor reale ecuația $\\log_2(6x-x^2)=\\log_2(4+x)$.",
+   "en": "Solve in the set of real numbers the equation $\\log_2(6x-x^2)=\\log_2(4+x)$."
+  },
+  "hint": {
+   "ro": "Egalează argumentele și verifică domeniul de existență.",
+   "en": "Set the arguments equal and check the domain."
+  },
+  "answer": "x=1 sau x=4",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "ade81325d232",
+  "ref": "matematica/07_2025_august/I.4",
+  "subject": "matematica",
+  "file": "matematica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Se consideră mulțimea $A=\\{3,4,5,7,9\\}$. Determinați câte numere naturale impare, de două cifre distincte, se pot forma cu cifre din mulțimea $A$.",
+   "en": "Consider the set $A=\\{3,4,5,7,9\\}$. Determine how many odd two-digit natural numbers with distinct digits can be formed with digits from $A$."
+  },
+  "hint": {
+   "ro": "Cifra unităților trebuie să fie impară.",
+   "en": "The units digit must be odd."
+  },
+  "answer": "16",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "7bc1f1977b47",
+  "ref": "matematica/07_2025_august/I.5",
+  "subject": "matematica",
+  "file": "matematica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "În reperul cartezian $xOy$ se consideră punctele $A(0,2)$ și $B(6,4)$. Determinați coordonatele punctului $C$ pentru care $2\\overrightarrow{AC}=\\overrightarrow{OB}$.",
+   "en": "In the Cartesian plane $xOy$ consider the points $A(0,2)$ and $B(6,4)$. Determine the coordinates of the point $C$ for which $2\\overrightarrow{AC}=\\overrightarrow{OB}$."
+  },
+  "hint": {
+   "ro": "$\\overrightarrow{AC}=x_C\\vec i+(y_C-2)\\vec j$.",
+   "en": "$\\overrightarrow{AC}=x_C\\vec i+(y_C-2)\\vec j$."
+  },
+  "answer": "C(3,4)",
+  "options": {},
+  "ordered": true
+ },
+ {
+  "id": "5127bc7dc30b",
+  "ref": "matematica/07_2025_august/II.1.c",
+  "subject": "matematica",
+  "file": "matematica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "II.1.c",
+  "problem": {
+   "ro": "Se consideră matricea $A(a)=\\begin{pmatrix}a&1&2a\\\\ a&1&0\\\\ 1&1&-a\\end{pmatrix}$ și sistemul de ecuații $\\begin{cases}ax+y+2az=a+1\\\\ ax+y=0\\\\ x+y-az=-1\\end{cases}$, unde $a$ este număr real. Determinați numărul real $a$ pentru care sistemul de ecuații are soluția unică $(x_0,y_0,z_0)$ și $x_0=a$.",
+   "en": "Consider the matrix $A(a)=\\begin{pmatrix}a&1&2a\\\\ a&1&0\\\\ 1&1&-a\\end{pmatrix}$ and the system $\\begin{cases}ax+y+2az=a+1\\\\ ax+y=0\\\\ x+y-az=-1\\end{cases}$, where $a$ is a real number. Determine the real number $a$ for which the system has the unique solution $(x_0,y_0,z_0)$ and $x_0=a$."
+  },
+  "hint": {
+   "ro": "$\\det A(a)=2a^2-2a$; scade a doua ecuație din celelalte două.",
+   "en": "$\\det A(a)=2a^2-2a$; subtract the second equation from the other two."
+  },
+  "answer": "a=-1/2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "619e0f932ef5",
+  "ref": "matematica/07_2025_august/II.2.b",
+  "subject": "matematica",
+  "file": "matematica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "II.2.b",
+  "problem": {
+   "ro": "Se consideră polinomul $f=X^4-3X^3+X^2-2X+m$, unde $m$ este număr real. Determinați numerele reale $m$ pentru care $(x_1x_2x_3x_4)^2-x_1-x_2-x_3-x_4=1$, unde $x_1,x_2,x_3,x_4$ sunt rădăcinile polinomului $f$.",
+   "en": "Consider the polynomial $f=X^4-3X^3+X^2-2X+m$, where $m$ is a real number. Determine the real numbers $m$ for which $(x_1x_2x_3x_4)^2-x_1-x_2-x_3-x_4=1$, where $x_1,x_2,x_3,x_4$ are the roots of $f$."
+  },
+  "hint": {
+   "ro": "Viète: $x_1x_2x_3x_4=m$ și $x_1+x_2+x_3+x_4=3$.",
+   "en": "Vieta: $x_1x_2x_3x_4=m$ and $x_1+x_2+x_3+x_4=3$."
+  },
+  "answer": "m=-2 sau m=2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "bd4c44f3d6ad",
+  "ref": "matematica/07_2025_august/II.2.c",
+  "subject": "matematica",
+  "file": "matematica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "II.2.c",
+  "problem": {
+   "ro": "Se consideră polinomul $f=X^4-3X^3+X^2-2X+m$, unde $m$ este număr real. Pentru $m=0$, determinați numerele reale $a$ pentru care restul împărțirii polinomului $f$ la polinomul $X-a$ este egal cu $a$.",
+   "en": "Consider the polynomial $f=X^4-3X^3+X^2-2X+m$, where $m$ is a real number. For $m=0$, determine the real numbers $a$ for which the remainder of the division of $f$ by $X-a$ equals $a$."
+  },
+  "hint": {
+   "ro": "Restul împărțirii la $X-a$ este $f(a)$.",
+   "en": "The remainder of the division by $X-a$ is $f(a)$."
+  },
+  "answer": "a=0 sau a=3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "eca3b031b2b9",
+  "ref": "matematica/07_2025_august/III.1.b",
+  "subject": "matematica",
+  "file": "matematica/07_2025_august_subiect.pdf",
+  "page": 1,
+  "item": "III.1.b",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=\\frac{x^2+6}{\\sqrt{x^2+1}}$. Se știe că $f'(x)=\\frac{x(x^2-4)}{(x^2+1)\\sqrt{x^2+1}}$. Determinați ecuația tangentei la graficul funcției $f$ în punctul de abscisă $x=0$, situat pe graficul funcției $f$.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=\\frac{x^2+6}{\\sqrt{x^2+1}}$. It is known that $f'(x)=\\frac{x(x^2-4)}{(x^2+1)\\sqrt{x^2+1}}$. Determine the equation of the tangent to the graph of $f$ at the point with abscissa $x=0$."
+  },
+  "hint": {
+   "ro": "Tangenta: $y-f(0)=f'(0)(x-0)$.",
+   "en": "Tangent line: $y-f(0)=f'(0)(x-0)$."
+  },
+  "answer": "y=6",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "299edf681c14",
+  "ref": "matematica/08_2025_speciala/I.1",
+  "subject": "matematica",
+  "file": "matematica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Determinați termenul $b_1$ al progresiei geometrice $(b_n)_{n\\ge1}$, în care $b_2=20$ și $b_3=100$.",
+   "en": "Determine the term $b_1$ of the geometric progression $(b_n)_{n\\ge1}$ with $b_2=20$ and $b_3=100$."
+  },
+  "hint": {
+   "ro": "Rația este $q=b_3/b_2$.",
+   "en": "The common ratio is $q=b_3/b_2$."
+  },
+  "answer": "4",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "9791cda5e037",
+  "ref": "matematica/08_2025_speciala/I.2",
+  "subject": "matematica",
+  "file": "matematica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Se consideră funcțiile $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=4x+3$ și $g:\\mathbb{R}\\to\\mathbb{R}$, $g(x)=x-3$. Determinați numărul real $a$ pentru care $f(a)=g(a)$.",
+   "en": "Consider the functions $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=4x+3$ and $g:\\mathbb{R}\\to\\mathbb{R}$, $g(x)=x-3$. Determine the real number $a$ for which $f(a)=g(a)$."
+  },
+  "hint": {
+   "ro": "Rezolvă $4a+3=a-3$.",
+   "en": "Solve $4a+3=a-3$."
+  },
+  "answer": "a=-2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "ee5f975e3be4",
+  "ref": "matematica/08_2025_speciala/I.3",
+  "subject": "matematica",
+  "file": "matematica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Rezolvați în mulțimea numerelor reale ecuația $9^x\\cdot 3^3=3^{x+2}$.",
+   "en": "Solve in the set of real numbers the equation $9^x\\cdot 3^3=3^{x+2}$."
+  },
+  "hint": {
+   "ro": "Scrie $9^x=3^{2x}$ și egalează exponenții.",
+   "en": "Write $9^x=3^{2x}$ and equate the exponents."
+  },
+  "answer": "x=-1",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "161abc440b16",
+  "ref": "matematica/08_2025_speciala/I.4",
+  "subject": "matematica",
+  "file": "matematica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Determinați probabilitatea ca, alegând un număr $n$ din mulțimea numerelor naturale de două cifre, $\\sqrt{n}$ să fie număr natural par.",
+   "en": "Determine the probability that, choosing a number $n$ from the set of two-digit natural numbers, $\\sqrt{n}$ is an even natural number."
+  },
+  "hint": {
+   "ro": "Caută pătratele perfecte de două cifre ale numerelor pare.",
+   "en": "Look for the two-digit perfect squares of even numbers."
+  },
+  "answer": "1/30",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "d5adcd30f9b0",
+  "ref": "matematica/08_2025_speciala/I.5",
+  "subject": "matematica",
+  "file": "matematica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "În reperul cartezian $xOy$ se consideră punctele $A(1,3)$, $B(6,2)$ și $C(4,a)$, unde $a$ este număr real. Determinați numărul real $a$ pentru care dreptele $AC$ și $OB$ sunt paralele.",
+   "en": "In the Cartesian plane $xOy$ consider the points $A(1,3)$, $B(6,2)$ and $C(4,a)$, where $a$ is a real number. Determine the real number $a$ for which the lines $AC$ and $OB$ are parallel."
+  },
+  "hint": {
+   "ro": "Egalează pantele dreptelor $AC$ și $OB$.",
+   "en": "Set the slopes of $AC$ and $OB$ equal."
+  },
+  "answer": "a=4",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "93a8460a56b7",
+  "ref": "matematica/08_2025_speciala/II.1.c",
+  "subject": "matematica",
+  "file": "matematica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "II.1.c",
+  "problem": {
+   "ro": "Se consideră matricele $I_3=\\begin{pmatrix}1&0&0\\\\ 0&1&0\\\\ 0&0&1\\end{pmatrix}$ și $M(x)=\\begin{pmatrix}2x&3x&-3\\\\ -x&-2x&1\\\\ 0&0&x+1\\end{pmatrix}$, unde $x$ este număr real. Se știe că $M(x)\\cdot M(y)-xyI_3=(x+y+1)M(0)$, pentru orice numere reale $x$ și $y$. Determinați numărul real $x$ pentru care $M(1)\\cdot M(x)-M(2)\\cdot M\\!\\left(\\frac{x}{2}\\right)=2M(0)$.",
+   "en": "Consider the matrices $I_3=\\begin{pmatrix}1&0&0\\\\ 0&1&0\\\\ 0&0&1\\end{pmatrix}$ and $M(x)=\\begin{pmatrix}2x&3x&-3\\\\ -x&-2x&1\\\\ 0&0&x+1\\end{pmatrix}$, where $x$ is a real number. It is known that $M(x)\\cdot M(y)-xyI_3=(x+y+1)M(0)$ for all real $x,y$. Determine the real number $x$ for which $M(1)\\cdot M(x)-M(2)\\cdot M\\!\\left(\\frac{x}{2}\\right)=2M(0)$."
+  },
+  "hint": {
+   "ro": "Aplică relația dată pentru fiecare produs; termenii cu $I_3$ se reduc.",
+   "en": "Apply the given relation to each product; the $I_3$ terms cancel."
+  },
+  "answer": "x=6",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "c56695205878",
+  "ref": "matematica/08_2025_speciala/II.2.c",
+  "subject": "matematica",
+  "file": "matematica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "II.2.c",
+  "problem": {
+   "ro": "Pe mulțimea numerelor reale se definește legea de compoziție asociativă $x*y=5(x-1)(y-1)+1$, cu elementul neutru $e=\\frac{6}{5}$. Determinați perechile $(m,n)$ de numere naturale pentru care $\\frac{m}{25}$ este simetricul elementului $n$ în raport cu legea de compoziție „$*$”.",
+   "en": "On the set of real numbers the associative operation $x*y=5(x-1)(y-1)+1$ is defined, with identity element $e=\\frac{6}{5}$. Determine the pairs $(m,n)$ of natural numbers for which $\\frac{m}{25}$ is the inverse (symmetric) of $n$ with respect to „$*$”."
+  },
+  "hint": {
+   "ro": "Condiția este $\\frac{m}{25}*n=\\frac{6}{5}$, adică $(m-25)(n-1)=1$.",
+   "en": "The condition is $\\frac{m}{25}*n=\\frac{6}{5}$, i.e. $(m-25)(n-1)=1$."
+  },
+  "answer": "(24,0) și (26,2)",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "bcb96468a26b",
+  "ref": "matematica/08_2025_speciala/III.1.c",
+  "subject": "matematica",
+  "file": "matematica/08_2025_speciala_subiect.pdf",
+  "page": 1,
+  "item": "III.1.c",
+  "problem": {
+   "ro": "Se consideră funcția $f:(0,+\\infty)\\to\\mathbb{R}$, $f(x)=\\frac{2x-2+\\ln x}{x}$. Se știe că $f'(x)=\\frac{3-\\ln x}{x^2}$. Determinați cel mai mare număr întreg $m$ pentru care ecuația $f(x)=m$ are cel puțin o soluție.",
+   "en": "Consider the function $f:(0,+\\infty)\\to\\mathbb{R}$, $f(x)=\\frac{2x-2+\\ln x}{x}$. It is known that $f'(x)=\\frac{3-\\ln x}{x^2}$. Determine the largest integer $m$ for which the equation $f(x)=m$ has at least one solution."
+  },
+  "hint": {
+   "ro": "Găsește valoarea maximă a lui $f$ (în $x=e^3$) și limita în $0$.",
+   "en": "Find the maximum value of $f$ (at $x=e^3$) and the limit at $0$."
+  },
+  "answer": "m=2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "6127708ff187",
+  "ref": "matematica/09_2024_iulie/I.2",
+  "subject": "matematica",
+  "file": "matematica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "I.2",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x-6$. Determinați numărul real $a$ pentru care $f(a)+f(3a)=0$.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=x-6$. Determine the real number $a$ for which $f(a)+f(3a)=0$."
+  },
+  "hint": {
+   "ro": "Calculează $f(a)$ și $f(3a)$.",
+   "en": "Compute $f(a)$ and $f(3a)$."
+  },
+  "answer": "a=3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "0ff97121613d",
+  "ref": "matematica/09_2024_iulie/I.3",
+  "subject": "matematica",
+  "file": "matematica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Rezolvați în mulțimea numerelor reale ecuația $5^{3x}\\cdot 5^2=5^x$.",
+   "en": "Solve in the set of real numbers the equation $5^{3x}\\cdot 5^2=5^x$."
+  },
+  "hint": {
+   "ro": "Egalează exponenții: $3x+2=x$.",
+   "en": "Equate the exponents: $3x+2=x$."
+  },
+  "answer": "x=-1",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "59f85a2032dd",
+  "ref": "matematica/09_2024_iulie/I.4",
+  "subject": "matematica",
+  "file": "matematica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Determinați câte submulțimi cu două elemente, ambele numere pare, are mulțimea $A=\\{1,2,4,6,8,9\\}$.",
+   "en": "Determine how many two-element subsets, with both elements even, the set $A=\\{1,2,4,6,8,9\\}$ has."
+  },
+  "hint": {
+   "ro": "Mulțimea are 4 numere pare; calculează $C_4^2$.",
+   "en": "The set has 4 even numbers; compute $C_4^2$."
+  },
+  "answer": "6",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "07f6a38138de",
+  "ref": "matematica/09_2024_iulie/I.5",
+  "subject": "matematica",
+  "file": "matematica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "În reperul cartezian $xOy$ se consideră punctele $A(3,1)$ și $B(3,0)$. Determinați coordonatele punctului $C$ pentru care $\\overrightarrow{AC}=\\overrightarrow{OB}$.",
+   "en": "In the Cartesian plane $xOy$ consider the points $A(3,1)$ and $B(3,0)$. Determine the coordinates of the point $C$ for which $\\overrightarrow{AC}=\\overrightarrow{OB}$."
+  },
+  "hint": {
+   "ro": "$\\overrightarrow{AC}=(x_C-3)\\vec i+(y_C-1)\\vec j$ și $\\overrightarrow{OB}=3\\vec i$.",
+   "en": "$\\overrightarrow{AC}=(x_C-3)\\vec i+(y_C-1)\\vec j$ and $\\overrightarrow{OB}=3\\vec i$."
+  },
+  "answer": "C(6,1)",
+  "options": {},
+  "ordered": true
+ },
+ {
+  "id": "5c7ab403885b",
+  "ref": "matematica/09_2024_iulie/II.1.b",
+  "subject": "matematica",
+  "file": "matematica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "II.1.b",
+  "problem": {
+   "ro": "Se consideră matricea $M(x)=\\begin{pmatrix}x&0&0\\\\ 0&x+2&x\\\\ 0&2x&x+2\\end{pmatrix}$, unde $x$ este număr real. Determinați numărul real $x$ pentru care $M(x)\\cdot M(2)=M(x-1)$.",
+   "en": "Consider the matrix $M(x)=\\begin{pmatrix}x&0&0\\\\ 0&x+2&x\\\\ 0&2x&x+2\\end{pmatrix}$, where $x$ is a real number. Determine the real number $x$ for which $M(x)\\cdot M(2)=M(x-1)$."
+  },
+  "hint": {
+   "ro": "Calculează $M(2)$ și produsul, apoi compară elementele.",
+   "en": "Compute $M(2)$ and the product, then compare entries."
+  },
+  "answer": "x=-1",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "8dbaa88a0868",
+  "ref": "matematica/09_2024_iulie/II.1.c",
+  "subject": "matematica",
+  "file": "matematica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "II.1.c",
+  "problem": {
+   "ro": "Se consideră matricea $M(x)=\\begin{pmatrix}x&0&0\\\\ 0&x+2&x\\\\ 0&2x&x+2\\end{pmatrix}$, unde $x$ este număr real. Determinați numerele naturale $n$ pentru care $2\\det(M(n))\\le\\det(M(2n))$.",
+   "en": "Consider the matrix $M(x)=\\begin{pmatrix}x&0&0\\\\ 0&x+2&x\\\\ 0&2x&x+2\\end{pmatrix}$, where $x$ is a real number. Determine the natural numbers $n$ for which $2\\det(M(n))\\le\\det(M(2n))$."
+  },
+  "hint": {
+   "ro": "$\\det(M(x))=x(-x^2+4x+4)$.",
+   "en": "$\\det(M(x))=x(-x^2+4x+4)$."
+  },
+  "answer": "n=0 sau n=1",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "5150d97c0b2d",
+  "ref": "matematica/09_2024_iulie/II.2.c",
+  "subject": "matematica",
+  "file": "matematica/09_2024_iulie_subiect.pdf",
+  "page": 1,
+  "item": "II.2.c",
+  "problem": {
+   "ro": "Se consideră polinomul $f=X^3-2X^2-aX+2a$, unde $a$ este număr real. Determinați $a\\in(0,+\\infty)$ pentru care $|x_1|+|x_2|+|x_3|=8$, unde $x_1,x_2,x_3$ sunt rădăcinile polinomului $f$.",
+   "en": "Consider the polynomial $f=X^3-2X^2-aX+2a$, where $a$ is a real number. Determine $a\\in(0,+\\infty)$ for which $|x_1|+|x_2|+|x_3|=8$, where $x_1,x_2,x_3$ are the roots of $f$."
+  },
+  "hint": {
+   "ro": "Factorizează: $f=(X-2)(X^2-a)$.",
+   "en": "Factor: $f=(X-2)(X^2-a)$."
+  },
+  "answer": "a=9",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "4c413e1ddd9f",
+  "ref": "matematica/10_2024_august/I.1",
+  "subject": "matematica",
+  "file": "matematica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "I.1",
+  "problem": {
+   "ro": "Determinați termenul $a_1$ al progresiei aritmetice $(a_n)_{n\\ge1}$, cu $a_2=14$ și $a_3=18$.",
+   "en": "Determine the term $a_1$ of the arithmetic progression $(a_n)_{n\\ge1}$ with $a_2=14$ and $a_3=18$."
+  },
+  "hint": {
+   "ro": "Rația este $r=a_3-a_2$.",
+   "en": "The common difference is $r=a_3-a_2$."
+  },
+  "answer": "10",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "10fb9c715a20",
+  "ref": "matematica/10_2024_august/I.3",
+  "subject": "matematica",
+  "file": "matematica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "I.3",
+  "problem": {
+   "ro": "Rezolvați în mulțimea numerelor reale ecuația $\\sqrt[3]{x^2+2x+1}=\\sqrt[3]{1-x}$.",
+   "en": "Solve in the set of real numbers the equation $\\sqrt[3]{x^2+2x+1}=\\sqrt[3]{1-x}$."
+  },
+  "hint": {
+   "ro": "Ridică la puterea a treia: $x^2+2x+1=1-x$.",
+   "en": "Cube both sides: $x^2+2x+1=1-x$."
+  },
+  "answer": "x=-3 sau x=0",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "a03a58d2755f",
+  "ref": "matematica/10_2024_august/I.4",
+  "subject": "matematica",
+  "file": "matematica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "I.4",
+  "problem": {
+   "ro": "Determinați câte numere naturale impare, de două cifre distincte, se pot forma cu elementele mulțimii $A=\\{1,2,3,7,9\\}$.",
+   "en": "Determine how many odd two-digit natural numbers with distinct digits can be formed with the elements of $A=\\{1,2,3,7,9\\}$."
+  },
+  "hint": {
+   "ro": "Cifra unităților trebuie să fie impară; cifra zecilor e diferită de ea.",
+   "en": "The units digit must be odd; the tens digit must differ from it."
+  },
+  "answer": "16",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "02a88c44e9c7",
+  "ref": "matematica/10_2024_august/I.5",
+  "subject": "matematica",
+  "file": "matematica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "I.5",
+  "problem": {
+   "ro": "În reperul cartezian $xOy$ se consideră punctul $A(2,1)$. Determinați coordonatele punctului $B$ pentru care $\\overrightarrow{AB}=2\\overrightarrow{OA}$.",
+   "en": "In the Cartesian plane $xOy$ consider the point $A(2,1)$. Determine the coordinates of the point $B$ for which $\\overrightarrow{AB}=2\\overrightarrow{OA}$."
+  },
+  "hint": {
+   "ro": "$2\\overrightarrow{OA}=4\\vec i+2\\vec j$.",
+   "en": "$2\\overrightarrow{OA}=4\\vec i+2\\vec j$."
+  },
+  "answer": "B(6,3)",
+  "options": {},
+  "ordered": true
+ },
+ {
+  "id": "c314e21f98f8",
+  "ref": "matematica/10_2024_august/II.1.c",
+  "subject": "matematica",
+  "file": "matematica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "II.1.c",
+  "problem": {
+   "ro": "Se consideră matricele $A=\\begin{pmatrix}0&0&0\\\\ 0&1&0\\\\ 0&0&1\\end{pmatrix}$ și $B(x)=\\begin{pmatrix}2^x&0&0\\\\ 0&1&x\\\\ 0&x&1\\end{pmatrix}$, unde $x$ este număr real. Se știe că $B(x)\\cdot B(y)-B(x+y)=xyA$, pentru orice numere reale $x$ și $y$. Determinați numerele reale $x$ pentru care $B(x)\\cdot B(x+1)-B(2x)\\cdot B(1)=xA$.",
+   "en": "Consider the matrices $A=\\begin{pmatrix}0&0&0\\\\ 0&1&0\\\\ 0&0&1\\end{pmatrix}$ and $B(x)=\\begin{pmatrix}2^x&0&0\\\\ 0&1&x\\\\ 0&x&1\\end{pmatrix}$, where $x$ is a real number. It is known that $B(x)\\cdot B(y)-B(x+y)=xyA$ for all real $x,y$. Determine the real numbers $x$ for which $B(x)\\cdot B(x+1)-B(2x)\\cdot B(1)=xA$."
+  },
+  "hint": {
+   "ro": "Aplică relația dată pentru ambele produse; termenii $B(2x+1)$ se reduc.",
+   "en": "Apply the given relation to both products; the $B(2x+1)$ terms cancel."
+  },
+  "answer": "x=0 sau x=2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "2f8762a6f6af",
+  "ref": "matematica/10_2024_august/II.2.b",
+  "subject": "matematica",
+  "file": "matematica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "II.2.b",
+  "problem": {
+   "ro": "Se consideră polinomul $f=X^3+aX^2+X+2-a$, unde $a$ este număr real. Pentru $a=2$, determinați rădăcinile polinomului $f$.",
+   "en": "Consider the polynomial $f=X^3+aX^2+X+2-a$, where $a$ is a real number. For $a=2$, determine the roots of $f$."
+  },
+  "hint": {
+   "ro": "Pentru $a=2$, $f=X(X+1)^2$.",
+   "en": "For $a=2$, $f=X(X+1)^2$."
+  },
+  "answer": "x1=x2=-1, x3=0",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "5956221322ce",
+  "ref": "matematica/10_2024_august/II.2.c",
+  "subject": "matematica",
+  "file": "matematica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "II.2.c",
+  "problem": {
+   "ro": "Se consideră polinomul $f=X^3+aX^2+X+2-a$, unde $a$ este număr real. Se știe că $f(1)=4$. Determinați numărul real $a$ pentru care $(x_1-x_1^2)(x_2-x_2^2)(x_3-x_3^2)=4$, unde $x_1,x_2,x_3$ sunt rădăcinile polinomului $f$.",
+   "en": "Consider the polynomial $f=X^3+aX^2+X+2-a$, where $a$ is a real number. It is known that $f(1)=4$. Determine the real number $a$ for which $(x_1-x_1^2)(x_2-x_2^2)(x_3-x_3^2)=4$, where $x_1,x_2,x_3$ are the roots of $f$."
+  },
+  "hint": {
+   "ro": "Produsul este $x_1x_2x_3\\,(1-x_1)(1-x_2)(1-x_3)=x_1x_2x_3\\cdot f(1)$.",
+   "en": "The product equals $x_1x_2x_3\\,(1-x_1)(1-x_2)(1-x_3)=x_1x_2x_3\\cdot f(1)$."
+  },
+  "answer": "a=3",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "497b4d992678",
+  "ref": "matematica/10_2024_august/III.1.b",
+  "subject": "matematica",
+  "file": "matematica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "III.1.b",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=(x^2-2)e^{2x}$. Se știe că $f'(x)=2e^{2x}(x^2+x-2)$. Calculați $\\lim\\limits_{x\\to+\\infty}\\frac{f(x)}{f'(x)}$.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=(x^2-2)e^{2x}$. It is known that $f'(x)=2e^{2x}(x^2+x-2)$. Compute $\\lim\\limits_{x\\to+\\infty}\\frac{f(x)}{f'(x)}$."
+  },
+  "hint": {
+   "ro": "Simplifică $e^{2x}$ și dă factor comun $x^2$.",
+   "en": "Cancel $e^{2x}$ and factor out $x^2$."
+  },
+  "answer": "1/2",
+  "options": {},
+  "ordered": false
+ },
+ {
+  "id": "f8d94176908d",
+  "ref": "matematica/10_2024_august/III.1.c",
+  "subject": "matematica",
+  "file": "matematica/10_2024_august_subiect.pdf",
+  "page": 1,
+  "item": "III.1.c",
+  "problem": {
+   "ro": "Se consideră funcția $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=(x^2-2)e^{2x}$. Se știe că $f'(x)=2e^{2x}(x^2+x-2)$. Determinați imaginea funcției $f$.",
+   "en": "Consider the function $f:\\mathbb{R}\\to\\mathbb{R}$, $f(x)=(x^2-2)e^{2x}$. It is known that $f'(x)=2e^{2x}(x^2+x-2)$. Determine the image (range) of $f$."
+  },
+  "hint": {
+   "ro": "Studiază monotonia ($f'=0$ în $x=-2$ și $x=1$), calculează $f(1)$ și limitele la $\\pm\\infty$.",
+   "en": "Study monotonicity ($f'=0$ at $x=-2$ and $x=1$), compute $f(1)$ and the limits at $\\pm\\infty$."
+  },
+  "answer": "[-e^2, +∞)",
+  "options": {},
+  "ordered": false
+ }
+]

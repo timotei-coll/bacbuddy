@@ -27,9 +27,9 @@ I wanted a tool I'd actually use myself: one that **only** answers from the offi
 - Math is rendered properly (LaTeX via KaTeX), and C/C++ code stays intact
 
 ### 🎯 Quiz me
-- Gives you a real exercise from a past Bac paper, picking only exercises that have a checkable final answer
+- Gives you a real exercise from a past Bac paper, from a **verified bank of 139 problems** (79 Math, 60 CS): every statement was transcribed from the official PDF (formulas in LaTeX, code kept as code) and every expected answer was taken from the official barem and re-checked by computing or simulating it. A problem is only shown if its statement and its answer are certain.
 - You type your final answer and it's **checked against the official grading scheme** of the same exam session
-- Checking is done in two layers so formatting doesn't matter: `x = 3`, `3`, `0,5` / `0.5` and `{3, 1}` / `{1,3}` are all accepted, and the AI only judges real equivalences like `1/2` = `0.5`
+- Checking is done in layers so formatting doesn't matter: `x = 3`, `3`, `0,5` / `0.5` and `{3, 1}` / `{1,3}` are all accepted; for multiple choice both the letter and the option's value count (`b` or `6`); intervals and points keep their brackets and order, so `[a,b]` ≠ `(a,b)`; the AI only judges real equivalences like `1/2` = `0.5`
 - The correct answer stays on the server, so you can't peek at it from the page source
 - Problems don't repeat until you've seen all of them
 
@@ -63,7 +63,7 @@ Reach is part of the judging, so I didn't want BacBuddy to stay a project only I
    - **BM25** keyword search (Romanian-aware, works without diacritics) + **semantic search** with `qwen3-embedding-4b` vectors (316 × 2560), combined with **Reciprocal Rank Fusion**
    - grading questions are guaranteed to include grading-scheme passages
 3. **Grounded answer**: `deepseek-v4.1-flash` answers only from the numbered sources, cites them, and states what the materials don't cover
-4. **Quiz engine** (`app/quiz.py`): one AI call turns an exercise into a clean problem, gives a hint and reads the expected answer from the barem; answers are then checked as described above
+4. **Quiz engine** (`app/quiz.py` + `app/quiz_bank.json`): problems come only from the verified bank; answers are then checked as described above
 
 ## How I tested it (and what the tests caught)
 
@@ -78,6 +78,7 @@ I didn't want to just pick a model and hope. I went through the code file by fil
   - "write a program" tasks appearing in the quiz → filtered out
   - the same problem repeating (it appears in several exam sessions) → deduplicated, with no repeats until you've seen them all
   - answers with *"respectiv"* must keep the order of values → handled
+  - the PDF text scrambles matrices and systems of equations, so a generated problem once showed the wrong system and marked a correct answer as wrong → the quiz now uses only hand-verified problems, and multi-line formulas and code blocks render properly
 - Deployment issues I solved along the way: a Vultr plan without a boot disk, a mistyped API key on the server, and a certificate warning that turned out to come from my own antivirus, not the site.
 
 ## Tech stack
@@ -133,7 +134,8 @@ app/
   ingest.py          PDF parsing, cleaning, chunking, embeddings
   search.py          BM25, vector search, rank fusion
   rag.py             query expansion, subject detection, grounded answers
-  quiz.py            quiz generation, answer checking, official solution
+  quiz.py            quiz (verified problems), answer checking, official solution
+  quiz_bank.json     139 hand-verified problems with official answers
   server.py          web server, API, rate limiting
   db.py              anonymous usage stats (SQLite)
   llm.py             Vultr Serverless Inference client
@@ -147,8 +149,8 @@ docs/                architecture diagram, model evaluation
 ## Limitations (being honest)
 
 - It covers only **Math M_mate-info and Computer Science (C/C++)**, sessions 2024–2026, for now
-- Formulas extracted from PDFs are sometimes scrambled. Answers are still grounded, but some formulas are shown simplified, and you can always open the original PDF page.
-- Quiz answer checking is an **AI estimate** based on the official grading scheme, which is why the official barem is always shown next to it
+- Formulas extracted from PDFs are sometimes scrambled. Chat answers are still grounded, but some formulas are shown simplified, and you can always open the original PDF page. Quiz problems are not affected: they are verified by hand.
+- When an answer isn't recognised by the exact checks, the final judgement is an **AI estimate** against the official answer, which is why the official answer and barem are always shown next to it
 - Scores are stored in your browser (no accounts), so they don't move between devices
 
 ## Credits

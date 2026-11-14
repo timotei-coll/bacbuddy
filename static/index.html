@@ -102,6 +102,11 @@
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--panel-2); border: 1px solid var(--accent);
            padding: 10px 16px; border-radius: 12px; z-index: 40; font-weight: 600; }
   .katex { font-size: 1.05em; }
+  .katex-display { overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+  pre.code { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+             overflow-x: auto; font-size: 14px; line-height: 1.45; margin: 8px 0 12px; }
+  pre.code code { font-family: ui-monospace, Consolas, "Cascadia Mono", monospace; white-space: pre;
+                  background: none; border: 0; padding: 0; border-radius: 0; font-size: inherit; }
   code { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 1px 5px;
          font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .92em; }
 </style>
@@ -260,6 +265,12 @@ function esc(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&
 // Citations [n] are only linked in AI answers (not in exam problems, where m[4][25] is C code),
 // and never right after a letter/digit/bracket or inside `code`.
 function render(md, prefix, withCitations = true) {
+  // ``` code blocks keep their lines and indentation; display formulas ($$…$$, \[…\]) that span
+  // several lines (e.g. systems of equations) are joined into one line so KaTeX sees them whole.
+  const blocks = [];
+  md = String(md)
+    .replace(/```[^\n]*\n([\s\S]*?)```/g, (m, code) => { blocks.push(code.replace(/\n$/, "")); return `\n@@CODE${blocks.length - 1}@@\n`; })
+    .replace(/\$\$[\s\S]*?\$\$|\\\[[\s\S]*?\\\]/g, m => m.replace(/\s*\n\s*/g, " "));
   const lines = esc(md).split(/\n/);
   let html = "", list = null;
   const inline = (t) => t.split(/(`[^`]+`)/g).map(part => {
@@ -272,6 +283,12 @@ function render(md, prefix, withCitations = true) {
   }).join("");
   for (const raw of lines) {
     const line = raw.trim();
+    const code = line.match(/^@@CODE(\d+)@@$/);
+    if (code) {
+      if (list) { html += `</${list}>`; list = null; }
+      html += `<pre class="code"><code>${esc(blocks[+code[1]] || "")}</code></pre>`;
+      continue;
+    }
     const ul = line.match(/^[-*•]\s+(.*)/), ol = line.match(/^\d+[.)]\s+(.*)/);
     if (ul || ol) {
       const type = ul ? "ul" : "ol";

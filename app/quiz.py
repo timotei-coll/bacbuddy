@@ -2,10 +2,13 @@
 grading scheme (barem), and the official solution.
 
 Flow:
-1. pick an exercise that asks for a final answer (Calculați / Determinați / Indicați ...)
-2. ONE AI call turns it into a clean problem + hint and reads the expected answer from the barem
-3. the expected answer stays on the server; the student's answer is checked in two layers:
-   exact match after normalization, then an AI equivalence check (1/2 == 0.5, {3,1} == {1,3})
+1. problems come ONLY from a verified bank (app/quiz_bank.json): every statement was transcribed
+   by hand from the official PDF (formulas in LaTeX, code in code blocks) and every expected
+   answer was taken from the official barem and re-checked (computed or simulated). Raw PDF text
+   scrambles matrices, systems and fractions, so problems are never generated from it on the fly.
+2. the expected answer stays on the server; the student's answer is checked in layers:
+   multiple-choice letter (or the text of an option), exact match after normalization, then an
+   AI equivalence check (1/2 == 0.5, {3,1} == {1,3})
 """
 import hashlib
 import json
@@ -14,6 +17,7 @@ import re
 import threading
 import time
 import uuid
+from pathlib import Path
 
 from app import llm
 from app.rag import EXAM_PAGES, INDEX, NOT_FOUND, SYSTEM_PROMPT, _format_sources, _public_source
@@ -130,50 +134,65 @@ def exercise_key(exercise: str) -> str:
     return hashlib.sha1(norm.encode("utf-8")).hexdigest()[:12]
 
 
-def new_quiz(subject=None, lang: str = "ro", seen=None, attempts: int = 4) -> dict:
+# ---------------------------------------------------------------- verified problem bank
+
+BANK_FILE = Path(__file__).with_name("quiz_bank.json")
+
+
+def _load_bank() -> list:
+    try:
+        bank = json.loads(BANK_FILE.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    ok = []
+    for item in bank:
+        # a problem is shown only if it is complete and its expected answer is known
+        if not (item.get("id") and item.get("answer") and item.get("problem", {}).get("ro")
+                and item.get("problem", {}).get("en")):
+            continue
+        if item.get("options") and item["answer"] not in item["options"]:
+            continue
+        ok.append(item)
+    return ok
+
+
+BANK = _load_bank()
+_PAGES = {(p["file"], p["page"]): p for p in EXAM_PAGES}
+
+
+def _page_for(item: dict) -> dict:
+    page = _PAGES.get((item["file"], item["page"]))
+    if page:
+        return page
+    m = re.match(r"(?:\d+_)?(\d{4})_(.+)_subiect\.pdf$", item["file"].split("/")[-1])
+    year, session = (int(m.group(1)), m.group(2)) if m else (None, "")
+    name = "Matematică" if item["subject"] == "matematica" else "Informatică"
+    return {"file": item["file"], "page": item["page"], "subject": item["subject"], "year": year,
+            "session": session, "doc_type": "subiect", "text": "",
+            "label": f"Subiect {name}, {year}, {session.replace('_', ' ')}"}
+
+
+def new_quiz(subject=None, lang: str = "ro", seen=None) -> dict:
     lang = "en" if lang == "en" else "ro"
-    pages = [p for p in (EXAM_PAGES or INDEX.chunks)
-             if p["doc_type"] == "subiect" and (not subject or p["subject"] == subject)]
-    unique = {}
-    for p in pages:
-        for ex in split_exercises(p["text"]):
-            if answerable(ex):
-                unique.setdefault(exercise_key(ex), (p, ex))   # drop duplicates across papers
-    if not unique:
+    pool = [b for b in BANK if not subject or b["subject"] == subject]
+    if not pool:
         return {"error": "no_subjects"}
     seen = set(seen or [])
-    fresh = [k for k in unique if k not in seen]
-    keys = fresh or list(unique)          # everything seen -> start a new round
-    random.shuffle(keys)
-    language = "English" if lang == "en" else "Romanian"
-
-    best = None
-    for key in keys[:attempts]:
-        page, exercise = unique[key]
-        barem = _barem_for(page, exercise)
-        raw = llm.chat([{"role": "user", "content": QUIZ_PROMPT.format(
-            label=page["label"], language=language, exercise=exercise,
-            barem=_format_sources(barem) if barem else "(not available)")}],
-            temperature=0.2, max_tokens=1500)
-        parsed = _parse(raw)
-        if len(parsed["problem"]) < 15:
-            parsed["problem"] = exercise
-        best = (key, page, exercise, barem, parsed)
-        if parsed["answer"]:
-            break
-
-    key, page, exercise, barem, parsed = best
+    fresh = [b for b in pool if b["id"] not in seen]
+    item = random.choice(fresh or pool)   # everything seen -> start a new round
+    page = _page_for(item)
     ref = {"subject": page["subject"], "year": page["year"], "session": page["session"],
-           "problem": exercise[:600]}
-    quiz_id = _remember({"expected": parsed["answer"], "problem": parsed["problem"], "ref": ref,
-                         "barem_ids": [c["id"] for c in barem], "lang": lang})
+           "problem": item["problem"]["ro"][:600]}
+    quiz_id = _remember({"expected": item["answer"], "options": item.get("options") or {},
+                         "ordered": bool(item.get("ordered")), "problem": item["problem"][lang],
+                         "ref": ref, "lang": lang})
     return {
         "quiz_id": quiz_id,
-        "exercise_key": key,
+        "exercise_key": item["id"],
         "remaining": max(0, len(fresh) - 1),
-        "problem": parsed["problem"],
-        "hint": parsed["hint"],
-        "checkable": bool(parsed["answer"]),
+        "problem": item["problem"][lang],
+        "hint": item["hint"][lang],
+        "checkable": True,
         "source": _public_source(1, page),
         "quiz_ref": ref,
     }
@@ -183,20 +202,29 @@ def new_quiz(subject=None, lang: str = "ro", seen=None, attempts: int = 4) -> di
 
 def normalize_answer(text: str, ordered: bool = False) -> str:
     """Make harmless differences disappear: spaces, case, diacritics, 'x =', decimal comma,
-    unicode minus, braces/brackets and the order of values in a set."""
+    unicode minus, braces and the order of values in a set. Intervals and points keep their
+    brackets and order, so [a,b] != (a,b) and (4,5) != (5,4)."""
     t = strip_diacritics(str(text).lower()).strip()
-    t = t.replace("−", "-").replace("–", "-").replace("$", "").replace("\\", "")
+    t = t.replace("−", "-").replace("–", "-").replace("$", "").replace("\\", "").replace("`", "")
+    t = t.replace("infty", "∞").replace("inf", "∞")
     t = re.sub(r"^(raspuns(ul)?|answer|r)\s*[:=-]\s*", "", t)
-    t = re.sub(r"^[a-z]\d*\s*(=|\u2208|in\b)\s*", "", t)        # "x = 3", "m ∈ {2,3}" -> value
-    t = re.sub(r"\s+(sau|si|or|and)\s+", ";", t)               # "x=1 sau x=9" -> list
-    t = re.sub(r"(?<=\d),(?=\d)", ".", t) if not re.search(r"[{};]", t) else t
+    t = re.sub(r"^[a-z]\d*\s*(=|∈|in\b)\s*", "", t)        # "x = 3", "m ∈ {2,3}" -> value
+    t = re.sub(r"\s+(sau|si|și|or|and)\s+", ";", t)            # "x=1 sau x=9" -> list
+    t = re.sub(r"(?<=\d),(?=\d)", ".", t) if not re.search(r"[{};()\[\]]", t) else t
     t = re.sub(r"\s+", "", t).strip(".;")
-    if re.fullmatch(r"[a-d][.)]?(.*)?", t) and len(t) <= 2:   # "b)" / "b." -> "b"
-        t = t[0]
+    t = re.sub(r"^[a-z](?=\()", "", t)                         # "C(4,5)" -> "(4,5)"
+    if re.fullmatch(r"[a-d][.)]?", t):                        # "b)" / "b." -> "b"
+        return t[0]
+    pairs = re.findall(r"\(([^()]*)\)", t)
+    if len(pairs) >= 2 and re.fullmatch(r"(?:[;,]?\([^()]*\))+", t):   # several points / pairs
+        items = ["(" + p + ")" for p in pairs]
+        return "{" + ",".join(items if ordered else sorted(items)) + "}"
+    if re.fullmatch(r"[\[(][^\[\]()]*,[^\[\]()]*[\])]", t):   # one interval or one point
+        return t
     if "frac" not in t and (re.search(r"[{};]", t) or t.count(",") >= 1):   # sets / lists
-        items = [i for i in re.split(r"[;,]", t.strip("{}[]()")) if i]
+        items = [i for i in re.split(r"[;,]", t.strip("{}")) if i]
         items = [re.sub(r"^[a-z]\d*=", "", i) for i in items]
-        t = "{" + ",".join(items if ordered else sorted(items)) + "}"
+        return "{" + ",".join(items if ordered else sorted(items)) + "}"
     return t
 
 
@@ -206,10 +234,16 @@ def _choice_letter(text: str):
     return m.group(1).lower() if m else None
 
 
+def _plain(option: str) -> str:
+    return option.replace("`", "").strip()
+
+
 CHECK_PROMPT = """Compare a student's final answer with the official answer for a Bac exercise.
 Decide if they are mathematically/logically EQUIVALENT (e.g. 1/2 and 0.5, x=2 and 2, {{1,3}} and \
-{{3,1}}, sqrt(4) and 2). Ignore formatting. If the official answer has several values, the student \
-must give all of them. If the exercise says "respectiv", the values must be in the same order.
+{{3,1}}, sqrt(4) and 2). Ignore formatting. Be strict: if the official answer has several values, \
+the student must give all of them and no extra ones; intervals must have the same endpoints and the \
+same open/closed brackets. If the exercise says "respectiv" or asks for printed values, the values \
+must be in the same order. If the answer is unclear or only partially correct, it is NOT correct.
 
 EXERCISE: {problem}
 OFFICIAL ANSWER: {expected}
@@ -229,34 +263,46 @@ def check_answer(quiz_id: str, student: str) -> dict:
             return {"error": "not_checkable"}
         quiz["answered"] = True
     expected, lang = quiz["expected"], quiz["lang"]
+    options = quiz.get("options") or {}
     language = "English" if lang == "en" else "Romanian"
     student = str(student or "").strip()[:200]
+    shown = f"{expected}. {_plain(options[expected])}" if expected in options else expected
 
-    # Layer 1: exact match after normalization (also multiple-choice letters).
-    exp_letter = _choice_letter(expected) if len(expected.strip()) <= 3 else None
-    if exp_letter:
-        correct = _choice_letter(student) == exp_letter
-        return {"correct": correct, "expected": expected, "method": "letter",
-                "explanation": ""}
-    # "Scrieți f(2), respectiv f(17)" -> the order of the values matters
-    ordered = "respectiv" in strip_diacritics(quiz["problem"].lower())
-    if normalize_answer(student, ordered) == normalize_answer(expected, ordered):
-        return {"correct": True, "expected": expected, "method": "exact", "explanation": ""}
+    # Layer 1a: multiple choice. A letter is compared directly; the text of an option counts too
+    # ("2" for the option "a. 2"), so a right value is never marked wrong for a missing letter.
+    if options:
+        letter = _choice_letter(student)
+        if letter in options:
+            return {"correct": letter == expected, "expected": shown, "method": "letter",
+                    "explanation": ""}
+        given = normalize_answer(student)
+        matches = [k for k, v in options.items() if normalize_answer(_plain(v)) == given]
+        if len(matches) == 1:
+            return {"correct": matches[0] == expected, "expected": shown, "method": "option",
+                    "explanation": ""}
+        expected_for_ai = shown
+    else:
+        expected_for_ai = expected
+
+    # Layer 1b: exact match after normalization.
+    ordered = quiz.get("ordered") or "respectiv" in strip_diacritics(quiz["problem"].lower())
+    if not options and normalize_answer(student, ordered) == normalize_answer(expected, ordered):
+        return {"correct": True, "expected": shown, "method": "exact", "explanation": ""}
 
     # Layer 2: AI equivalence check.
     try:
         raw = llm.chat([{"role": "user", "content": CHECK_PROMPT.format(
-            problem=quiz["problem"][:800], expected=expected, student=student, language=language)}],
-            temperature=0.0, max_tokens=200)
+            problem=quiz["problem"][:1500], expected=expected_for_ai, student=student,
+            language=language)}], temperature=0.0, max_tokens=200)
         m = re.search(r"\{.*\}", raw, flags=re.DOTALL)
         data = json.loads(m.group(0)) if m else {}
-        correct = bool(data.get("correct"))
+        correct = data.get("correct") is True
         explanation = str(data.get("explanation", ""))[:300]
     except (llm.LLMError, ValueError):
         with _store_lock:
             quiz["answered"] = False      # let the student try again
         raise llm.LLMError("check failed")
-    return {"correct": correct, "expected": expected, "method": "ai", "explanation": explanation}
+    return {"correct": correct, "expected": shown, "method": "ai", "explanation": explanation}
 
 
 # ---------------------------------------------------------------- official solution
