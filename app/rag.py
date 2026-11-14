@@ -93,6 +93,17 @@ def _public_source(i: int, c: dict) -> dict:
     }
 
 
+EXPAND_PROMPT = """A student asks about the Romanian Baccalaureate exam (Math M_mate-info or \
+Computer Science C/C++). Write 8-15 Romanian search keywords that would appear in the official \
+curriculum (programa), exam papers (subiecte) or grading schemes (bareme) relevant to the question. \
+Include synonyms and the concrete math/CS terms used in exam papers (e.g. for "monotonie": \
+crescătoare descrescătoare derivata semnul). Output ONLY the keywords separated by spaces.
+
+QUESTION: {question}"""
+
+GRADING_WORDS = ("punct", "barem", "noteaz", "notare", "grad", "point", "score", "mark")
+
+
 def expand_query(question: str) -> str:
     """Ask the model for extra search terms (query rewriting). Falls back silently."""
     try:
