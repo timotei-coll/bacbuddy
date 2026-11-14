@@ -4,6 +4,7 @@
 
 🔗 **Live demo:** https://108-61-189-232.sslip.io
 📊 **Live usage stats:** https://108-61-189-232.sslip.io/stats
+🎬 **Demo video (2 min):** https://youtu.be/AqOPJruSXOY
 🏁 Built solo for **HackGlobal 2026** (Polaris School of Technology × Vultr) · Track: *Grounded knowledge and RAG*
 
 ![BacBuddy architecture](docs/architecture.png)
