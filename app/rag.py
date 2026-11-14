@@ -56,8 +56,32 @@ def _format_sources(chunks: list) -> str:
     return "\n\n---\n\n".join(parts)
 
 
+_KEEP_SYMBOLS = set("+-−=<>≤≥≠≈±×·÷/*^%()[]{}|.,;:!?'\"„”“’–—…_#&@$€°√∞∫∑∈∉⊂⊆∪∩∅→⇒⇔ℝℕℤℚℂπαβγδεθλμσφωΔ")
+
+
+def clean_snippet(text: str) -> str:
+    """Make a source preview readable: drop PDF bullet glyphs / private-use symbols and
+    collapse runs of scrambled formula fragments (e.g. '000 , , , 0 , 1 , , 00')."""
+    out = []
+    for ch in text:
+        if ch.isalnum() or ch.isspace() or ch in _KEEP_SYMBOLS:
+            out.append(ch)
+        else:
+            out.append(" ")
+    t = "".join(out)
+    # a run of tiny digit/comma tokens like "000 , , , 0 , 1 , , 00" is a broken formula;
+    # real expressions such as "1 + 2 + 3 = 6" have operators, not piles of commas
+    def _broken(m):
+        return " … " if m.group(0).count(",") + m.group(0).count(";") >= 3 else m.group(0)
+    t = re.sub(r"(?:(?<=\s)|^)(?:[\d.,;:()]{1,3}\s+){4,}[\d.,;:()]{0,3}", _broken, t)
+    t = re.sub(r"(?:\s*[,;]){2,}", ",", t)                       # ", , ," -> ","
+    t = re.sub(r"(\s*…\s*)+", " … ", t)
+    t = re.sub(r"\s+([,.;:])", r"\1", t)
+    return re.sub(r"\s+", " ", t).strip(" ,;")
+
+
 def _public_source(i: int, c: dict) -> dict:
-    snippet = re.sub(r"\s+", " ", c["text"]).strip()
+    snippet = clean_snippet(c["text"])
     return {
         "n": i,
         "label": c["label"],
@@ -67,17 +91,6 @@ def _public_source(i: int, c: dict) -> dict:
         "doc_type": c["doc_type"],
         "year": c["year"],
     }
-
-
-EXPAND_PROMPT = """A student asks about the Romanian Baccalaureate exam (Math M_mate-info or \
-Computer Science C/C++). Write 8-15 Romanian search keywords that would appear in the official \
-curriculum (programa), exam papers (subiecte) or grading schemes (bareme) relevant to the question. \
-Include synonyms and the concrete math/CS terms used in exam papers (e.g. for "monotonie": \
-crescătoare descrescătoare derivata semnul). Output ONLY the keywords separated by spaces.
-
-QUESTION: {question}"""
-
-GRADING_WORDS = ("punct", "barem", "noteaz", "notare", "grad", "point", "score", "mark")
 
 
 def expand_query(question: str) -> str:
