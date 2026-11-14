@@ -50,7 +50,7 @@ async function load() {
     document.getElementById("levels").textContent = s.level_ups;
     document.getElementById("shares").textContent = s.cards_shared;
     const rows = document.getElementById("rows");
-    rows.innerHTML = "";
+    rows.innerHTML = s.countries.length ? "" : '<tr><td colspan="2" style="color:#9aa6c7">No countries yet</td></tr>';
     s.countries.forEach(c => {
       const tr = document.createElement("tr");
       const a = document.createElement("td"); a.textContent = c.country;

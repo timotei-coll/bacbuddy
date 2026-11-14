@@ -589,7 +589,20 @@ $("tab-quiz").onclick = () => showTab("quiz");
 $("ask-btn").onclick = () => ask();
 $("question").addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) ask(); });
 $("quiz-btn").onclick = newQuiz;
-$("country").value = store("bb_country") || "";
+// Pre-fill the country from the browser's time zone (the visitor can still change it).
+const TZ_COUNTRY = { "Europe/Bucharest": "Romania", "Europe/Chisinau": "Moldova", "Asia/Kolkata": "India",
+  "Asia/Calcutta": "India", "Europe/Berlin": "Germany", "Europe/London": "United Kingdom", "Africa/Lagos": "Nigeria",
+  "Africa/Nairobi": "Kenya", "Europe/Istanbul": "Turkey", "Asia/Dubai": "UAE" };
+function guessCountry() {
+  try {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+    if (TZ_COUNTRY[tz]) return TZ_COUNTRY[tz];
+    if (tz.startsWith("America/")) return ["America/New_York", "America/Chicago", "America/Denver",
+      "America/Los_Angeles", "America/Phoenix", "America/Detroit"].includes(tz) ? "United States" : "Other";
+    return tz ? "Other" : "";
+  } catch (e) { return ""; }
+}
+$("country").value = store("bb_country") || guessCountry();
 $("country").onchange = () => store("bb_country", $("country").value);
 applyLang();
 </script>
