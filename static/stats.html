@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BacBuddy · Live usage stats</title>
+<style>
+  body { margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #0b1020; color: #e8ecf8; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 28px 18px; }
+  h1 { margin: 0 0 4px; font-size: 26px; }
+  p { color: #9aa6c7; margin: 0 0 22px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .tile { background: #121a33; border: 1px solid #26325a; border-radius: 14px; padding: 16px; }
+  .num { font-size: 34px; font-weight: 800; color: #ffcc33; }
+  .lbl { color: #9aa6c7; font-size: 13.5px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 18px; background: #121a33; border: 1px solid #26325a; border-radius: 14px; overflow: hidden; }
+  td, th { padding: 10px 14px; border-bottom: 1px solid #26325a; text-align: left; }
+  th { color: #9aa6c7; font-weight: 600; font-size: 13px; }
+  a { color: #9db6ff; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>📊 BacBuddy · live usage</h1>
+  <p>Anonymous, real-time usage of the deployed app (refreshes every 30 s). <a href="/">← Back to BacBuddy</a></p>
+  <div class="grid">
+    <div class="tile"><div class="num" id="users">–</div><div class="lbl">unique users</div></div>
+    <div class="tile"><div class="num" id="questions">–</div><div class="lbl">questions answered</div></div>
+    <div class="tile"><div class="num" id="quizzes">–</div><div class="lbl">practice problems</div></div>
+    <div class="tile"><div class="num" id="countries">–</div><div class="lbl">countries</div></div>
+    <div class="tile"><div class="num" id="helpful">–</div><div class="lbl">rated helpful (<span id="fb">0</span> ratings)</div></div>
+  </div>
+  <table><thead><tr><th>Country</th><th>Users</th></tr></thead><tbody id="rows"></tbody></table>
+</div>
+<script>
+async function load() {
+  try {
+    const s = await (await fetch("/api/stats")).json();
+    document.getElementById("users").textContent = s.users;
+    document.getElementById("questions").textContent = s.questions;
+    document.getElementById("quizzes").textContent = s.quizzes;
+    document.getElementById("countries").textContent = s.countries.length;
+    document.getElementById("helpful").textContent = s.helpful_percent === null ? "–" : s.helpful_percent + "%";
+    document.getElementById("fb").textContent = s.feedback_total;
+    const rows = document.getElementById("rows");
+    rows.innerHTML = "";
+    s.countries.forEach(c => {
+      const tr = document.createElement("tr");
+      const a = document.createElement("td"); a.textContent = c.country;
+      const b = document.createElement("td"); b.textContent = c.users;
+      tr.append(a, b); rows.append(tr);
+    });
+  } catch (e) {}
+}
+load(); setInterval(load, 30000);
+</script>
+</body>
+</html>

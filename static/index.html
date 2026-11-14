@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BacBuddy · AI Bac study assistant with cited sources</title>
+<meta name="description" content="BacBuddy answers Baccalaureate questions only from official Romanian exam materials and cites the exact source.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+  :root {
+    --bg: #0b1020; --panel: #121a33; --panel-2: #18223f; --line: #26325a;
+    --text: #e8ecf8; --muted: #9aa6c7; --accent: #ffcc33; --accent-ink: #2a2100;
+    --blue: #4f7cff; --good: #3ccf8e; --bad: #ff6b6b; --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 10% -10%, #1b2a5c 0%, transparent 60%), var(--bg);
+    color: var(--text); line-height: 1.55; min-height: 100vh;
+  }
+  a { color: #9db6ff; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 24px 18px 60px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo { width: 42px; height: 42px; border-radius: 12px; background: var(--accent); color: var(--accent-ink);
+          display: grid; place-items: center; font-weight: 800; font-size: 20px; }
+  .brand h1 { margin: 0; font-size: 24px; letter-spacing: -0.02em; }
+  .brand p { margin: 0; color: var(--muted); font-size: 13.5px; }
+  .lang { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+  .lang button { background: none; border: 0; color: var(--muted); padding: 6px 14px; cursor: pointer; font-weight: 600; }
+  .lang button.on { background: var(--panel-2); color: var(--text); }
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; margin: 18px 0 8px; }
+  .badge { font-size: 12.5px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px; }
+  .tabs { display: flex; gap: 6px; margin: 18px 0 14px; }
+  .tab { flex: 1; background: var(--panel); border: 1px solid var(--line); color: var(--muted); padding: 10px;
+         border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 15px; }
+  .tab.on { color: var(--text); border-color: var(--blue); background: var(--panel-2); }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+  textarea { width: 100%; min-height: 86px; resize: vertical; background: var(--bg); color: var(--text);
+             border: 1px solid var(--line); border-radius: 10px; padding: 12px; font: inherit; font-size: 15.5px; }
+  textarea:focus, select:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
+  select { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 9px 10px; font: inherit; }
+  .btn { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 10px; padding: 10px 18px;
+         font-weight: 700; cursor: pointer; font-size: 15px; }
+  .btn:disabled { opacity: .6; cursor: wait; }
+  .btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+  .grow { flex: 1; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+  .chip { background: var(--panel-2); border: 1px solid var(--line); color: var(--muted); border-radius: 999px;
+          padding: 5px 12px; font-size: 13px; cursor: pointer; }
+  .chip:hover { color: var(--text); }
+  .answer { margin-top: 16px; }
+  .answer .body { font-size: 15.5px; }
+  .answer .body p { margin: 0 0 10px; }
+  .answer .body ul, .answer .body ol { margin: 0 0 10px; padding-left: 22px; }
+  .cite { display: inline-block; min-width: 20px; padding: 0 5px; margin: 0 1px; border-radius: 6px; background: var(--blue);
+          color: #fff; font-size: 11.5px; font-weight: 700; text-decoration: none; text-align: center; vertical-align: 2px; }
+  .sources { margin-top: 14px; display: grid; gap: 10px; }
+  .src { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; scroll-margin-top: 20px; }
+  .src.flash { border-color: var(--accent); }
+  .src-top { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .src-title { font-weight: 700; font-size: 14px; }
+  .src-title .n { color: var(--accent); margin-right: 6px; }
+  .src-snip { color: var(--muted); font-size: 13px; margin-top: 6px; }
+  .src a { font-size: 13px; font-weight: 600; white-space: nowrap; }
+  .tag { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); border: 1px solid #5a4a12;
+         border-radius: 6px; padding: 1px 6px; margin-left: 6px; }
+  .fb { display: flex; gap: 8px; align-items: center; margin-top: 14px; color: var(--muted); font-size: 13.5px; }
+  .fb button { background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; cursor: pointer; font-size: 16px; }
+  .fb button.on { border-color: var(--good); }
+  .muted { color: var(--muted); font-size: 13.5px; }
+  .err { color: var(--bad); margin-top: 12px; }
+  .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid var(--line); border-top-color: var(--accent);
+             border-radius: 50%; animation: spin .8s linear infinite; vertical-align: -3px; margin-right: 8px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hint { margin-top: 10px; padding: 10px 12px; border-left: 3px solid var(--accent); background: var(--panel-2); border-radius: 8px; }
+  footer { margin-top: 28px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 13px; align-items: center; }
+  .hidden { display: none !important; }
+  .katex { font-size: 1.05em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">B</div>
+      <div>
+        <h1>BacBuddy</h1>
+        <p data-i18n="tagline"></p>
+      </div>
+    </div>
+    <div class="lang" role="group" aria-label="Language">
+      <button id="lang-ro">RO</button><button id="lang-en">EN</button>
+    </div>
+  </header>
+
+  <div class="badges">
+    <span class="badge" data-i18n="b1"></span>
+    <span class="badge" data-i18n="b2"></span>
+    <span class="badge" data-i18n="b3"></span>
+  </div>
+
+  <div class="tabs">
+    <button class="tab on" id="tab-ask" data-i18n="tabAsk"></button>
+    <button class="tab" id="tab-quiz" data-i18n="tabQuiz"></button>
+  </div>
+
+  <!-- ASK -->
+  <section id="view-ask">
+    <div class="card">
+      <textarea id="question" maxlength="500" data-i18n-ph="placeholder"></textarea>
+      <div class="row">
+        <select id="subject">
+          <option value="" data-i18n="allSubjects"></option>
+          <option value="matematica" data-i18n="math"></option>
+          <option value="informatica" data-i18n="cs"></option>
+        </select>
+        <select id="year">
+          <option value="" data-i18n="allYears"></option>
+          <option>2026</option><option>2025</option><option>2024</option>
+        </select>
+        <span class="grow"></span>
+        <button class="btn" id="ask-btn" data-i18n="ask"></button>
+      </div>
+      <div class="chips" id="examples"></div>
+    </div>
+    <div id="ask-out" class="answer"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="view-quiz" class="hidden">
+    <div class="card">
+      <p class="muted" data-i18n="quizIntro" style="margin-top:0"></p>
+      <div class="row">
+        <select id="quiz-subject">
+          <option value="matematica" data-i18n="math"></option>
+          <option value="informatica" data-i18n="cs"></option>
+        </select>
+        <span class="grow"></span>
+        <button class="btn" id="quiz-btn" data-i18n="newProblem"></button>
+      </div>
+    </div>
+    <div id="quiz-out" class="answer"></div>
+  </section>
+
+  <footer>
+    <div>
+      <label for="country" data-i18n="whereFrom"></label>
+      <select id="country">
+        <option value="">—</option>
+        <option>Romania</option><option>Moldova</option><option>India</option><option>United States</option>
+        <option>Germany</option><option>United Kingdom</option><option>Nigeria</option><option>Kenya</option>
+        <option>Turkey</option><option>UAE</option><option>Other</option>
+      </select>
+    </div>
+    <div><a href="/stats" data-i18n="liveStats"></a> · HackGlobal 2026 · Powered by Vultr</div>
+  </footer>
+</div>
+
+<script>
+const T = {
+  ro: {
+    tagline: "Asistent AI pentru Bac care răspunde doar din materialele oficiale",
+    b1: "📚 Programe, subiecte și bareme oficiale 2024–2026", b2: "🔗 Fiecare răspuns are sursă", b3: "🚫 Nu inventează",
+    tabAsk: "💬 Întreabă", tabQuiz: "🎯 Quiz me",
+    placeholder: "Ex.: Cum se punctează studiul monotoniei unei funcții la Bac?",
+    allSubjects: "Toate materiile", math: "Matematică M_mate-info", cs: "Informatică (C/C++)", allYears: "Toți anii",
+    ask: "Întreabă", thinking: "Caut în materialele oficiale…", sources: "Surse oficiale",
+    openPdf: "Deschide PDF-ul ↗", page: "pagina", helpful: "Ți-a fost util?", thanks: "Mulțumim! 💛",
+    quizIntro: "Primești o problemă dintr-un subiect oficial de Bac. Încearc-o, apoi vezi baremul oficial al aceleiași sesiuni.",
+    newProblem: "Problemă nouă", hint: "Indiciu", showHint: "Arată indiciul", showBarem: "Arată baremul oficial",
+    fromExam: "Din", whereFrom: "Din ce țară ești? ", liveStats: "📊 Statistici live",
+    errGeneric: "A apărut o eroare. Încearcă din nou.",
+    examples: ["Ce trebuie să știu despre funcții derivabile?", "Cum se punctează subiectul III la matematică?",
+               "Ce algoritmi de sortare sunt în programă?", "Cum se punctează un subprogram la informatică?"]
+  },
+  en: {
+    tagline: "AI Bac study assistant that answers only from official materials",
+    b1: "📚 Official curricula, papers & grading schemes 2024–2026", b2: "🔗 Every answer is cited", b3: "🚫 Never makes things up",
+    tabAsk: "💬 Ask", tabQuiz: "🎯 Quiz me",
+    placeholder: "E.g.: What do I need to know about derivatives for the Bac?",
+    allSubjects: "All subjects", math: "Math M_mate-info", cs: "Computer Science (C/C++)", allYears: "All years",
+    ask: "Ask", thinking: "Searching the official materials…", sources: "Official sources",
+    openPdf: "Open PDF ↗", page: "page", helpful: "Was this helpful?", thanks: "Thanks! 💛",
+    quizIntro: "Get a problem from a real Bac exam paper. Try it, then reveal the official grading scheme from the same session.",
+    newProblem: "New problem", hint: "Hint", showHint: "Show hint", showBarem: "Show official grading",
+    fromExam: "From", whereFrom: "Where are you from? ", liveStats: "📊 Live stats",
+    errGeneric: "Something went wrong. Please try again.",
+    examples: ["What topics about derivatives are in the curriculum?", "How is Subject III graded in Math?",
+               "Which sorting algorithms are in the CS curriculum?", "How are subprograms graded in CS?"]
+  }
+};
+
+// ---------- small helpers ----------
+const $ = (id) => document.getElementById(id);
+function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+let lang = store("bb_lang") || ((navigator.language || "").startsWith("ro") ? "ro" : "en");
+let client = store("bb_client");
+if (!client) { client = Math.random().toString(36).slice(2) + Date.now().toString(36); store("bb_client", client); }
+
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+
+// Safe mini-markdown: escape first, then add bold, lists, paragraphs and citation links.
+function render(md, prefix) {
+  const lines = esc(md).split(/\n/);
+  let html = "", list = null;
+  const inline = (t) => t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+                         .replace(/\[(\d{1,2})\]/g, `<a class="cite" href="#${prefix}-$1" data-ref="${prefix}-$1">$1</a>`);
+  for (const raw of lines) {
+    const line = raw.trim();
+    const ul = line.match(/^[-*•]\s+(.*)/), ol = line.match(/^\d+[.)]\s+(.*)/);
+    if (ul || ol) {
+      const type = ul ? "ul" : "ol";
+      if (list !== type) { if (list) html += `</${list}>`; html += `<${type}>`; list = type; }
+      html += `<li>${inline((ul || ol)[1])}</li>`;
+    } else {
+      if (list) { html += `</${list}>`; list = null; }
+      if (line) html += `<p>${inline(line)}</p>`;
+    }
+  }
+  if (list) html += `</${list}>`;
+  return html;
+}
+
+function renderMath(el) {
+  if (window.renderMathInElement) {
+    try { renderMathInElement(el, { delimiters: [{left: "$$", right: "$$", display: true}, {left: "$", right: "$", display: false},
+                                                  {left: "\\(", right: "\\)", display: false}], throwOnError: false }); } catch (e) {}
+  }
+}
+
+function sourcesHtml(sources, prefix) {
+  if (!sources || !sources.length) return "";
+  const t = T[lang];
+  return `<h3 style="margin:18px 0 8px;font-size:15px">${t.sources}</h3><div class="sources">` + sources.map(s => `
+    <div class="src" id="${prefix}-${s.n}">
+      <div class="src-top">
+        <div class="src-title"><span class="n">[${s.n}]</span>${esc(s.label)}, ${t.page} ${s.page}
+          <span class="tag">${esc(s.doc_type)}</span></div>
+        <a href="${esc(s.url)}" target="_blank" rel="noopener">${t.openPdf}</a>
+      </div>
+      <div class="src-snip">${esc(s.snippet)}</div>
+    </div>`).join("") + "</div>";
+}
+
+function wireCitations(root) {
+  root.querySelectorAll(".cite").forEach(a => a.addEventListener("click", (e) => {
+    const target = document.getElementById(a.dataset.ref);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    target.classList.add("flash"); setTimeout(() => target.classList.remove("flash"), 1200);
+  }));
+}
+
+function feedbackHtml(kind) {
+  return `<div class="fb" data-kind="${kind}"><span>${T[lang].helpful}</span>
+    <button data-v="1" aria-label="yes">👍</button><button data-v="0" aria-label="no">👎</button></div>`;
+}
+function wireFeedback(root) {
+  const box = root.querySelector(".fb"); if (!box) return;
+  box.querySelectorAll("button").forEach(b => b.addEventListener("click", async () => {
+    box.querySelectorAll("button").forEach(x => x.disabled = true); b.classList.add("on");
+    box.querySelector("span").textContent = T[lang].thanks;
+    try { await post("/api/feedback", { helpful: b.dataset.v === "1", kind: box.dataset.kind }); } catch (e) {}
+  }));
+}
+
+async function post(url, data) {
+  const res = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...data, lang, client, country: $("country").value }) });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(json.error || T[lang].errGeneric);
+  return json;
+}
+
+function loading(el) { el.innerHTML = `<div class="card muted"><span class="spinner"></span>${T[lang].thinking}</div>`; }
+function showError(el, msg) { el.innerHTML = `<div class="card err">${esc(msg)}</div>`; }
+
+// ---------- ASK ----------
+async function ask(q) {
+  const question = (q || $("question").value).trim();
+  if (question.length < 3) { $("question").focus(); return; }
+  $("question").value = question;
+  const out = $("ask-out"), btn = $("ask-btn");
+  btn.disabled = true; loading(out);
+  try {
+    const r = await post("/api/ask", { question, subject: $("subject").value, year: $("year").value });
+    out.innerHTML = `<div class="card"><div class="body">${render(r.answer, "a")}</div>
+      ${sourcesHtml(r.sources, "a")}${feedbackHtml("ask")}</div>`;
+    renderMath(out); wireCitations(out); wireFeedback(out);
+  } catch (e) { showError(out, e.message); }
+  btn.disabled = false;
+}
+
+// ---------- QUIZ ----------
+let currentQuiz = null;
+async function newQuiz() {
+  const out = $("quiz-out"), btn = $("quiz-btn");
+  btn.disabled = true; loading(out);
+  try {
+    const r = await post("/api/quiz", { subject: $("quiz-subject").value });
+    if (r.error) throw new Error(T[lang].errGeneric);
+    currentQuiz = r;
+    const t = T[lang];
+    out.innerHTML = `<div class="card">
+      <div class="muted">${t.fromExam}: <a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.source.label)}, ${t.page} ${r.source.page} ↗</a></div>
+      <div class="body" style="margin-top:10px">${render(r.problem, "q")}</div>
+      ${r.hint ? `<button class="btn ghost" id="hint-btn" style="margin-top:6px">${t.showHint}</button>
+        <div class="hint hidden" id="hint-box"><strong>${t.hint}:</strong> ${render(r.hint, "q")}</div>` : ""}
+      <div class="row"><button class="btn" id="barem-btn">${t.showBarem}</button></div>
+      <div id="solution"></div></div>`;
+    renderMath(out);
+    const hb = $("hint-btn"); if (hb) hb.onclick = () => { $("hint-box").classList.remove("hidden"); hb.remove(); };
+    $("barem-btn").onclick = showSolution;
+  } catch (e) { showError(out, e.message); }
+  btn.disabled = false;
+}
+
+async function showSolution() {
+  const box = $("solution"), btn = $("barem-btn");
+  btn.disabled = true; loading(box);
+  try {
+    const r = await post("/api/quiz/solution", { quiz_ref: currentQuiz.quiz_ref });
+    box.innerHTML = `<div style="margin-top:14px" class="body">${render(r.answer, "s")}</div>
+      ${sourcesHtml(r.sources, "s")}${feedbackHtml("quiz")}`;
+    renderMath(box); wireCitations(box); wireFeedback(box); btn.remove();
+  } catch (e) { showError(box, e.message); btn.disabled = false; }
+}
+
+// ---------- language + tabs ----------
+function applyLang() {
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach(el => el.textContent = t[el.dataset.i18n]);
+  document.querySelectorAll("[data-i18n-ph]").forEach(el => el.placeholder = t[el.dataset.i18nPh]);
+  $("lang-ro").classList.toggle("on", lang === "ro"); $("lang-en").classList.toggle("on", lang === "en");
+  $("examples").innerHTML = t.examples.map(x => `<button class="chip">${esc(x)}</button>`).join("");
+  $("examples").querySelectorAll(".chip").forEach(c => c.onclick = () => ask(c.textContent));
+}
+$("lang-ro").onclick = () => { lang = "ro"; store("bb_lang", lang); applyLang(); };
+$("lang-en").onclick = () => { lang = "en"; store("bb_lang", lang); applyLang(); };
+function showTab(name) {
+  $("tab-ask").classList.toggle("on", name === "ask"); $("tab-quiz").classList.toggle("on", name === "quiz");
+  $("view-ask").classList.toggle("hidden", name !== "ask"); $("view-quiz").classList.toggle("hidden", name !== "quiz");
+}
+$("tab-ask").onclick = () => showTab("ask");
+$("tab-quiz").onclick = () => showTab("quiz");
+$("ask-btn").onclick = () => ask();
+$("question").addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) ask(); });
+$("quiz-btn").onclick = newQuiz;
+$("country").value = store("bb_country") || "";
+$("country").onchange = () => store("bb_country", $("country").value);
+applyLang();
+</script>
+</body>
+</html>
