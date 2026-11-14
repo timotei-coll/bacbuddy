@@ -13,7 +13,7 @@ from starlette.responses import FileResponse, JSONResponse
 from starlette.routing import Mount, Route
 from starlette.staticfiles import StaticFiles
 
-from app import db, rag
+from app import db, quiz as quizzes, rag
 from app.llm import LLMError
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -106,7 +106,8 @@ async def quiz(request):
         return _too_many()
     subject, _, lang, client, country = _clean(body)
     try:
-        result = await run_in_threadpool(rag.quiz, subject, lang)
+        seen = [str(x)[:16] for x in body.get("seen", [])][:300] if isinstance(body.get("seen"), list) else []
+        result = await run_in_threadpool(quizzes.new_quiz, subject, lang, seen)
     except LLMError as exc:
         return _ai_error(exc)
     db.log_event("quiz", client, country, lang, subject, "error" not in result)
@@ -120,9 +121,38 @@ async def quiz_solution(request):
     ref = body.get("quiz_ref") if isinstance(body.get("quiz_ref"), dict) else {}
     _, _, lang, _, _ = _clean(body)
     try:
-        return JSONResponse(await run_in_threadpool(rag.quiz_solution, ref, lang))
+        return JSONResponse(await run_in_threadpool(quizzes.solution, ref, lang))
     except LLMError as exc:
         return _ai_error(exc)
+
+
+async def quiz_check(request):
+    body = await _json_body(request)
+    if _rate_limited(request, body):
+        return _too_many()
+    _, _, lang, client, country = _clean(body)
+    quiz_id = str(body.get("quiz_id", ""))[:64]
+    try:
+        result = await run_in_threadpool(quizzes.check_answer, quiz_id, body.get("answer", ""))
+    except LLMError as exc:
+        return _ai_error(exc)
+    if "error" not in result:
+        db.log_event("quiz_answer", client, country, lang, None, result["correct"])
+    return JSONResponse(result)
+
+
+EVENT_KINDS = {"share_card", "level_up"}
+
+
+async def event(request):
+    """Small anonymous events from the UI (e.g. an achievement card was shared)."""
+    body = await _json_body(request)
+    kind = str(body.get("kind", ""))
+    if kind not in EVENT_KINDS:
+        return JSONResponse({"error": "unknown event"}, status_code=400)
+    _, _, lang, client, country = _clean(body)
+    db.log_event(kind, client, country, lang, None, True)
+    return JSONResponse({"ok": True})
 
 
 async def feedback(request):
@@ -154,6 +184,8 @@ app = Starlette(routes=[
     Route("/api/ask", ask, methods=["POST"]),
     Route("/api/quiz", quiz, methods=["POST"]),
     Route("/api/quiz/solution", quiz_solution, methods=["POST"]),
+    Route("/api/quiz/check", quiz_check, methods=["POST"]),
+    Route("/api/event", event, methods=["POST"]),
     Route("/api/feedback", feedback, methods=["POST"]),
     Route("/api/stats", stats),
     Route("/health", health),

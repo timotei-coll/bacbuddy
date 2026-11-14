@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>BacBuddy · AI Bac study assistant with cited sources</title>
+<title>BacBuddy · AI study assistant for Romania's Baccalaureate (Bac) with cited sources</title>
 <meta name="description" content="BacBuddy answers Baccalaureate questions only from official Romanian exam materials and cites the exact source.">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -12,12 +12,11 @@
   :root {
     --bg: #0b1020; --panel: #121a33; --panel-2: #18223f; --line: #26325a;
     --text: #e8ecf8; --muted: #9aa6c7; --accent: #ffcc33; --accent-ink: #2a2100;
-    --blue: #4f7cff; --good: #3ccf8e; --bad: #ff6b6b; --radius: 14px;
+    --blue: #4f7cff; --good: #3ccf8e; --bad: #ff6b6b; --radius: 14px; --glow: #1b2a5c;
   }
   * { box-sizing: border-box; }
   body {
     margin: 0; font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: radial-gradient(1200px 600px at 10% -10%, #1b2a5c 0%, transparent 60%), var(--bg);
     color: var(--text); line-height: 1.55; min-height: 100vh;
   }
   a { color: #9db6ff; }
@@ -79,6 +78,27 @@
   .hint { margin-top: 10px; padding: 10px 12px; border-left: 3px solid var(--accent); background: var(--panel-2); border-radius: 8px; }
   footer { margin-top: 28px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 13px; align-items: center; }
   .hidden { display: none !important; }
+  /* score + belts */
+  body { transition: background .6s; background: radial-gradient(1200px 600px at 10% -10%, var(--glow) 0%, transparent 60%), var(--bg); }
+  .score { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+  .belt-chip { display: flex; align-items: center; gap: 8px; font-weight: 700; }
+  .belt-dot { width: 26px; height: 12px; border-radius: 4px; background: var(--accent); box-shadow: 0 0 0 2px #0006 inset; }
+  .pts { font-size: 26px; font-weight: 800; color: var(--accent); }
+  .bar { flex: 1; min-width: 140px; height: 8px; background: var(--bg); border-radius: 99px; overflow: hidden; border: 1px solid var(--line); }
+  .bar > div { height: 100%; background: var(--accent); width: 0; transition: width .6s; }
+  .answer-row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .answer-row input { flex: 1; min-width: 180px; background: var(--bg); color: var(--text); border: 1px solid var(--line);
+                      border-radius: 10px; padding: 10px 12px; font: inherit; font-size: 15.5px; }
+  .verdict { margin-top: 12px; padding: 12px 14px; border-radius: 10px; font-weight: 600; }
+  .verdict.ok { background: #123a2a; border: 1px solid var(--good); }
+  .verdict.no { background: #3a1620; border: 1px solid var(--bad); }
+  .modal { position: fixed; inset: 0; background: #000b; display: grid; place-items: center; z-index: 50; padding: 16px; }
+  .modal-box { background: var(--panel); border: 1px solid var(--accent); border-radius: 18px; padding: 20px; max-width: 420px; width: 100%; text-align: center; }
+  .modal-box img { width: 100%; border-radius: 12px; margin: 12px 0; border: 1px solid var(--line); }
+  .modal-box h2 { margin: 6px 0; }
+  #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 60; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--panel-2); border: 1px solid var(--accent);
+           padding: 10px 16px; border-radius: 12px; z-index: 40; font-weight: 600; }
   .katex { font-size: 1.05em; }
   code { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 1px 5px;
          font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .92em; }
@@ -135,6 +155,13 @@
   <!-- QUIZ -->
   <section id="view-quiz" class="hidden">
     <div class="card">
+      <div class="score">
+        <div class="belt-chip"><span class="belt-dot"></span><span id="belt-name"></span></div>
+        <div class="pts"><span id="pts">0</span> <span class="muted" data-i18n="pts"></span></div>
+        <div class="bar" title=""><div id="bar-fill"></div></div>
+        <div class="muted"><span id="streak">0</span>🔥</div>
+      </div>
+      <p class="muted" id="next-belt" style="margin:0 0 10px"></p>
       <p class="muted" data-i18n="quizIntro" style="margin-top:0"></p>
       <div class="row">
         <select id="quiz-subject">
@@ -146,7 +173,9 @@
       </div>
     </div>
     <div id="quiz-out" class="answer"></div>
+    <p class="muted" data-i18n="season" style="text-align:center;margin-top:12px"></p>
   </section>
+  <canvas id="confetti" class="hidden"></canvas>
 
   <footer>
     <div>
@@ -165,8 +194,8 @@
 <script>
 const T = {
   ro: {
-    tagline: "Asistent AI pentru Bac care răspunde doar din materialele oficiale",
-    b1: "📚 Programe, subiecte și bareme oficiale 2024–2026", b2: "🔗 Fiecare răspuns are sursă", b3: "🚫 Nu inventează",
+    tagline: "Asistent AI pentru Bacalaureatul din România care răspunde doar din materialele oficiale",
+    b1: "🇷🇴 Bac România · Mate M_mate-info & Info C/C++ · 2024–2026", b2: "🔗 Fiecare răspuns are sursă", b3: "🚫 Nu inventează",
     tabAsk: "💬 Întreabă", tabQuiz: "🎯 Quiz me",
     placeholder: "Ex.: Cum se punctează studiul monotoniei unei funcții la Bac?",
     allSubjects: "Toate materiile", math: "Matematică M_mate-info", cs: "Informatică (C/C++)", allYears: "Toți anii",
@@ -175,13 +204,21 @@ const T = {
     quizIntro: "Primești o problemă dintr-un subiect oficial de Bac. Încearc-o, apoi vezi baremul oficial al aceleiași sesiuni.",
     newProblem: "Problemă nouă", hint: "Indiciu", showHint: "Arată indiciul", showBarem: "Arată baremul oficial",
     fromExam: "Din", whereFrom: "Din ce țară ești? ", liveStats: "📊 Statistici live",
+    pts: "puncte", yourAnswer: "Răspunsul tău final (ex.: 3, x=2, {1,4}, b)", check: "Verifică",
+    correct: "Corect!", wrong: "Nu chiar.", officialAnswer: "Răspuns din baremul oficial",
+    notCheckable: "Exercițiul ăsta nu are un rezultat de verificat automat. Vezi baremul oficial.",
+    streakBonus: "bonus serie", hintUsed: "cu indiciu", season: "🗓️ Scorul e pe sezon: se resetează în fiecare luni. Prinde centura neagră până atunci!",
+    nextBelt: (n, b) => `Încă ${n} puncte până la ${b}.`, maxBelt: "Ai centura supremă. Respect! 🥷",
+    levelUp: "Nivel nou!", download: "Descarcă cardul", share: "Distribuie", cont: "Continuă",
+    cardLine: (p) => `${p} puncte la exerciții oficiale de Bac săptămâna asta`, cardCta: "Încearcă și tu:",
+    expired: "Problema a expirat. Cere una nouă.",
     errGeneric: "A apărut o eroare. Încearcă din nou.",
     examples: ["Ce trebuie să știu despre funcții derivabile?", "Cum se punctează subiectul III la matematică?",
                "Ce algoritmi de sortare sunt în programă?", "Cum se punctează un subprogram la informatică?"]
   },
   en: {
-    tagline: "AI Bac study assistant that answers only from official materials",
-    b1: "📚 Official curricula, papers & grading schemes 2024–2026", b2: "🔗 Every answer is cited", b3: "🚫 Never makes things up",
+    tagline: "AI study assistant for Romania's Baccalaureate exam, answering only from official materials",
+    b1: "🇷🇴 Romanian Bac · Math M_mate-info & CS C/C++ · 2024–2026", b2: "🔗 Every answer is cited", b3: "🚫 Never makes things up",
     tabAsk: "💬 Ask", tabQuiz: "🎯 Quiz me",
     placeholder: "E.g.: What do I need to know about derivatives for the Bac?",
     allSubjects: "All subjects", math: "Math M_mate-info", cs: "Computer Science (C/C++)", allYears: "All years",
@@ -190,6 +227,14 @@ const T = {
     quizIntro: "Get a problem from a real Bac exam paper. Try it, then reveal the official grading scheme from the same session.",
     newProblem: "New problem", hint: "Hint", showHint: "Show hint", showBarem: "Show official grading",
     fromExam: "From", whereFrom: "Where are you from? ", liveStats: "📊 Live stats",
+    pts: "points", yourAnswer: "Your final answer (e.g. 3, x=2, {1,4}, b)", check: "Check",
+    correct: "Correct!", wrong: "Not quite.", officialAnswer: "Answer from the official grading scheme",
+    notCheckable: "This exercise has no final result to check automatically. See the official grading.",
+    streakBonus: "streak bonus", hintUsed: "with hint", season: "🗓️ Scores are weekly: they reset every Monday. Get your black belt before then!",
+    nextBelt: (n, b) => `${n} more points to ${b}.`, maxBelt: "You hold the highest belt. Respect! 🥷",
+    levelUp: "Level up!", download: "Download card", share: "Share", cont: "Continue",
+    cardLine: (p) => `${p} points on official Bac exam problems this week`, cardCta: "Try it too:",
+    expired: "This problem expired. Get a new one.",
     errGeneric: "Something went wrong. Please try again.",
     examples: ["What topics about derivatives are in the curriculum?", "How is Subject III graded in Math?",
                "Which sorting algorithms are in the CS curriculum?", "How are subprograms graded in CS?"]
@@ -307,28 +352,208 @@ async function ask(q) {
   btn.disabled = false;
 }
 
+// ---------- SCORE + BELTS ----------
+const BELTS = [
+  { min: 0,   ro: "Centura albă",       en: "White belt",  accent: "#f1f3fa", ink: "#14182a", glow: "#2a3354" },
+  { min: 50,  ro: "Centura galbenă",    en: "Yellow belt", accent: "#ffcc33", ink: "#2a2100", glow: "#4a3d10" },
+  { min: 100, ro: "Centura portocalie", en: "Orange belt", accent: "#ff8a3d", ink: "#2a1200", glow: "#5a2a10" },
+  { min: 200, ro: "Centura verde",      en: "Green belt",  accent: "#3ccf8e", ink: "#062a1a", glow: "#10442e" },
+  { min: 300, ro: "Centura albastră",   en: "Blue belt",   accent: "#4f9dff", ink: "#04142e", glow: "#16336a" },
+  { min: 450, ro: "Centura maro",       en: "Brown belt",  accent: "#c8915f", ink: "#24140a", glow: "#4a2e18" },
+  { min: 650, ro: "Centura neagră",     en: "Black belt",  accent: "#d4af37", ink: "#1a1400", glow: "#000000" },
+];
+const MOTIVATION = {
+  ro: ["Primul pas e făcut. Bacul se câștigă exercițiu cu exercițiu!",
+       "Ai prins ritmul! Încă puțin și ești peste media clasei.",
+       "100 de puncte! Așa arată cineva care chiar învață pentru Bac. 🔥",
+       "Centura verde: baremul începe să fie prietenul tău.",
+       "Centura albastră: rezolvi ca la examen. Ține-o tot așa!",
+       "Centura maro: ești la un pas de vârf. Nu te opri acum!",
+       "CENTURA NEAGRĂ! Ești pregătit de Bac. Respect total! 🥷"],
+  en: ["First step done. The Bac is won one exercise at a time!",
+       "You found your rhythm! Keep going.",
+       "100 points! That's what real Bac preparation looks like. 🔥",
+       "Green belt: the grading scheme is becoming your friend.",
+       "Blue belt: you solve like it's exam day. Keep it up!",
+       "Brown belt: one step from the top. Don't stop now!",
+       "BLACK BELT! You're ready for the Bac. Total respect! 🥷"],
+};
+
+function isoWeek(d = new Date()) {
+  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - day);
+  const y = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));
+  return t.getUTCFullYear() + "-W" + Math.ceil(((t - y) / 86400000 + 1) / 7);
+}
+function loadScore() {
+  let s = null; try { s = JSON.parse(store("bb_score") || "null"); } catch (e) {}
+  const week = isoWeek();
+  if (!s || s.week !== week) s = { week, points: 0, streak: 0, belt: 0 };   // weekly reset (Monday)
+  return s;
+}
+let score = loadScore();
+function saveScore() { store("bb_score", JSON.stringify(score)); }
+function beltIndex(points) { let i = 0; BELTS.forEach((b, k) => { if (points >= b.min) i = k; }); return i; }
+
+function applyTheme(i) {
+  const b = BELTS[i], r = document.documentElement.style;
+  r.setProperty("--accent", b.accent); r.setProperty("--accent-ink", b.ink); r.setProperty("--glow", b.glow);
+}
+function renderScore() {
+  const i = beltIndex(score.points), b = BELTS[i], next = BELTS[i + 1], t = T[lang];
+  applyTheme(i);
+  $("pts").textContent = score.points; $("streak").textContent = score.streak;
+  $("belt-name").textContent = b[lang];
+  const pct = next ? 100 * (score.points - b.min) / (next.min - b.min) : 100;
+  $("bar-fill").style.width = Math.max(3, Math.min(100, pct)) + "%";
+  $("next-belt").textContent = next ? t.nextBelt(next.min - score.points, next[lang]) : t.maxBelt;
+}
+function addPoints(delta) {
+  const before = beltIndex(score.points);
+  score.points = Math.max(0, score.points + delta);
+  const after = beltIndex(score.points);
+  if (after > score.belt) score.belt = after;
+  saveScore(); renderScore();
+  if (after > before) levelUp(after);
+}
+function toast(msg) {
+  const el = document.createElement("div"); el.className = "toast"; el.textContent = msg;
+  document.body.appendChild(el); setTimeout(() => el.remove(), 2600);
+}
+
+// ---------- level up: confetti + motivational message + shareable card ----------
+function confetti() {
+  const c = $("confetti"), ctx = c.getContext("2d");
+  c.classList.remove("hidden"); c.width = innerWidth; c.height = innerHeight;
+  const colors = [BELTS[beltIndex(score.points)].accent, "#ffffff", "#4f7cff", "#3ccf8e", "#ff6b6b"];
+  const parts = Array.from({ length: 160 }, () => ({ x: Math.random() * c.width, y: -20 - Math.random() * c.height / 2,
+    vx: (Math.random() - .5) * 4, vy: 2 + Math.random() * 4, s: 4 + Math.random() * 6, r: Math.random() * 6,
+    col: colors[Math.floor(Math.random() * colors.length)] }));
+  let frames = 0;
+  (function tick() {
+    ctx.clearRect(0, 0, c.width, c.height);
+    parts.forEach(p => { p.x += p.vx; p.y += p.vy; p.r += .1; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+      ctx.fillStyle = p.col; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * .6); ctx.restore(); });
+    if (++frames < 200) requestAnimationFrame(tick); else c.classList.add("hidden");
+  })();
+}
+
+function drawCard(i) {
+  const b = BELTS[i], t = T[lang], c = document.createElement("canvas");
+  c.width = 1080; c.height = 1350; const g = c.getContext("2d");
+  const grad = g.createLinearGradient(0, 0, 1080, 1350);
+  grad.addColorStop(0, "#0b1020"); grad.addColorStop(1, b.glow === "#000000" ? "#1a1400" : b.glow);
+  g.fillStyle = grad; g.fillRect(0, 0, 1080, 1350);
+  const font = (w, sz) => `${w} ${sz}px Inter, "Segoe UI", Roboto, Arial, sans-serif`;
+  g.fillStyle = b.accent; g.beginPath(); g.roundRect(90, 90, 110, 110, 28); g.fill();
+  g.fillStyle = b.ink; g.font = font(800, 64); g.textAlign = "center"; g.fillText("B", 145, 168);
+  g.textAlign = "left"; g.fillStyle = "#e8ecf8"; g.font = font(800, 64); g.fillText("BacBuddy", 230, 168);
+  // belt
+  g.fillStyle = b.accent; g.beginPath(); g.roundRect(140, 380, 800, 120, 24); g.fill();
+  g.fillStyle = "#0006"; g.fillRect(500, 380, 80, 120);
+  g.fillStyle = b.accent; g.beginPath(); g.moveTo(500, 500); g.lineTo(450, 640); g.lineTo(520, 640); g.lineTo(540, 500); g.fill();
+  g.beginPath(); g.moveTo(580, 500); g.lineTo(630, 640); g.lineTo(560, 640); g.lineTo(540, 500); g.fill();
+  g.textAlign = "center"; g.fillStyle = "#ffffff"; g.font = font(800, 84); g.fillText(b[lang], 540, 790);
+  g.fillStyle = b.accent; g.font = font(800, 150); g.fillText(String(score.points), 540, 960);
+  g.fillStyle = "#c9d2ea"; g.font = font(500, 40); wrap(g, t.cardLine(score.points), 540, 1030, 860, 52);
+  g.fillStyle = "#9aa6c7"; g.font = font(500, 34); g.fillText(t.cardCta, 540, 1200);
+  g.fillStyle = "#ffffff"; g.font = font(700, 40); g.fillText(location.host || "bacbuddy", 540, 1255);
+  return c;
+}
+function wrap(g, text, x, y, maxW, lh) {
+  const words = text.split(" "); let line = "";
+  for (const w of words) { const test = line ? line + " " + w : w;
+    if (g.measureText(test).width > maxW && line) { g.fillText(line, x, y); line = w; y += lh; } else line = test; }
+  g.fillText(line, x, y);
+}
+
+function levelUp(i) {
+  confetti();
+  try { post("/api/event", { kind: "level_up" }); } catch (e) {}
+  const b = BELTS[i], t = T[lang], canvas = drawCard(i), url = canvas.toDataURL("image/png");
+  const m = document.createElement("div"); m.className = "modal";
+  m.innerHTML = `<div class="modal-box">
+      <div class="muted">${t.levelUp}</div><h2 style="color:${b.accent}">🥋 ${esc(b[lang])}</h2>
+      <p>${esc(MOTIVATION[lang][i] || "")}</p><img alt="card" src="${url}">
+      <div class="row" style="justify-content:center"><button class="btn" id="m-share">${t.share}</button>
+      <a class="btn ghost" id="m-dl" download="bacbuddy-${b.en.replace(/ /g, "-").toLowerCase()}.png" href="${url}" style="text-decoration:none">${t.download}</a>
+      <button class="btn ghost" id="m-close">${t.cont}</button></div></div>`;
+  document.body.appendChild(m);
+  const logShare = () => { try { post("/api/event", { kind: "share_card" }); } catch (e) {} };
+  m.querySelector("#m-dl").onclick = logShare;
+  m.querySelector("#m-close").onclick = () => m.remove();
+  m.querySelector("#m-share").onclick = () => canvas.toBlob(async (blob) => {
+    const file = new File([blob], "bacbuddy.png", { type: "image/png" });
+    const data = { title: "BacBuddy", text: `${b[lang]} · ${t.cardLine(score.points)} · ${location.origin}`, files: [file] };
+    try {
+      if (navigator.canShare && navigator.canShare(data)) { await navigator.share(data); logShare(); }
+      else { m.querySelector("#m-dl").click(); }
+    } catch (e) {}
+  });
+}
+
 // ---------- QUIZ ----------
-let currentQuiz = null;
+let currentQuiz = null, hintUsed = false;
 async function newQuiz() {
   const out = $("quiz-out"), btn = $("quiz-btn");
-  btn.disabled = true; loading(out);
+  btn.disabled = true; loading(out); hintUsed = false;
   try {
-    const r = await post("/api/quiz", { subject: $("quiz-subject").value });
+    let seen = []; try { seen = JSON.parse(store("bb_seen") || "[]"); } catch (e) {}
+    const r = await post("/api/quiz", { subject: $("quiz-subject").value, seen: seen.slice(-250) });
     if (r.error) throw new Error(T[lang].errGeneric);
     currentQuiz = r;
+    if (r.exercise_key) {   // remember it; when every exercise was seen, start a new round
+      seen = r.remaining === 0 ? [r.exercise_key] : seen.filter(k => k !== r.exercise_key).concat(r.exercise_key);
+      store("bb_seen", JSON.stringify(seen.slice(-250)));
+    }
     const t = T[lang];
     out.innerHTML = `<div class="card">
       <div class="muted">${t.fromExam}: <a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.source.label)}, ${t.page} ${r.source.page} ↗</a></div>
       <div class="body" style="margin-top:10px">${render(r.problem, "q", false)}</div>
       ${r.hint ? `<button class="btn ghost" id="hint-btn" style="margin-top:6px">${t.showHint}</button>
         <div class="hint hidden" id="hint-box"><strong>${t.hint}:</strong> ${render(r.hint, "q", false)}</div>` : ""}
-      <div class="row"><button class="btn" id="barem-btn">${t.showBarem}</button></div>
+      ${r.checkable ? `<div class="answer-row"><input id="quiz-answer" maxlength="200" placeholder="${esc(t.yourAnswer)}">
+        <button class="btn" id="check-btn">${t.check}</button></div>`
+        : `<p class="muted">${t.notCheckable}</p>`}
+      <div id="verdict"></div>
+      <div class="row"><button class="btn ghost" id="barem-btn">${t.showBarem}</button></div>
       <div id="solution"></div></div>`;
     renderMath(out);
-    const hb = $("hint-btn"); if (hb) hb.onclick = () => { $("hint-box").classList.remove("hidden"); hb.remove(); };
+    const hb = $("hint-btn");
+    if (hb) hb.onclick = () => { $("hint-box").classList.remove("hidden"); hb.remove(); hintUsed = true; };
     $("barem-btn").onclick = showSolution;
+    if (r.checkable) {
+      $("check-btn").onclick = checkAnswer;
+      $("quiz-answer").addEventListener("keydown", e => { if (e.key === "Enter") checkAnswer(); });
+      $("quiz-answer").focus();
+    }
   } catch (e) { showError(out, e.message); }
   btn.disabled = false;
+}
+
+async function checkAnswer() {
+  const input = $("quiz-answer"), btn = $("check-btn"), box = $("verdict"), t = T[lang];
+  if (!input.value.trim()) { input.focus(); return; }
+  btn.disabled = true; input.disabled = true; loading(box);
+  try {
+    const r = await post("/api/quiz/check", { quiz_id: currentQuiz.quiz_id, answer: input.value });
+    if (r.error) throw new Error(r.error === "expired" ? t.expired : t.errGeneric);
+    let delta, detail;
+    if (r.correct) {
+      score.streak += 1;
+      delta = hintUsed ? 5 : 10;
+      detail = `+${delta}${hintUsed ? " (" + t.hintUsed + ")" : ""}`;
+      if (score.streak % 3 === 0) { delta += 5; detail += ` · +5 ${t.streakBonus} 🔥`; }
+    } else {
+      score.streak = 0; delta = -3; detail = "−3";
+    }
+    box.innerHTML = `<div class="verdict ${r.correct ? "ok" : "no"}">${r.correct ? "✅ " + t.correct : "❌ " + t.wrong} <span>${detail}</span>
+      <div class="muted" style="font-weight:400;margin-top:6px">${t.officialAnswer}: <span class="ans">${esc(r.expected)}</span>
+      ${r.explanation ? "<br>" + esc(r.explanation) : ""}</div></div>`;
+    renderMath(box);
+    addPoints(delta);
+    btn.remove();
+  } catch (e) { showError(box, e.message); btn.disabled = false; input.disabled = false; }
 }
 
 async function showSolution() {
@@ -351,6 +576,7 @@ function applyLang() {
   $("lang-ro").classList.toggle("on", lang === "ro"); $("lang-en").classList.toggle("on", lang === "en");
   $("examples").innerHTML = t.examples.map(x => `<button class="chip">${esc(x)}</button>`).join("");
   $("examples").querySelectorAll(".chip").forEach(c => c.onclick = () => ask(c.textContent));
+  renderScore();
 }
 $("lang-ro").onclick = () => { lang = "ro"; store("bb_lang", lang); applyLang(); };
 $("lang-en").onclick = () => { lang = "en"; store("bb_lang", lang); applyLang(); };

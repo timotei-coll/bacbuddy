@@ -43,11 +43,16 @@ def stats() -> dict:
         cur = _conn.cursor()
         questions = cur.execute("SELECT COUNT(*) FROM events WHERE kind='ask'").fetchone()[0]
         quizzes = cur.execute("SELECT COUNT(*) FROM events WHERE kind='quiz'").fetchone()[0]
-        users = cur.execute("SELECT COUNT(DISTINCT client) FROM events").fetchone()[0]
+        users = cur.execute("SELECT COUNT(DISTINCT client) FROM events "
+                            "WHERE kind IN ('ask','quiz','quiz_answer')").fetchone()[0]
         countries = cur.execute(
             "SELECT country, COUNT(DISTINCT client) FROM events WHERE country != '' "
             "GROUP BY country ORDER BY 2 DESC").fetchall()
         fb = cur.execute("SELECT COUNT(*), COALESCE(SUM(helpful),0) FROM feedback").fetchone()
+        answers = cur.execute("SELECT COUNT(*), COALESCE(SUM(found),0) FROM events "
+                              "WHERE kind='quiz_answer'").fetchone()
+        shares = cur.execute("SELECT COUNT(*) FROM events WHERE kind='share_card'").fetchone()[0]
+        level_ups = cur.execute("SELECT COUNT(*) FROM events WHERE kind='level_up'").fetchone()[0]
     return {
         "questions": questions,
         "quizzes": quizzes,
@@ -55,4 +60,8 @@ def stats() -> dict:
         "countries": [{"country": c, "users": n} for c, n in countries],
         "feedback_total": fb[0],
         "helpful_percent": round(100 * fb[1] / fb[0]) if fb[0] else None,
+        "quiz_answers": answers[0],
+        "quiz_correct_percent": round(100 * answers[1] / answers[0]) if answers[0] else None,
+        "cards_shared": shares,
+        "level_ups": level_ups,
     }

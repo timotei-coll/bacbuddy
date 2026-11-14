@@ -29,6 +29,9 @@
     <div class="tile"><div class="num" id="quizzes">–</div><div class="lbl">practice problems</div></div>
     <div class="tile"><div class="num" id="countries">–</div><div class="lbl">countries</div></div>
     <div class="tile"><div class="num" id="helpful">–</div><div class="lbl">rated helpful (<span id="fb">0</span> ratings)</div></div>
+    <div class="tile"><div class="num" id="answers">–</div><div class="lbl">quiz answers checked (<span id="acc">–</span> correct)</div></div>
+    <div class="tile"><div class="num" id="levels">–</div><div class="lbl">belts earned (level-ups)</div></div>
+    <div class="tile"><div class="num" id="shares">–</div><div class="lbl">achievement cards shared</div></div>
   </div>
   <table><thead><tr><th>Country</th><th>Users</th></tr></thead><tbody id="rows"></tbody></table>
 </div>
@@ -42,6 +45,10 @@ async function load() {
     document.getElementById("countries").textContent = s.countries.length;
     document.getElementById("helpful").textContent = s.helpful_percent === null ? "–" : s.helpful_percent + "%";
     document.getElementById("fb").textContent = s.feedback_total;
+    document.getElementById("answers").textContent = s.quiz_answers;
+    document.getElementById("acc").textContent = s.quiz_correct_percent === null ? "–" : s.quiz_correct_percent + "%";
+    document.getElementById("levels").textContent = s.level_ups;
+    document.getElementById("shares").textContent = s.cards_shared;
     const rows = document.getElementById("rows");
     rows.innerHTML = "";
     s.countries.forEach(c => {
