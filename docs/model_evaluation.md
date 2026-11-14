@@ -32,3 +32,20 @@ We use **`deepseek-v4.1-flash-1017`**: best balance of speed, answer quality and
    *algoritm, subprogram, C++* → Computer Science).
 4. **Partial answers:** the prompt now asks the model to answer the part the sources cover and
    state clearly what the official materials don't specify.
+
+## Reasoning ("thinking") tokens
+
+`python -m app.debug_quiz` showed that for Quiz mode the model used its whole budget on hidden
+reasoning (`reasoning_tokens: 1500`, `finish_reason: length`) and returned an **empty answer**.
+`python -m app.test_reasoning` compared four request variants:
+
+| Variant | Time | Reasoning tokens | Result |
+|---|---|---|---|
+| no extra parameters | 3.7 s | 1500 | empty |
+| `reasoning_effort: "low"` | 3.5 s | 1500 | empty |
+| `reasoning: {effort: "low"}` | 3.4 s | 1500 | empty |
+| `chat_template_kwargs: {thinking: false}` | **1.0 s** | **0** | ✅ correct answer |
+
+**Decision:** BacBuddy sends `chat_template_kwargs: {"thinking": false}` (configurable with
+`INFERENCE_DISABLE_THINKING`). Answers are grounded in retrieved sources, so long hidden reasoning
+adds latency without improving accuracy.

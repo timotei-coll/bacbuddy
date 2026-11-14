@@ -32,6 +32,9 @@ def normalize_text(text: str) -> str:
     text = re.sub(r"(?<![^\W\d_])([îÎ]) (?=[^\W\d_])", r"\1", text)
     text = re.sub(r"(?<=[^\W\d_]) ([ăâșțĂÂȘȚ])(?![^\W\d_])", r"\1", text)
     text = re.sub(r"(?<=[^\W\d_]) ([ăâĂÂ])(?=[^\W\d_])", r"\1", text)  # "num ărul" -> "numărul"
+    # common word endings split before "ț": "ecua ția", "mul țimea", "Rezolva ți", "func ției"
+    text = re.sub(r"(?<=[^\W\d_]{3}) (ț(?:i|ia|ie|ii|iei|iile|iilor|ilor|imea|imile|iune|iuni|"
+                  r"ional|ionale|ionează|ă|a|e|ei))(?![^\W\d_])", r"\1", text)
     text = re.sub(r"\n\s*\n+", "\n\n", text)
     return text.strip()
 

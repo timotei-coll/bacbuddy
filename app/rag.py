@@ -1,6 +1,8 @@
 """Retrieval-augmented answers and quiz generation, grounded in official Bac documents."""
+import json
 import random
 import re
+from pathlib import Path
 from urllib.parse import quote
 
 from app import llm
@@ -8,6 +10,8 @@ from app.search import fuse, load_index, load_vectors, vector_search
 from app.text_utils import strip_diacritics
 
 INDEX = load_index()
+_PAGES_FILE = Path(__file__).resolve().parent.parent / "index" / "exam_pages.json"
+EXAM_PAGES = json.loads(_PAGES_FILE.read_text(encoding="utf-8")) if _PAGES_FILE.exists() else []
 VECTORS = load_vectors(len(INDEX.chunks))   # None -> keyword search only
 QUERY_INSTRUCT = "Instruct: Given a student's question about the Romanian Baccalaureate exam, " \
                  "retrieve official curriculum, exam or grading-scheme passages that answer it\nQuery: "
@@ -81,7 +85,7 @@ def expand_query(question: str) -> str:
     """Ask the model for extra search terms (query rewriting). Falls back silently."""
     try:
         extra = llm.chat([{"role": "user", "content": EXPAND_PROMPT.format(question=question)}],
-                         temperature=0.0, max_tokens=80)
+                         temperature=0.0, max_tokens=300)
         extra = re.sub(r"[^\w\s\-]", " ", extra)[:300]
         return f"{question} {extra}"
     except llm.LLMError:
@@ -164,11 +168,13 @@ def ask(question: str, subject=None, year=None, lang: str = "ro") -> dict:
     return {"answer": answer, "sources": sources, "found": True}
 
 
-QUIZ_PROMPT = """You are BacBuddy. Below is a fragment of an official Romanian Baccalaureate exam \
-paper ({label}). Pick ONE exercise from it and present it to the student as a practice problem.
+QUIZ_PROMPT = """You are BacBuddy. Below is ONE exercise taken from an official Romanian \
+Baccalaureate exam paper ({label}). Present it to the student as a single practice problem.
 
 Rules:
-- Copy the exercise faithfully; only tidy formatting. Do not invent new data or numbers.
+- If the exercise has several sub-questions (a), b), c)), keep the shared statement and ONLY the \
+first sub-question. Keep multiple-choice options (a. b. c. d.) intact.
+- Copy it faithfully; only tidy formatting. Do not invent new data or numbers.
 - If formulas are scrambled from PDF extraction, rewrite them in clear math notation only when \
 the meaning is unambiguous.
 - Write math in LaTeX between single dollar signs, e.g. $\\lim_{{x\\to 0}} f(x)$.
@@ -178,32 +184,51 @@ PROBLEM: <the exercise>
 HINT: <one short hint>
 - Write in {language}.
 
-EXAM FRAGMENT:
+EXERCISE:
 {text}"""
+
+# Exercises in Bac papers start on a new line with an optional score and a number, e.g. "5p 2. ..."
+_EXERCISE_START = re.compile(r"\n(?=\s*(?:\d{1,2}\s*p\s*)?\d{1,2}\.\s)")
+
+
+def split_exercises(text: str) -> list:
+    """Cut a fragment of an exam paper into separate numbered exercises."""
+    text = re.sub(r"(?im)^\s*SUBIECTUL.*$", "", text)   # drop section headers
+    parts = [p.strip() for p in _EXERCISE_START.split("\n" + text) if p.strip()]
+    # keep real exercises: they start with a number (not mid-sentence) and have a sane length
+    good = [p for p in parts if 60 <= len(p) <= 1500
+            and re.match(r"(?:\d{1,2}\s*p\s*)?\d{1,2}\.\s", p)]
+    return good
 
 
 def quiz(subject=None, lang: str = "ro") -> dict:
     lang = "en" if lang == "en" else "ro"
-    pool = [c for c in INDEX.chunks
-            if c["doc_type"] == "subiect" and (not subject or c["subject"] == subject)
-            and len(c["text"]) > 250]
-    if not pool:
+    # Use whole exam pages (not search chunks) so exercises are never cut in half.
+    pool = [p for p in (EXAM_PAGES or INDEX.chunks)
+            if p["doc_type"] == "subiect" and (not subject or p["subject"] == subject)]
+    candidates = [(p, ex) for p in pool for ex in split_exercises(p["text"])]
+    if not candidates:
         return {"error": "no_subjects"}
-    chunk = random.choice(pool)
+    chunk, exercise = random.choice(candidates)
     language = "English" if lang == "en" else "Romanian"
     raw = llm.chat([{"role": "user", "content": QUIZ_PROMPT.format(
-        label=chunk["label"], language=language, text=chunk["text"])}], temperature=0.4)
+        label=chunk["label"], language=language, text=exercise)}], temperature=0.3, max_tokens=1500)
 
-    problem, hint = raw, ""
+    raw = raw.replace("**", "")
+    problem, hint = raw.strip(), ""
     m = re.search(r"PROBLEM:\s*(.*?)\s*HINT:\s*(.*)", raw, flags=re.DOTALL | re.IGNORECASE)
     if m:
         problem, hint = m.group(1).strip(), m.group(2).strip()
+    else:
+        problem = re.sub(r"^\s*PROBLEM:\s*", "", problem, flags=re.IGNORECASE)
+    if len(problem) < 15:          # empty/odd model output -> show the official text as is
+        problem, hint = exercise, ""
     return {
         "problem": problem,
         "hint": hint,
         "source": _public_source(1, chunk),
         "quiz_ref": {"subject": chunk["subject"], "year": chunk["year"],
-                     "session": chunk["session"], "problem": problem[:400]},
+                     "session": chunk["session"], "problem": exercise[:600]},
     }
 
 
@@ -225,7 +250,7 @@ def quiz_solution(ref: dict, lang: str = "ro") -> dict:
             f"SOURCES:\n\n{_format_sources(ranked)}\n\nQUESTION: Using the official grading scheme, "
             f"show how this exercise is solved and how many points each step gets:\n{ref.get('problem', '')}"},
     ]
-    answer = llm.chat(messages, max_tokens=1000)
+    answer = llm.chat(messages, max_tokens=1500)
     if not answer or "NOT_FOUND" in answer[:40]:
         return {"answer": NOT_FOUND[lang], "sources": [_public_source(i, c) for i, c in enumerate(ranked, 1)],
                 "found": False}

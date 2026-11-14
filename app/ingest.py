@@ -18,6 +18,7 @@ DATA_DIR = ROOT / "data"
 INDEX_DIR = ROOT / "index"
 CHUNKS_FILE = INDEX_DIR / "chunks.json"
 VECTORS_FILE = INDEX_DIR / "vectors.npy"
+PAGES_FILE = INDEX_DIR / "exam_pages.json"   # full exam-paper pages, used by Quiz me
 EMBED_BATCH = 32
 
 SUBJECTS = {"matematica": "Matematică", "informatica": "Informatică"}
@@ -182,7 +183,7 @@ def build_index() -> dict:
         boilerplate[key] = {line for line, n in counts.items() if n >= limit}
 
     # ---- Pass 2: chunk the cleaned text ----
-    chunks, first_seen = [], set()
+    chunks, first_seen, exam_pages = [], set(), []
     for folder, pdf_path, meta, pages in documents:
         key = (meta["subject"], meta["doc_type"])
         common = boilerplate.get(key, set())
@@ -196,6 +197,9 @@ def build_index() -> dict:
                 text = "\n".join(kept).strip()
                 if len(text) < MIN_PAGE_CHARS:
                     continue
+            if meta["doc_type"] == "subiect":
+                exam_pages.append({"file": f"{folder}/{pdf_path.name}", "page": page_no,
+                                   "text": text, **meta})
             for piece in split_into_chunks(text):
                 chunks.append({
                     "id": len(chunks),
@@ -207,6 +211,7 @@ def build_index() -> dict:
 
     INDEX_DIR.mkdir(exist_ok=True)
     CHUNKS_FILE.write_text(json.dumps(chunks, ensure_ascii=False, indent=1), encoding="utf-8")
+    PAGES_FILE.write_text(json.dumps(exam_pages, ensure_ascii=False, indent=1), encoding="utf-8")
     report["chunks"] = len(chunks)
     report["vectors"] = build_vectors(chunks)
     return report

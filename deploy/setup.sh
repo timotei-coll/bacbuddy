@@ -26,9 +26,17 @@ python3 -m venv .venv
 
 if [ ! -f .env ]; then
   echo "==> Creating .env (your Vultr Inference settings)"
-  read -rp "INFERENCE_API_KEY: " KEY
-  read -rp "INFERENCE_MODEL: " MODEL
-  printf 'INFERENCE_API_KEY=%s\nINFERENCE_MODEL=%s\nINFERENCE_BASE_URL=https://api.vultrinference.com/v1\n' "$KEY" "$MODEL" > .env
+  read -rsp "INFERENCE_API_KEY (paste, it stays hidden): " KEY; echo
+  read -rp "INFERENCE_MODEL [deepseek-v4.1-flash-1017]: " MODEL
+  MODEL=${MODEL:-deepseek-v4.1-flash-1017}
+  read -rp "INFERENCE_EMBED_MODEL [qwen3-embedding-4b]: " EMBED
+  EMBED=${EMBED:-qwen3-embedding-4b}
+  cat > .env <<ENV
+INFERENCE_API_KEY=$KEY
+INFERENCE_MODEL=$MODEL
+INFERENCE_EMBED_MODEL=$EMBED
+INFERENCE_BASE_URL=https://api.vultrinference.com/v1
+ENV
   chmod 600 .env
 fi
 

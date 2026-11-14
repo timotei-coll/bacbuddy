@@ -80,6 +80,8 @@
   footer { margin-top: 28px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 13px; align-items: center; }
   .hidden { display: none !important; }
   .katex { font-size: 1.05em; }
+  code { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 1px 5px;
+         font-family: ui-monospace, "Cascadia Code", Consolas, monospace; font-size: .92em; }
 </style>
 </head>
 <body>
@@ -203,12 +205,20 @@ if (!client) { client = Math.random().toString(36).slice(2) + Date.now().toStrin
 
 function esc(s) { return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
 
-// Safe mini-markdown: escape first, then add bold, lists, paragraphs and citation links.
-function render(md, prefix) {
+// Safe mini-markdown: escape first, then add bold, inline code, lists, paragraphs and citations.
+// Citations [n] are only linked in AI answers (not in exam problems, where m[4][25] is C code),
+// and never right after a letter/digit/bracket or inside `code`.
+function render(md, prefix, withCitations = true) {
   const lines = esc(md).split(/\n/);
   let html = "", list = null;
-  const inline = (t) => t.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-                         .replace(/\[(\d{1,2})\]/g, `<a class="cite" href="#${prefix}-$1" data-ref="${prefix}-$1">$1</a>`);
+  const inline = (t) => t.split(/(`[^`]+`)/g).map(part => {
+    if (part.startsWith("`") && part.endsWith("`") && part.length > 2) return `<code>${part.slice(1, -1)}</code>`;
+    let out = part.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+    if (withCitations) out = out.replace(/(^|[^\w\]\[])((?:\[\d{1,2}\])+)/g, (m, pre, group) =>
+      pre + group.replace(/\[(\d{1,2})\]/g,
+        (x, n) => `<a class="cite" href="#${prefix}-${n}" data-ref="${prefix}-${n}">${n}</a>`));
+    return out;
+  }).join("");
   for (const raw of lines) {
     const line = raw.trim();
     const ul = line.match(/^[-*•]\s+(.*)/), ol = line.match(/^\d+[.)]\s+(.*)/);
@@ -228,6 +238,7 @@ function render(md, prefix) {
 function renderMath(el) {
   if (window.renderMathInElement) {
     try { renderMathInElement(el, { delimiters: [{left: "$$", right: "$$", display: true}, {left: "$", right: "$", display: false},
+                                                  {left: "\\[", right: "\\]", display: true},
                                                   {left: "\\(", right: "\\)", display: false}], throwOnError: false }); } catch (e) {}
   }
 }
@@ -308,9 +319,9 @@ async function newQuiz() {
     const t = T[lang];
     out.innerHTML = `<div class="card">
       <div class="muted">${t.fromExam}: <a href="${esc(r.source.url)}" target="_blank" rel="noopener">${esc(r.source.label)}, ${t.page} ${r.source.page} ↗</a></div>
-      <div class="body" style="margin-top:10px">${render(r.problem, "q")}</div>
+      <div class="body" style="margin-top:10px">${render(r.problem, "q", false)}</div>
       ${r.hint ? `<button class="btn ghost" id="hint-btn" style="margin-top:6px">${t.showHint}</button>
-        <div class="hint hidden" id="hint-box"><strong>${t.hint}:</strong> ${render(r.hint, "q")}</div>` : ""}
+        <div class="hint hidden" id="hint-box"><strong>${t.hint}:</strong> ${render(r.hint, "q", false)}</div>` : ""}
       <div class="row"><button class="btn" id="barem-btn">${t.showBarem}</button></div>
       <div id="solution"></div></div>`;
     renderMath(out);

@@ -18,6 +18,9 @@ BASE_URL = os.getenv("INFERENCE_BASE_URL", "https://api.vultrinference.com/v1").
 API_KEY = os.getenv("INFERENCE_API_KEY", "")
 MODEL = os.getenv("INFERENCE_MODEL", "")
 EMBED_MODEL = os.getenv("INFERENCE_EMBED_MODEL", "")
+# Reasoning models can spend the whole token budget "thinking" and return an empty answer.
+# Tested on Vultr: chat_template_kwargs below turns thinking off (1.0s vs 3.7s, no empty replies).
+DISABLE_THINKING = os.getenv("INFERENCE_DISABLE_THINKING", "1") != "0"
 TIMEOUT = 60
 
 
@@ -39,7 +42,7 @@ def list_models() -> list:
     return [m.get("id") for m in data if m.get("id")]
 
 
-def chat(messages: list, temperature: float = 0.2, max_tokens: int = 900) -> str:
+def chat(messages: list, temperature: float = 0.2, max_tokens: int = 1500) -> str:
     if not MODEL:
         raise LLMError("Lipsește INFERENCE_MODEL în fișierul .env (vezi: python -m app.llm models)")
     payload = {
@@ -48,6 +51,8 @@ def chat(messages: list, temperature: float = 0.2, max_tokens: int = 900) -> str
         "temperature": temperature,
         "max_tokens": max_tokens,
     }
+    if DISABLE_THINKING:
+        payload["chat_template_kwargs"] = {"thinking": False, "enable_thinking": False}
     try:
         r = requests.post(f"{BASE_URL}/chat/completions", headers=_headers(),
                           json=payload, timeout=TIMEOUT)
