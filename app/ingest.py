@@ -10,7 +10,7 @@ from pathlib import Path
 
 from pypdf import PdfReader
 
-from app.text_utils import normalize_text
+from app.text_utils import normalize_text, strip_diacritics
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "data"
@@ -69,6 +69,31 @@ def describe_file(folder: str, filename: str):
     return None
 
 
+# The official "programe" PDFs contain several profiles in one file
+# (e.g. M_mate-info, M_st-nat, M_tehnologic, M_pedagogic). We keep only mate-info.
+PROFILE_MARKERS = {
+    "matematica": {"keep": ["m_mate-info"],
+                   "drop": ["m_st-nat", "m_tehnologic", "m_pedagogic"]},
+    "informatica": {"keep": ["matematica-informatica"],
+                    "drop": ["stiinte ale naturii", "stiintele naturii"]},
+}
+
+
+def detect_profile(subject: str, page_text: str):
+    """Return 'keep', 'drop' or None (no clear profile marker on this page)."""
+    markers = PROFILE_MARKERS.get(subject)
+    if not markers:
+        return None
+    t = strip_diacritics(page_text.lower())
+    has_keep = any(m in t for m in markers["keep"])
+    has_drop = any(m in t for m in markers["drop"])
+    if has_keep and not has_drop:
+        return "keep"
+    if has_drop and not has_keep:
+        return "drop"
+    return None  # both (intro/summary page) or neither: don't change state
+
+
 def split_into_chunks(text: str) -> list:
     """Split page text into overlapping pieces, cutting at paragraph/line ends."""
     if len(text) <= CHUNK_CHARS:
@@ -94,7 +119,8 @@ def build_index() -> dict:
     if not DATA_DIR.exists():
         sys.exit(f"Nu găsesc folderul {DATA_DIR}. Copiază PDF-urile în data/.")
 
-    chunks, report = [], {"files": 0, "skipped": [], "low_text_pages": []}
+    chunks, report = [], {"files": 0, "skipped": [], "low_text_pages": [],
+                           "other_profile_pages": 0}
     for folder in ["programe", "matematica", "informatica"]:
         folder_path = DATA_DIR / folder
         if not folder_path.exists():
@@ -111,12 +137,18 @@ def build_index() -> dict:
                 report["skipped"].append(f"{folder}/{pdf_path.name} ({exc})")
                 continue
             report["files"] += 1
+            profile_state = "keep"
             for page_no, page in enumerate(reader.pages, start=1):
                 raw = page.extract_text() or ""
                 text = normalize_text(raw)
                 if len(text) < MIN_PAGE_CHARS:
                     report["low_text_pages"].append(f"{folder}/{pdf_path.name} p.{page_no}")
                     continue
+                if meta["doc_type"] == "programa":
+                    profile_state = detect_profile(meta["subject"], text) or profile_state
+                    if profile_state == "drop":
+                        report["other_profile_pages"] += 1
+                        continue
                 for piece in split_into_chunks(text):
                     chunks.append({
                         "id": len(chunks),
@@ -136,6 +168,7 @@ if __name__ == "__main__":
     result = build_index()
     print(f"✅ Fișiere citite: {result['files']}")
     print(f"✅ Bucăți de text salvate: {result['chunks']} -> index/chunks.json")
+    print(f"ℹ️  Pagini din programe pentru alte profiluri (ignorate): {result['other_profile_pages']}")
     if result["skipped"]:
         print("⚠️  Fișiere sărite:")
         for item in result["skipped"]:

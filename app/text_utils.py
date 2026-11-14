@@ -5,10 +5,10 @@ import unicodedata
 # Old Romanian PDFs often use cedilla letters (ş, ţ) instead of the correct
 # comma-below letters (ș, ț). We convert everything to the correct form.
 _CEDILLA_FIX = str.maketrans({
-    "\u015f": "\u0219",  # ş -> ș
-    "\u015e": "\u0218",  # Ş -> Ș
-    "\u0163": "\u021b",  # ţ -> ț
-    "\u0162": "\u021a",  # Ţ -> Ț
+    "\u015f": "\u0219",  # cedilla s -> comma s
+    "\u015e": "\u0218",  # cedilla S -> comma S
+    "\u0163": "\u021b",  # cedilla t -> comma t
+    "\u0162": "\u021a",  # cedilla T -> comma T
 })
 
 # Very common Romanian words that don't help search.
@@ -17,7 +17,7 @@ STOPWORDS = {
     "ale", "ai", "ca", "ce", "care", "este", "sunt", "fi", "nu", "mai", "sau",
     "prin", "pentru", "lui", "lor", "le", "il", "ii", "i", "e", "am", "ati",
     "au", "fie", "dupa", "cum", "iar", "dar", "daca", "cat", "ori", "the",
-    "and", "of", "to", "is", "what", "how", "for", "on", "an",
+    "and", "of", "to", "is", "what", "how", "for", "in", "on", "an",
 }
 
 
@@ -25,8 +25,13 @@ def normalize_text(text: str) -> str:
     """Fix diacritics, join hyphenated line breaks and tidy whitespace."""
     text = unicodedata.normalize("NFC", text).translate(_CEDILLA_FIX)
     text = re.sub(r"-\n(\w)", r"\1", text)      # word-\nbreak -> wordbreak
-    text = text.replace("\u00a0", " ")
+    text = text.replace("\u00a0", " ")  # non-breaking space
     text = re.sub(r"[ \t]+", " ", text)
+    # PDF extraction sometimes splits words around diacritics:
+    # "î ntr-un" -> "într-un", "memoreaz ă" -> "memorează"
+    text = re.sub(r"(?<![^\W\d_])([îÎ]) (?=[^\W\d_])", r"\1", text)
+    text = re.sub(r"(?<=[^\W\d_]) ([ăâșțĂÂȘȚ])(?![^\W\d_])", r"\1", text)
+    text = re.sub(r"(?<=[^\W\d_]) ([ăâĂÂ])(?=[^\W\d_])", r"\1", text)  # "num ărul" -> "numărul"
     text = re.sub(r"\n\s*\n+", "\n\n", text)
     return text.strip()
 
