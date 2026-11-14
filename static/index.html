@@ -183,8 +183,12 @@
       <select id="country">
         <option value="">—</option>
         <option>Romania</option><option>Moldova</option><option>India</option><option>United States</option>
-        <option>Germany</option><option>United Kingdom</option><option>Nigeria</option><option>Kenya</option>
-        <option>Turkey</option><option>UAE</option><option>Other</option>
+        <option>Germany</option><option>United Kingdom</option><option>Sweden</option><option>UAE</option>
+        <option>Italy</option><option>Spain</option><option>France</option><option>Netherlands</option>
+        <option>Austria</option><option>Belgium</option><option>Ireland</option><option>Denmark</option>
+        <option>Norway</option><option>Switzerland</option><option>Hungary</option><option>Bulgaria</option>
+        <option>Poland</option><option>Greece</option><option>Canada</option><option>Nigeria</option>
+        <option>Kenya</option><option>Turkey</option><option>Other</option>
       </select>
     </div>
     <div><a href="/stats" data-i18n="liveStats"></a> · HackGlobal 2026 · Powered by Vultr</div>
@@ -592,7 +596,11 @@ $("quiz-btn").onclick = newQuiz;
 // Pre-fill the country from the browser's time zone (the visitor can still change it).
 const TZ_COUNTRY = { "Europe/Bucharest": "Romania", "Europe/Chisinau": "Moldova", "Asia/Kolkata": "India",
   "Asia/Calcutta": "India", "Europe/Berlin": "Germany", "Europe/London": "United Kingdom", "Africa/Lagos": "Nigeria",
-  "Africa/Nairobi": "Kenya", "Europe/Istanbul": "Turkey", "Asia/Dubai": "UAE" };
+  "Africa/Nairobi": "Kenya", "Europe/Istanbul": "Turkey", "Asia/Dubai": "UAE", "Europe/Stockholm": "Sweden",
+  "Europe/Rome": "Italy", "Europe/Madrid": "Spain", "Europe/Paris": "France", "Europe/Amsterdam": "Netherlands",
+  "Europe/Vienna": "Austria", "Europe/Brussels": "Belgium", "Europe/Dublin": "Ireland", "Europe/Copenhagen": "Denmark",
+  "Europe/Oslo": "Norway", "Europe/Zurich": "Switzerland", "Europe/Budapest": "Hungary", "Europe/Sofia": "Bulgaria",
+  "Europe/Warsaw": "Poland", "Europe/Athens": "Greece", "America/Toronto": "Canada", "America/Vancouver": "Canada" };
 function guessCountry() {
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
